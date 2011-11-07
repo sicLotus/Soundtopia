@@ -3,7 +3,6 @@
 	<name>Soundtopia</name>
 	<comment></comment>
 	<projects>
-		<project>SoundtopiaWeb</project>
 		<project>SoundtopiaEJB</project>
 	</projects>
 	<buildSpec>
