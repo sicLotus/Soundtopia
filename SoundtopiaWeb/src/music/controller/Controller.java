@@ -2,6 +2,7 @@ package music.controller;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.RequestDispatcher;
@@ -14,23 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import music.controller.handler.LoginHandler;
+import music.data.User;
+import music.manager.UserBO;
+import music.manager.UserBOLocal;
+import music.manager.UserBORemote;
+import music.repository.UserDAO;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// EJB injezieren
-	/*
-	 * @EJB User userHelper; ...
-	 */
-
-	@PersistenceUnit
-	private EntityManager em;
-
-	// BusinessObjekte anlegen
-	/*
-	 * private UserBO userBO; ...
-	 */
+	@EJB  
+	private UserBOLocal userBO;
+	 
 
 	private ServletConfig servletConfig;
 
@@ -74,12 +71,10 @@ public class Controller extends HttpServlet {
 			}
 	
 	private void initializeSession(HttpSession session) {
-	/*
 			if (session.getAttribute("userBO") == null) {
-				userBO = new UserBO(userHelper);
 				session.setAttribute("userBO", userBO);
 			}
-	*/
+	
 	}
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
