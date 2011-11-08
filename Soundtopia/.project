@@ -4,8 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>SoundtopiaEJB</project>
-		<project>SoundtopiaEJB 2</project>
-		<project>SoundtopiaWeb 2</project>
+		<project>SoundtopiaWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
