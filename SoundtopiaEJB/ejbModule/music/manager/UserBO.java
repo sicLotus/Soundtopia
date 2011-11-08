@@ -48,6 +48,11 @@ public class UserBO implements UserBOLocal, UserBORemote {
 		this.users = users;
 	}
 	//getter & setter
+
+	@Override
+	public User getUser(int id) {	
+		return userHelper.getUser(id);
+	}
 	
 	//methods wie checkLogin, changePassword, halt alles was mit dem user zu tun hat
 }

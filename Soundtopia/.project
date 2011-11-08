@@ -5,6 +5,8 @@
 	<projects>
 		<project>SoundtopiaWeb</project>
 		<project>SoundtopiaEJB</project>
+		<project>SoundtopiaEJB 2</project>
+		<project>SoundtopiaWeb 2</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

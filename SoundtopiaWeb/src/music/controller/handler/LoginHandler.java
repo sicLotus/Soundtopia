@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import music.manager.UserBOLocal;
+
 @WebServlet("/LoginHandler")
 public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,22 +46,24 @@ public class LoginHandler extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		
-		boolean allowUser = false;
-		String username = request.getParameter("account");
-		String password = request.getParameter("password");
 		
-		//userHelper = (UserBO) session.getAttribute("userBO");
+		//boolean allowUser = false;
+		//String username = request.getParameter("account");
+		//String password = request.getParameter("password");
+		
+		UserBOLocal userHelper = (UserBOLocal) session.getAttribute("userBO");
 		//allowUser = userHelper.checkLogin(username, password);
+		System.out.println(userHelper.getUser(1).getEmail());
 		
-		if (!allowUser) {
-			view = "/error/loginErr.jsp";
-		} else {
-			//User user = new User();
-			//user = userHelper.getUser(username);
-			//session.setAttribute("userObject", user);
-			view = "/controller/showBooks";
-			session.setAttribute("eingeloggt", new Boolean(allowUser));
-		}
+//		if (!allowUser) {
+//			view = "/error/loginErr.jsp";
+//		} else {
+//			//User user = new User();
+//			//user = userHelper.getUser(username);
+//			//session.setAttribute("userObject", user);
+//			view = "/controller/showBooks";
+//			session.setAttribute("eingeloggt", new Boolean(allowUser));
+//		}
 		return view;
 	}
 

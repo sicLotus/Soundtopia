@@ -10,5 +10,13 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="SoundtopiaEJB.jar" deploy-path="/" handle="module:/resource/SoundtopiaEJB 2/SoundtopiaEJB 2">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="SoundtopiaWeb.war" deploy-path="/" handle="module:/resource/SoundtopiaWeb 2/SoundtopiaWeb 2">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
