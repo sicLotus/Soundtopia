@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.manager.sessionLocal;
+import music.manager.SessionLocal;
 
 
 
@@ -17,16 +17,16 @@ import music.manager.sessionLocal;
  * Servlet implementation class myservlet
  */
 @WebServlet("/myservlet")
-public class myservlet extends HttpServlet {
+public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	sessionLocal test;
+	SessionLocal test;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public myservlet() {
+    public MyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +35,7 @@ public class myservlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println(test.getUser(1).getEmail());
-		
+		System.out.println(test.getUser(1).getEmail());	
 	}
 
 	/**

@@ -10,13 +10,13 @@ import music.data.User;
  * Session Bean implementation class session
  */
 @Stateless
-public class session implements sessionRemote, sessionLocal {
+public class Session implements SessionRemote, SessionLocal {
 	@PersistenceContext
 	private EntityManager em;
     /**
      * Default constructor. 
      */
-    public session() {
+    public Session() {
         // TODO Auto-generated constructor stub
     }
     
