@@ -36,6 +36,8 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(test.getUser(1).getEmail());	
+		System.out.println(test.getSong(1).getInterpreter());
+		System.out.println(test.getSong(1).getLyric().getText());
 	}
 
 	/**

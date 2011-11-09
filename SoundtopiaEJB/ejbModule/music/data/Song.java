@@ -180,11 +180,11 @@ public class Song implements Serializable {
 		this.voteTotal = voteTotal;
 	}
 
-	public List<Chart> getCharts() {
+	public Set<Chart> getCharts() {
 		return this.charts;
 	}
 
-	public void setCharts(List<Chart> charts) {
+	public void setCharts(Set<Chart> charts) {
 		this.charts = charts;
 	}
 	

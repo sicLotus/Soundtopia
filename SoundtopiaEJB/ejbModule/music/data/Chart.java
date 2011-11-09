@@ -73,11 +73,11 @@ public class Chart implements Serializable {
 		this.name = name;
 	}
 
-	public List<Song> getSongs() {
+	public Set<Song> getSongs() {
 		return this.songs;
 	}
 
-	public void setSongs(List<Song> songs) {
+	public void setSongs(Set<Song> songs) {
 		this.songs = songs;
 	}
 	

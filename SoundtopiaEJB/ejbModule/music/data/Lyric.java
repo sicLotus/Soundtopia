@@ -13,25 +13,25 @@ public class Lyric implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private int songID;
 
     @Lob()
 	private String text;
 
 	//bi-directional one-to-one association to Song
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="songID")
 	private Song song;
 
     public Lyric() {
     }
 
 	public int getId() {
-		return this.id;
+		return this.songID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.songID = id;
 	}
 
 	public String getText() {
