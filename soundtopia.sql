@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. November 2011 um 14:50
+-- Erstellungszeit: 11. November 2011 um 18:36
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -60,15 +60,17 @@ CREATE TABLE IF NOT EXISTS `charts` (
 --
 
 CREATE TABLE IF NOT EXISTS `lyric` (
-  `id` int(11) NOT NULL,
+  `songID` int(11) NOT NULL,
   `text` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`songID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `lyric`
 --
 
+INSERT INTO `lyric` (`songID`, `text`) VALUES
+(1, 'Mum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah\r\nI wanna hold ''em like they do in Texas please \r\nFold ''em let ''em hit me raise it baby stay with me (I love it) \r\nLuck and intuition play the cards with Spades to start \r\nAnd after he''s been hooked I''ll play the one that''s on his heart\r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh \r\nI''ll get him hot, show him what I''ve got \r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh, \r\nI''ll get him hot, show him what I''ve got [...] (Mum mum mum mah)\r\nPokerface');
 
 -- --------------------------------------------------------
 
@@ -115,6 +117,8 @@ CREATE TABLE IF NOT EXISTS `song` (
 -- Daten für Tabelle `song`
 --
 
+INSERT INTO `song` (`id`, `interpreter`, `title`, `date`, `tracklength`, `video`, `rating`, `voteCount`, `voteTotal`, `picture`, `priceAmazon`, `priceItunes`, `price7digital`) VALUES
+(1, 'Lady Gaga', 'Pokerface', '2011-11-09', 213, NULL, 0, 0, 0, NULL, 1.21, 0.99, 0.99);
 
 -- --------------------------------------------------------
 
@@ -147,12 +151,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Daten für Tabelle `user`
 --
 
+INSERT INTO `user` (`id`, `email`, `password`) VALUES
+(1, 'asd@asd.de', 'asd');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
