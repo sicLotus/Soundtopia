@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. November 2011 um 18:36
+-- Erstellungszeit: 14. November 2011 um 18:40
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -150,15 +150,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `password`) VALUES
-(1, 'asd@asd.de', 'asd');
+(1, 'asd@asd.de', 'asd'),
+(2, 'Mateful@web.de', '73675debcd8a436be48ec22211dcf44fe0df0a64');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
