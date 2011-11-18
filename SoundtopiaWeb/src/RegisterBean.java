@@ -1,12 +1,8 @@
-package music.manager;
 import java.io.Serializable;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import music.data.Register;
-
 
 @Named
 @RequestScoped
