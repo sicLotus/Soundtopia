@@ -6,8 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import music.data.Song;
-import music.data.User;
 import music.repository.UserDAO;
+import music.services.MyVideoAPI;
 
 /**
  * Session Bean implementation class session
@@ -29,6 +29,11 @@ public class Session implements SessionRemote, SessionLocal {
     
     public Song getSong(int id) {
     	return em.find(Song.class, id);
+    }
+    
+    public void myvideotest() {
+    	MyVideoAPI api = new MyVideoAPI();
+    	api.retrieveData();
     }
     
 
