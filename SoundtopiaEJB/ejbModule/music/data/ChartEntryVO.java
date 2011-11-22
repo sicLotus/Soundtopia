@@ -17,6 +17,24 @@ public class ChartEntryVO {
 
 	private String title;
 	private String interpreter;
+	private String coverUrl;
+	private LyricVO lyricVO;
+	
+	public String getCoverUrl() {
+		return coverUrl;
+	}
+
+	public void setCoverUrl(String coverUrl) {
+		this.coverUrl = coverUrl;
+	}
+	
+	public LyricVO getLyricVO() {
+		return lyricVO;
+	}
+
+	public void setLyricVO(LyricVO lyricVO) {
+		this.lyricVO = lyricVO;
+	}
 
 	public String getInterpreter() {
 		return interpreter;

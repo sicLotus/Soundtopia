@@ -1,13 +1,9 @@
 package music.services;
 
-import java.util.List;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import music.util.EntityDecoder;
-
-import org.jdom.input.SAXBuilder;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
@@ -23,7 +19,7 @@ public class GoogleImageAPI {
 		String delimiter = "\"url\":\"";
 		int delIndex;
 
-		WebResource wr = client
+		WebResource webResource = client
 				.resource("http://ajax.googleapis.com/ajax/services/search/images");
 		
 		String decodedQuery = EntityDecoder.htmlToChar(query);
@@ -31,14 +27,14 @@ public class GoogleImageAPI {
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("v", "1.0");
 		params.add("q", decodedQuery);
-		System.out.println(decodedQuery);
+		//System.out.println(decodedQuery);
 		
-		String sr = wr.queryParams(params).accept(MediaType.TEXT_PLAIN)
+		String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN)
 				.get(String.class);
 		
-		delIndex = sr.indexOf(delimiter)+delimiter.length();
+		delIndex = response.indexOf(delimiter)+delimiter.length();
 		
-		String url = sr.substring(delIndex, sr.indexOf("\"", delIndex));
+		String url = response.substring(delIndex, response.indexOf("\"", delIndex));
 		return url;
 		
 	}

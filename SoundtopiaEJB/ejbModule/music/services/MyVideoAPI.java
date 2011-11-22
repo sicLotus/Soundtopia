@@ -37,10 +37,12 @@ public class MyVideoAPI {
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
 		List<ChartEntryVO> chartList = new ArrayList<ChartEntryVO>();
+
+		@SuppressWarnings("rawtypes")
 		List list = null;
 		int page = 1;
 
-		WebResource wr = client
+		WebResource webResource = client
 				.resource("https://api.myvideo.de/prod/mobile/api2_rest.php");
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("dev_id", "fd613876bee13bc19d5a4d8575a6fd47");
@@ -54,11 +56,11 @@ public class MyVideoAPI {
 
 		do {
 			params.putSingle("page", "" + page);
-			String sr = wr.queryParams(params).accept(MediaType.TEXT_PLAIN)
-					.get(String.class);
+			String response = webResource.queryParams(params)
+					.accept(MediaType.TEXT_PLAIN).get(String.class);
 
 			try {
-				Reader in = new StringReader(sr);
+				Reader in = new StringReader(response);
 
 				Document document = (Document) builder.build(in);
 				Element rootNode = document.getRootElement();
@@ -90,16 +92,20 @@ public class MyVideoAPI {
 					entry.setPermalink(node.getChildText("permalink"));
 					entry.setPermathumblink(node.getChildText("permathumblink"));
 					entry.setMovie_url(node.getChildText("movie_url"));
-
-					chartList.add(entry);
-
-					//System.out.print(entry + " % ");
-					GoogleImageAPI.retrieveData(entry
+/*
+					entry.setCoverUrl(GoogleImageAPI.retrieveData(entry
 							.getInterpreter()
 							+ " "
 							+ entry.getTitle()
-							+ " cover");
-
+							+ " cover"));
+					entry.setLyricVO(LyricAPI.retrieveData(entry.getInterpreter(), entry.getTitle()));
+*/
+					chartList.add(entry);
+					System.out.println("Current song: " + (i + 1) + " from " + list.size() + " page (" + page + ")");
+					AmazonAPI.retrieveData(AmazonAPI.SearchIndex.MP3Downloads, entry.getInterpreter() + " " + entry.getTitle());
+					
+					//System.out.print(entry + " % ");
+					//System.out.println(entry.getLyricVO().getText() + "$$" + entry.getLyricVO().getUrl());
 				}
 
 			} catch (IOException io) {
