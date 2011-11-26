@@ -34,12 +34,6 @@ public class Song implements Serializable {
 
 	private String picture;
 
-	private float price7digital;
-
-	private float priceAmazon;
-
-	private float priceItunes;
-
 	private float rating;
 
 	private String title;
@@ -106,30 +100,6 @@ public class Song implements Serializable {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}
-
-	public float getPrice7digital() {
-		return this.price7digital;
-	}
-
-	public void setPrice7digital(float price7digital) {
-		this.price7digital = price7digital;
-	}
-
-	public float getPriceAmazon() {
-		return this.priceAmazon;
-	}
-
-	public void setPriceAmazon(float priceAmazon) {
-		this.priceAmazon = priceAmazon;
-	}
-
-	public float getPriceItunes() {
-		return this.priceItunes;
-	}
-
-	public void setPriceItunes(float priceItunes) {
-		this.priceItunes = priceItunes;
 	}
 
 	public float getRating() {

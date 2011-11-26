@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. November 2011 um 18:40
+-- Erstellungszeit: 26. November 2011 um 16:40
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -61,16 +61,37 @@ CREATE TABLE IF NOT EXISTS `charts` (
 
 CREATE TABLE IF NOT EXISTS `lyric` (
   `songID` int(11) NOT NULL,
-  `text` text,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `text` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`songID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `lyric`
 --
 
-INSERT INTO `lyric` (`songID`, `text`) VALUES
-(1, 'Mum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah\r\nI wanna hold ''em like they do in Texas please \r\nFold ''em let ''em hit me raise it baby stay with me (I love it) \r\nLuck and intuition play the cards with Spades to start \r\nAnd after he''s been hooked I''ll play the one that''s on his heart\r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh \r\nI''ll get him hot, show him what I''ve got \r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh, \r\nI''ll get him hot, show him what I''ve got [...] (Mum mum mum mah)\r\nPokerface');
+INSERT INTO `lyric` (`songID`, `url`, `text`) VALUES
+(1, NULL, 'Mum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah \r\nMum mum mum mah\r\nI wanna hold ''em like they do in Texas please \r\nFold ''em let ''em hit me raise it baby stay with me (I love it) \r\nLuck and intuition play the cards with Spades to start \r\nAnd after he''s been hooked I''ll play the one that''s on his heart\r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh \r\nI''ll get him hot, show him what I''ve got \r\nOh, oh, oh, oh, ohhhh, ohh-oh-e-ohh-oh-oh, \r\nI''ll get him hot, show him what I''ve got [...] (Mum mum mum mah)\r\nPokerface');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `price`
+--
+
+CREATE TABLE IF NOT EXISTS `price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `songID` int(11) NOT NULL,
+  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `offerUrl` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `price`
+--
+
 
 -- --------------------------------------------------------
 
@@ -98,18 +119,15 @@ CREATE TABLE IF NOT EXISTS `rating` (
 
 CREATE TABLE IF NOT EXISTS `song` (
   `id` int(11) NOT NULL,
-  `interpreter` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `title` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `interpreter` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `tracklength` int(11) NOT NULL,
-  `video` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `video` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `rating` float DEFAULT '0',
   `voteCount` int(11) NOT NULL DEFAULT '0',
   `voteTotal` int(11) NOT NULL DEFAULT '0',
-  `picture` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `priceAmazon` float DEFAULT NULL,
-  `priceItunes` float DEFAULT NULL,
-  `price7digital` float DEFAULT NULL,
+  `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -117,8 +135,8 @@ CREATE TABLE IF NOT EXISTS `song` (
 -- Daten für Tabelle `song`
 --
 
-INSERT INTO `song` (`id`, `interpreter`, `title`, `date`, `tracklength`, `video`, `rating`, `voteCount`, `voteTotal`, `picture`, `priceAmazon`, `priceItunes`, `price7digital`) VALUES
-(1, 'Lady Gaga', 'Pokerface', '2011-11-09', 213, NULL, 0, 0, 0, NULL, 1.21, 0.99, 0.99);
+INSERT INTO `song` (`id`, `interpreter`, `title`, `date`, `tracklength`, `video`, `rating`, `voteCount`, `voteTotal`, `picture`) VALUES
+(1, 'Lady Gaga', 'Pokerface', '2011-11-09', 213, NULL, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -147,11 +165,11 @@ CREATE TABLE IF NOT EXISTS `song_in_chart` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `user`

@@ -71,10 +71,16 @@ public class MyVideoAPI {
 					Element node = (Element) list.get(i);
 					ChartEntryVO entry = new ChartEntryVO();
 
-					entry.setMovie_id(Integer.parseInt(node
-							.getChildText("movie_id")));
 					entry.setMovie_length(Integer.parseInt(node
 							.getChildText("movie_length")));
+					entry.setMovie_title(node.getChildText("movie_title"));
+					entry.setPermalink(node.getChildText("permalink"));
+					entry.setMovie_url(node.getChildText("movie_url"));
+					
+					
+					/*entry.setMovie_id(Integer.parseInt(node
+							.getChildText("movie_id")));
+					
 					entry.setMovie_owner_id(Integer.parseInt(node
 							.getChildText("movie_owner_id")));
 					entry.setMovie_views(Integer.parseInt(node
@@ -83,15 +89,15 @@ public class MyVideoAPI {
 							.getChildText("movie_added")));
 					entry.setMovie_rating(Double.parseDouble(node
 							.getChildText("movie_rating")));
-					entry.setMovie_title(node.getChildText("movie_title"));
+					
 					entry.setMovie_thumbnail(node
 							.getChildText("movie_thumbnail"));
 					entry.setMovie_owner(node.getChildText("movie_owner"));
 					entry.setMovie_owner_url(node
 							.getChildText("movie_owner_url"));
-					entry.setPermalink(node.getChildText("permalink"));
-					entry.setPermathumblink(node.getChildText("permathumblink"));
-					entry.setMovie_url(node.getChildText("movie_url"));
+					
+					entry.setPermathumblink(node.getChildText("permathumblink"));*/
+					
 /*
 					entry.setCoverUrl(GoogleImageAPI.retrieveData(entry
 							.getInterpreter()

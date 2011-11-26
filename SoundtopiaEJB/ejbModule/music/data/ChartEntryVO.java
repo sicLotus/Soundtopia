@@ -1,68 +1,31 @@
 package music.data;
 
-public class ChartEntryVO {
-	private int movie_id;
-	private String movie_title;
-	private String movie_thumbnail;
-	private int movie_length;
-	private int movie_owner_id;
-	private String movie_owner;
-	private String movie_owner_url;
-	private double movie_rating;
-	private int movie_views;
-	private int movie_added; // decrypten?
-	private String permalink;
-	private String permathumblink;
-	private String movie_url;
+import java.util.List;
 
+import music.util.EntityDecoder;
+
+public class ChartEntryVO {
+	private String movie_title;
+	private int movie_length;
+	private String permalink;
+	private String movie_url;
+	
+	//private int movie_id;
+	//private String movie_thumbnail;
+	//private int movie_owner_id;
+	//private String movie_owner;
+	//private String movie_owner_url;
+	//private double movie_rating;
+	//private int movie_views;
+	//private int movie_added;
+	//private String permathumblink;
+	
 	private String title;
 	private String interpreter;
 	private String coverUrl;
 	private LyricVO lyricVO;
+	private List<PriceVO> priceVO;
 	
-	public String getCoverUrl() {
-		return coverUrl;
-	}
-
-	public void setCoverUrl(String coverUrl) {
-		this.coverUrl = coverUrl;
-	}
-	
-	public LyricVO getLyricVO() {
-		return lyricVO;
-	}
-
-	public void setLyricVO(LyricVO lyricVO) {
-		this.lyricVO = lyricVO;
-	}
-
-	public String getInterpreter() {
-		return interpreter;
-	}
-
-	public void setInterpreter(String interpreter) {
-		this.interpreter = interpreter;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public int getMovie_id() {
-		return movie_id;
-	}
-
-	public void setMovie_id(int movie_id) {
-		this.movie_id = movie_id;
-	}
-
-	public String getMovie_title() {
-		return movie_title;
-	}
 
 	public void setMovie_title(String movie_title) {
 		String[] delimiter = new String[] { " -- ", " - " };
@@ -72,17 +35,71 @@ public class ChartEntryVO {
 		for (String del : delimiter) {
 			index = movie_title.indexOf(del);
 			if (index >= 0) {
-				this.interpreter = movie_title.substring(0, index);
-				this.title = movie_title.substring(index + del.length())
-						.replaceAll("\\(.*\\)", "");
+				setInterpreter(movie_title.substring(0, index));
+				setTitle(movie_title.substring(index + del.length())
+						.replaceAll("\\(.*\\)", ""));
 				break;
 			} else {
-				this.interpreter = "";
-				this.title = movie_title;
+				setInterpreter("");
+				setTitle(movie_title);
 			}
 		}
-
 	}
+
+	public String getCoverUrl() {
+		return coverUrl;
+	}
+
+	public void setCoverUrl(String coverUrl) {
+		this.coverUrl = coverUrl;
+	}
+
+	public LyricVO getLyricVO() {
+		return lyricVO;
+	}
+
+	public void setLyricVO(LyricVO lyricVO) {
+		this.lyricVO = lyricVO;
+	}
+
+	public List<PriceVO> getPriceVO() {
+		return priceVO;
+	}
+
+	public void setPriceVO(List<PriceVO> priceVO) {
+		this.priceVO = priceVO;
+	}
+
+	public String getInterpreter() {
+		return interpreter;
+	}
+
+	public void setInterpreter(String interpreter) {
+		this.interpreter = EntityDecoder.htmlToChar(interpreter);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = EntityDecoder.htmlToChar(title);
+	}
+	
+	public String getMovie_title() {
+		return movie_title;
+	}
+	
+/*
+	public int getMovie_id() {
+		return movie_id;
+	}
+
+	public void setMovie_id(int movie_id) {
+		this.movie_id = movie_id;
+	}
+
+
 
 	public String getMovie_thumbnail() {
 		return movie_thumbnail;
@@ -90,7 +107,7 @@ public class ChartEntryVO {
 
 	public void setMovie_thumbnail(String movie_thumbnail) {
 		this.movie_thumbnail = movie_thumbnail;
-	}
+	}*/
 
 	public int getMovie_length() {
 		return movie_length;
@@ -100,7 +117,7 @@ public class ChartEntryVO {
 		this.movie_length = movie_length;
 	}
 
-	public int getMovie_owner_id() {
+/*	public int getMovie_owner_id() {
 		return movie_owner_id;
 	}
 
@@ -146,7 +163,7 @@ public class ChartEntryVO {
 
 	public void setMovie_added(int movie_added) {
 		this.movie_added = movie_added;
-	}
+	}*/
 
 	public String getPermalink() {
 		return permalink;
@@ -156,13 +173,13 @@ public class ChartEntryVO {
 		this.permalink = permalink;
 	}
 
-	public String getPermathumblink() {
+/*	public String getPermathumblink() {
 		return permathumblink;
 	}
 
 	public void setPermathumblink(String permathumblink) {
 		this.permathumblink = permathumblink;
-	}
+	}*/
 
 	public String getMovie_url() {
 		return movie_url;

@@ -17,6 +17,8 @@ public class Lyric implements Serializable {
 
     @Lob()
 	private String text;
+    
+    private String url;
 
 	//bi-directional one-to-one association to Song
 	@OneToOne
@@ -40,6 +42,14 @@ public class Lyric implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Song getSong() {

@@ -8,6 +8,7 @@
 	<class>music.data.Lyric</class>
 	<class>music.data.Song</class>
 	<class>music.data.User</class>
+	<class>music.data.Price</class>
 	<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 	
