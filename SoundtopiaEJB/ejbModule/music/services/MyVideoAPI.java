@@ -22,17 +22,9 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-/*
- * 
- Your Developer Key (dev_id) is: fd613876bee13bc19d5a4d8575a6fd47
-
- Your Website Key(s) (website_id) is (are): 
-
- For Website www.fh-brandenburg.de: 57c115313d1c7b9e531035af0e739973
- */
 public class MyVideoAPI {
 
-	public void retrieveData() {
+	public List<ChartEntryVO> retrieveData() {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
@@ -77,54 +69,50 @@ public class MyVideoAPI {
 					entry.setPermalink(node.getChildText("permalink"));
 					entry.setMovie_url(node.getChildText("movie_url"));
 					
-					
-					/*entry.setMovie_id(Integer.parseInt(node
-							.getChildText("movie_id")));
-					
-					entry.setMovie_owner_id(Integer.parseInt(node
-							.getChildText("movie_owner_id")));
-					entry.setMovie_views(Integer.parseInt(node
-							.getChildText("movie_views")));
-					entry.setMovie_added(Integer.parseInt(node
-							.getChildText("movie_added")));
-					entry.setMovie_rating(Double.parseDouble(node
-							.getChildText("movie_rating")));
-					
-					entry.setMovie_thumbnail(node
-							.getChildText("movie_thumbnail"));
-					entry.setMovie_owner(node.getChildText("movie_owner"));
-					entry.setMovie_owner_url(node
-							.getChildText("movie_owner_url"));
-					
-					entry.setPermathumblink(node.getChildText("permathumblink"));*/
-					
-/*
-					entry.setCoverUrl(GoogleImageAPI.retrieveData(entry
-							.getInterpreter()
-							+ " "
-							+ entry.getTitle()
-							+ " cover"));
-					entry.setLyricVO(LyricAPI.retrieveData(entry.getInterpreter(), entry.getTitle()));
-*/
 					chartList.add(entry);
 					System.out.println("Current song: " + (i + 1) + " from " + list.size() + " page (" + page + ")");
-					AmazonAPI.retrieveData(AmazonAPI.SearchIndex.MP3Downloads, entry.getInterpreter() + " " + entry.getTitle());
-					
-					//System.out.print(entry + " % ");
-					//System.out.println(entry.getLyricVO().getText() + "$$" + entry.getLyricVO().getUrl());
 				}
-
 			} catch (IOException io) {
 				System.out.println(io.getMessage());
 			} catch (JDOMException jdomex) {
 				System.out.println(jdomex.getMessage());
 			}
-
 			page++;
-
 		} while (list != null && list.size() > 0);
-
-		// System.out.println(chartList.size());
-
+		return chartList;
 	}
 }
+//AmazonAPI.retrieveData(AmazonAPI.SearchIndex.MP3Downloads, entry.getInterpreter() + " " + entry.getTitle());
+
+//System.out.print(entry + " % ");
+//System.out.println(entry.getLyricVO().getText() + "$$" + entry.getLyricVO().getUrl());
+
+
+/*entry.setMovie_id(Integer.parseInt(node
+.getChildText("movie_id")));
+
+entry.setMovie_owner_id(Integer.parseInt(node
+.getChildText("movie_owner_id")));
+entry.setMovie_views(Integer.parseInt(node
+.getChildText("movie_views")));
+entry.setMovie_added(Integer.parseInt(node
+.getChildText("movie_added")));
+entry.setMovie_rating(Double.parseDouble(node
+.getChildText("movie_rating")));
+
+entry.setMovie_thumbnail(node
+.getChildText("movie_thumbnail"));
+entry.setMovie_owner(node.getChildText("movie_owner"));
+entry.setMovie_owner_url(node
+.getChildText("movie_owner_url"));
+
+entry.setPermathumblink(node.getChildText("permathumblink"));*/
+
+/*
+entry.setCoverUrl(GoogleImageAPI.retrieveData(entry
+.getInterpreter()
++ " "
++ entry.getTitle()
++ " cover"));
+entry.setLyricVO(LyricAPI.retrieveData(entry.getInterpreter(), entry.getTitle()));
+*/

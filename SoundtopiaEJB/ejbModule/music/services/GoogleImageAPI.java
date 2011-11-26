@@ -14,10 +14,11 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 //wird nicht wirklich gebraucht
 public class GoogleImageAPI {
 
-	public static String retrieveData(String query) {
+	public static String retrieveData(String interpreter, String title) {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		String delimiter = "\"url\":\"";
+		String query = interpreter + " " + title + " cover";
 		int delIndex;
 
 		WebResource webResource = client
@@ -28,15 +29,12 @@ public class GoogleImageAPI {
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("v", "1.0");
 		params.add("q", decodedQuery);
-		//System.out.println(decodedQuery);
 		
 		String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN)
 				.get(String.class);
 		
-		delIndex = response.indexOf(delimiter)+delimiter.length();
-		
-		String url = response.substring(delIndex, response.indexOf("\"", delIndex));
-		return url;
-		
+		delIndex = response.indexOf(delimiter)+delimiter.length();	
+		String url = response.substring(delIndex, response.indexOf("\"", delIndex)).replaceAll("\\%2520", "%20");
+		return url;		
 	}
 }

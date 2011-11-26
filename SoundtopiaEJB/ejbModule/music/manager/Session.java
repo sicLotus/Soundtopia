@@ -1,12 +1,16 @@
 package music.manager;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import music.data.ChartEntryVO;
 import music.data.Song;
-import music.repository.UserDAO;
+import music.repository.SongDAO;
+import music.services.GoogleImageAPI;
 import music.services.MyVideoAPI;
 
 /**
@@ -18,11 +22,10 @@ public class Session implements SessionRemote, SessionLocal {
 	private EntityManager em;
     
 	@EJB
-	private UserDAO userDAO;
+	private SongDAO songDAO;
 	
 	
     public Session() {
-        // TODO Auto-generated constructor stub
     }
     
   
@@ -31,15 +34,24 @@ public class Session implements SessionRemote, SessionLocal {
     	return em.find(Song.class, id);
     }
     
-    public void myvideotest() {
+    public void readChartsFromMyvideo() {
     	MyVideoAPI api = new MyVideoAPI();
-    	api.retrieveData();
+    	ChartEntryVO entry;
+    	List<ChartEntryVO> chartList = api.retrieveData();
+    	System.out.println("Succeeded: "+chartList.size());
+    	for(int i = 0; i < chartList.size(); i++) {
+    		entry = chartList.get(i);
+    		songDAO.createSong(entry.getInterpreter(), entry.getTitle(), entry.getMovie_length(), entry.getMovie_url());
+    		addPicture(entry.getInterpreter(), entry.getTitle());
+    	}
     }
     
-
+    public void addPicture(String interpreter, String title) {
+    	String picture = GoogleImageAPI.retrieveData(interpreter, title);
+    	Song s = songDAO.findSong(interpreter, title);
+    	if (s != null)
+    		songDAO.addPicture(s.getId(), picture);
+    }
     
-    /*public Lyric getLyric(int id) {
-    	return em.find(Lyric.class, id);
-    }*/
 
 }

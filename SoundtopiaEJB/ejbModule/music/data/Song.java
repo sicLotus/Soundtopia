@@ -7,10 +7,13 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,10 +24,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
+
+@NamedQuery(
+        name="song.findByInterpreterAndTitle",
+        query="SELECT s FROM Song s WHERE s.interpreter LIKE :interpreter AND s.title LIKE :title"
+)
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
     @Temporal( TemporalType.DATE)

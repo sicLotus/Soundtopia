@@ -65,7 +65,7 @@ public class EntityDecoder {
 			"&agrave;", "&egrave;", "&igrave;", "&ograve;", "&Ugrave;",
 			"&Agrave;", "&Egrave;", "&Igrave;", "&Ograve;", "&Ugrave;",
 			"&deg;", "&sup3;", "&sup2;", "&euro;", "|", "&circ;", "`",
-			"&acute;", "'", " ", "@", "~", "*" };
+			"&acute;", "'", "&nbsp;", "@", "~", "*" };
 
 	public final static String chars[] = { "ö", "ä", "ü", "Ö", "Ä", "Ü", "ß",
 			"?", "\\", ",", ":", ";", "#", "+", "~", "!", "\"", "§", "$", "%",

@@ -12,11 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import music.manager.SessionLocal;
 import music.manager.UserManagerLocal;
 
-
-
-/**
- * Servlet implementation class myservlet
- */
 @WebServlet("/myservlet")
 public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +27,6 @@ public class MyServlet extends HttpServlet {
      */
     public MyServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -50,7 +44,7 @@ public class MyServlet extends HttpServlet {
 		System.out.println("fd5dc0798250b169f94fb9d1cde2febe5503f77b");
 		System.out.println(userManager.findByEmail("Mateful@web.de").getPassword());
 		System.out.println(userManager.checkLogin("Mateful@web.de", "ben"));*/
-		test.myvideotest();
+		test.readChartsFromMyvideo();
 	}
 
 	/**

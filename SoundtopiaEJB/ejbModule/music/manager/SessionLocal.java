@@ -6,5 +6,5 @@ import music.data.Song;
 @Local
 public interface SessionLocal {
 	public Song getSong(int id);
-	public void myvideotest();
+	public void readChartsFromMyvideo();
 }
