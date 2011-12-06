@@ -13,14 +13,19 @@ public class Price implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY )
 	private int id;
 
 	private String offerUrl;
 
 	private String provider;
 
-	private int value;
+	private float value;
+
+	//bi-directional many-to-one association to Song
+    @ManyToOne
+	@JoinColumn(name="songID")
+	private Song song;
 
     public Price() {
     }
@@ -49,12 +54,20 @@ public class Price implements Serializable {
 		this.provider = provider;
 	}
 
-	public int getValue() {
+	public float getValue() {
 		return this.value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(float value) {
 		this.value = value;
 	}
 
+	public Song getSong() {
+		return this.song;
+	}
+
+	public void setSong(Song song) {
+		this.song = song;
+	}
+	
 }

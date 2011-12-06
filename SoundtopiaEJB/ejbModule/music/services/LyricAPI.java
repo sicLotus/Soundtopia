@@ -21,7 +21,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class LyricAPI {
-	public static LyricVO retrieveData(String artist, String title) {
+	public static LyricVO retrieveData(String interpreter, String title) {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
@@ -31,7 +31,7 @@ public class LyricAPI {
 				.resource("http://lyrics.wikia.com/api.php");
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("func", "getSong");
-		params.add("artist", artist);
+		params.add("artist", interpreter);
 		params.add("song", title);
 		params.add("fmt", "xml");
 

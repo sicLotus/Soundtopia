@@ -13,27 +13,27 @@ public class Lyric implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	private int songID;
 
     @Lob()
 	private String text;
-    
-    private String url;
+
+	private String url;
 
 	//bi-directional one-to-one association to Song
-	@OneToOne
-	@JoinColumn(name="songID")
+	@OneToOne(mappedBy="lyric")
 	private Song song;
 
     public Lyric() {
     }
 
-	public int getId() {
+	public int getSongID() {
 		return this.songID;
 	}
 
-	public void setId(int id) {
-		this.songID = id;
+	public void setSongID(int songID) {
+		this.songID = songID;
 	}
 
 	public String getText() {
@@ -45,7 +45,7 @@ public class Lyric implements Serializable {
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	public void setUrl(String url) {

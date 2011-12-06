@@ -1,19 +1,9 @@
 package music.data;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
@@ -26,6 +16,7 @@ public class Chart implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
     @Temporal( TemporalType.TIMESTAMP)
@@ -33,18 +24,9 @@ public class Chart implements Serializable {
 
 	private String name;
 
-	//bi-directional many-to-many association to Song
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="song_in_chart"
-		, joinColumns={
-			@JoinColumn(name="chartID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="songID")
-			}
-		)
-	private Set<Song> songs;
+	//bi-directional many-to-one association to SongInChart
+	@OneToMany(mappedBy="chart", fetch=FetchType.EAGER)
+	private Set<SongInChart> songInCharts;
 
     public Chart() {
     }
@@ -73,12 +55,12 @@ public class Chart implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Song> getSongs() {
-		return this.songs;
+	public Set<SongInChart> getSongInCharts() {
+		return this.songInCharts;
 	}
 
-	public void setSongs(Set<Song> songs) {
-		this.songs = songs;
+	public void setSongInCharts(Set<SongInChart> songInCharts) {
+		this.songInCharts = songInCharts;
 	}
 	
 }

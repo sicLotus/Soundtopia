@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import music.data.Song;
+import music.data.SongInChart;
+import music.data.SongInChartPK;
 
 /**
  * Session Bean implementation class SongDAO
@@ -24,6 +26,13 @@ public class SongDAO {
 
 	public boolean doesSongExist(String interpreter, String title) {
 		if (findSong(interpreter, title) != null)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean doesChartEntryExist(SongInChartPK pk) {
+		if (findChartEntry(pk) != null)
 			return true;
 		else
 			return false;
@@ -46,9 +55,33 @@ public class SongDAO {
 			song.setVoteTotal(0);
 
 			em.persist(song);
+
 			return song;
 		} else
 			return null;
+	}
+	
+	public void createChartEntry(String interpreter, String title,
+			int chartPlacing) {
+		createChartEntry(interpreter, title, chartPlacing, 1);
+	}
+	
+	public void createChartEntry(String interpreter, String title,
+			int chartPlacing, int chartTable) {
+		Song song = findSong(interpreter, title);
+		SongInChartPK pk = new SongInChartPK();
+		pk.setChartID(chartTable);
+		pk.setSongID(song.getId());
+		
+		if(!doesChartEntryExist(pk)) {
+		
+		SongInChart sic = new SongInChart();		
+		sic.setId(pk);
+		sic.setAdded(new java.sql.Date(System.currentTimeMillis()));
+		sic.setRanking(chartPlacing);
+
+		em.persist(sic);
+		}
 	}
 
 	public boolean addPicture(int songID, String picture) {
@@ -68,8 +101,22 @@ public class SongDAO {
 		List<Song> list = em.createNamedQuery("song.findByInterpreterAndTitle")
 				.setParameter("interpreter", interpreter)
 				.setParameter("title", title).getResultList();
-		if (list.size() > 0)
+		if (list.size() > 0){
+			System.out.println("Found:"+interpreter+" - "+title);
 			return (Song) list.get(0);
+		}
+		else
+			return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public SongInChart findChartEntry(SongInChartPK pk) {
+		
+		List<SongInChart> list = em.createNamedQuery("songInChart.findByIds")
+				.setParameter("id", pk).getResultList();
+		if (list.size() > 0){
+			return (SongInChart) list.get(0);
+		}
 		else
 			return null;
 	}

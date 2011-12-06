@@ -20,6 +20,7 @@ public class ChartEntryVO {
 	//private int movie_added;
 	//private String permathumblink;
 	
+	private int chartPlacing;
 	private String title;
 	private String interpreter;
 	private String coverUrl;
@@ -48,6 +49,14 @@ public class ChartEntryVO {
 
 	public String getCoverUrl() {
 		return coverUrl;
+	}
+
+	public int getChartPlacing() {
+		return chartPlacing;
+	}
+
+	public void setChartPlacing(int chartPlacing) {
+		this.chartPlacing = chartPlacing;
 	}
 
 	public void setCoverUrl(String coverUrl) {

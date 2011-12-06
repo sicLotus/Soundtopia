@@ -22,6 +22,7 @@ public class AmazonAPI {
 		All, MP3Downloads, Music, Electronics
 	} // to be continued
 
+	//keyword um "single" erweitern, weil erster eintrag eventuell album sein könnte?!
 	public static AmazonItemVO retrieveData(SearchIndex searchIndex,
 			String keywords) {
 		final String AWS_ACCESS_KEY_ID = "AKIAJRWULOQJOTTEI66A";

@@ -1,12 +1,8 @@
 package music.data;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
+import java.util.Set;
 
 
 /**
@@ -14,11 +10,6 @@ import javax.persistence.NamedQuery;
  * 
  */
 @Entity
-
-@NamedQuery(
-        name="user.findByEmail",
-        query="SELECT u FROM User u WHERE u.email LIKE :email"
-)
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,9 +17,15 @@ public class User implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	private byte admin;
+
 	private String email;
 
 	private String password;
+
+	//bi-directional many-to-one association to Rating
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	private Set<Rating> ratings;
 
     public User() {
     }
@@ -39,6 +36,14 @@ public class User implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public byte getAdmin() {
+		return this.admin;
+	}
+
+	public void setAdmin(byte admin) {
+		this.admin = admin;
 	}
 
 	public String getEmail() {
@@ -57,4 +62,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	public Set<Rating> getRatings() {
+		return this.ratings;
+	}
+
+	public void setRatings(Set<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
 }

@@ -1,22 +1,9 @@
 package music.data;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
@@ -24,11 +11,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-
+@NamedQueries ( {
 @NamedQuery(
         name="song.findByInterpreterAndTitle",
         query="SELECT s FROM Song s WHERE s.interpreter LIKE :interpreter AND s.title LIKE :title"
-)
+),
+@NamedQuery(
+		name="songInChart.findByIds",
+		query="SELECT s FROM SongInChart s WHERE s.id LIKE :id"
+		)
+})
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -55,26 +47,22 @@ public class Song implements Serializable {
 
 	private int voteTotal;
 
-	//bi-directional many-to-many association to Chart
-	@ManyToMany(mappedBy="songs", fetch=FetchType.EAGER)
-	private Set<Chart> charts;
+	//bi-directional many-to-one association to Price
+	@OneToMany(mappedBy="song", fetch=FetchType.EAGER)
+	private Set<Price> prices;
 
 	//bi-directional one-to-one association to Lyric
-	@OneToOne(mappedBy="song")
+	@OneToOne
+	@JoinColumn(name="id")
 	private Lyric lyric;
 
-	//bi-directional many-to-many association to User
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(
-		name="rating"
-		, joinColumns={
-			@JoinColumn(name="songID")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="userID")
-			}
-		)
-	private List<User> users;
+	//bi-directional many-to-one association to SongInChart
+	@OneToMany(mappedBy="song", fetch=FetchType.EAGER)
+	private Set<SongInChart> songInCharts;
+
+	//bi-directional many-to-one association to Rating
+	@OneToMany(mappedBy="song", fetch=FetchType.EAGER)
+	private Set<Rating> ratings;
 
     public Song() {
     }
@@ -159,12 +147,12 @@ public class Song implements Serializable {
 		this.voteTotal = voteTotal;
 	}
 
-	public Set<Chart> getCharts() {
-		return this.charts;
+	public Set<Price> getPrices() {
+		return this.prices;
 	}
 
-	public void setCharts(Set<Chart> charts) {
-		this.charts = charts;
+	public void setPrices(Set<Price> prices) {
+		this.prices = prices;
 	}
 	
 	public Lyric getLyric() {
@@ -175,12 +163,20 @@ public class Song implements Serializable {
 		this.lyric = lyric;
 	}
 	
-	public List<User> getUsers() {
-		return this.users;
+	public Set<SongInChart> getSongInCharts() {
+		return this.songInCharts;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setSongInCharts(Set<SongInChart> songInCharts) {
+		this.songInCharts = songInCharts;
+	}
+	
+	public Set<Rating> getRatings() {
+		return this.ratings;
+	}
+
+	public void setRatings(Set<Rating> ratings) {
+		this.ratings = ratings;
 	}
 	
 }

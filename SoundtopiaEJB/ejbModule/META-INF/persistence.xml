@@ -3,12 +3,15 @@
 	<persistence-unit name="SoundtopiaEJB">
 	
 	<non-jta-data-source>SoundtopiaDS</non-jta-data-source>
-	<class>music.data.Admin</class>
 	<class>music.data.Chart</class>
 	<class>music.data.Lyric</class>
 	<class>music.data.Song</class>
 	<class>music.data.User</class>
 	<class>music.data.Price</class>
+	<class>music.data.SongInChart</class>
+	<class>music.data.SongInChartPK</class>
+	<class>music.data.Rating</class>
+	<class>music.data.RatingPK</class>
 	<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 	

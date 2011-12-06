@@ -68,6 +68,7 @@ public class MyVideoAPI {
 					entry.setMovie_title(node.getChildText("movie_title"));
 					entry.setPermalink(node.getChildText("permalink"));
 					entry.setMovie_url(node.getChildText("movie_url"));
+					entry.setChartPlacing(i+1+((page-1)*20));
 					
 					chartList.add(entry);
 					System.out.println("Current song: " + (i + 1) + " from " + list.size() + " page (" + page + ")");

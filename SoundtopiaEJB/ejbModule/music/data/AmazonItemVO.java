@@ -12,4 +12,8 @@ public class AmazonItemVO {
 	public void setAmount(BigInteger amount) {
 		this.amount = amount;
 	}
+	
+	public float getFloatAmount() {
+		return (float)amount.intValue()/100;
+	}
 }

@@ -22,14 +22,6 @@ public class UserManager implements UserManagerRemote, UserManagerLocal {
 	public UserManager() {
 	}
 
-	public User getUser(int id) {
-		return userDAO.getUser(id);
-	}
-
-	public User findByEmail(String email) {
-		return userDAO.findByEmail(email);
-	}
-
 	public boolean checkLogin(String email, String password) {
 		User u = userDAO.findByEmail(email);
 		

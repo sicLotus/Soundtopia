@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import music.data.Lyric;
-import music.data.User;
+import music.data.LyricVO;
 
 /**
  * Session Bean implementation class LyricDAO
@@ -14,21 +14,34 @@ import music.data.User;
 @Stateless
 @LocalBean
 public class LyricDAO {
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
-    public LyricDAO() {
-    }
-    
-	public Lyric createLyric() {
-		Lyric lyric = new Lyric();
-		//lyric.setEmail(email);
-		//lyric.setPassword(password);
-		
-		em.persist(lyric);
-
-		return lyric;
+	public LyricDAO() {
 	}
 
+	public boolean doesLyricExist(int songID) {
+		if (getLyric(songID) != null)
+			return true;
+		else
+			return false;
+	}
+
+	public Lyric createLyric(int songID, LyricVO lyricVO) {
+		if (!doesLyricExist(songID)) {
+			Lyric lyric = new Lyric();
+			lyric.setSongID(songID);
+			lyric.setText(lyricVO.getText());
+			lyric.setUrl(lyricVO.getUrl());
+			em.persist(lyric);
+
+			return lyric;
+		} else
+			return null;
+	}
+
+	public Lyric getLyric(int songID) {
+		return em.find(Lyric.class, songID);
+	}
 }
