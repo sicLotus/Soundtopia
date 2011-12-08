@@ -38,7 +38,7 @@ public class ChartEntryVO {
 			if (index >= 0) {
 				setInterpreter(movie_title.substring(0, index));
 				setTitle(movie_title.substring(index + del.length())
-						.replaceAll("\\(.*\\)", ""));
+						.replaceAll("\\(.*\\)", "").replaceAll("Official HD.*", ""));
 				break;
 			} else {
 				setInterpreter("");

@@ -17,9 +17,9 @@ import java.util.Set;
         query="SELECT s FROM Song s WHERE s.interpreter LIKE :interpreter AND s.title LIKE :title"
 ),
 @NamedQuery(
-		name="songInChart.findByIds",
-		query="SELECT s FROM SongInChart s WHERE s.id LIKE :id"
-		)
+		name="test.myTest",
+		query="SELECT max(x.lastUpdated) FROM Chart x WHERE x.name LIKE :name")
+
 })
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;

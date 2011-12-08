@@ -56,7 +56,7 @@ public class EntityDecoder {
 			"40", "98", "2A" };
 
 	public final static String charsHtml[] = { "&ouml;", "&auml;", "&uuml;", "&Ouml;", "&Auml;", "&Uuml;",
-			"&szml;", "?", "\\", ",", ":", ";", "#", "+", "&tilde;", "!", "\"",
+			"&szlig;", "?", "\\", ",", ":", ";", "#", "+", "&tilde;", "!", "\"",
 			"&sect;", "$", "%", "&amp;", "(", ")", "=", "&lt;", "&gt;", "{",
 			"[", "]", "}", "/", "&acirc;", "&ecirc;", "&icirc;", "&ocirc;",
 			"&ucirc;", "&Acirc;", "&Ecirc;", "&Icirc;", "&Ocirc;", "&Ucirc;",

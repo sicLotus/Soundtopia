@@ -2,8 +2,13 @@ package music.data;
  
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -12,14 +17,15 @@ import java.util.Date;
  */
 @Entity
 @Table(name="song_in_chart")
+@NamedQuery(
+		name="songInChart.findByIds",
+		query="SELECT s FROM SongInChart s WHERE s.id LIKE :id"
+		)
 public class SongInChart implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private SongInChartPK id;
-
-    @Temporal( TemporalType.DATE)
-	private Date added;
 
 	private int ranking;
 
@@ -42,14 +48,6 @@ public class SongInChart implements Serializable {
 
 	public void setId(SongInChartPK id) {
 		this.id = id;
-	}
-	
-	public Date getAdded() {
-		return this.added;
-	}
-
-	public void setAdded(Date added) {
-		this.added = added;
 	}
 
 	public int getRanking() {

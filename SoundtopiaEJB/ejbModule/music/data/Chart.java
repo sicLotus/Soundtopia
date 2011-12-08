@@ -2,6 +2,7 @@ package music.data;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -11,7 +12,12 @@ import java.util.Set;
  * 
  */
 @Entity
-@Table(name="charts")
+@NamedQuery(
+		name="chart.findChart",
+	    //query="SELECT c FROM Chart c WHERE c.name LIKE :name AND c.lastUpdated = (SELECT max(x.lastUpdated) FROM Chart x WHERE x.name LIKE :name)"
+		query="SELECT c FROM Chart c WHERE c.name LIKE :name ORDER BY c.lastUpdated DESC"
+	
+)
 public class Chart implements Serializable {
 	private static final long serialVersionUID = 1L;
 

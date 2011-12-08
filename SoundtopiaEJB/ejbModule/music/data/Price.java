@@ -21,6 +21,8 @@ public class Price implements Serializable {
 	private String provider;
 
 	private float value;
+	
+	private String currency;
 
 	//bi-directional many-to-one association to Song
     @ManyToOne
@@ -68,6 +70,14 @@ public class Price implements Serializable {
 
 	public void setSong(Song song) {
 		this.song = song;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	
 }

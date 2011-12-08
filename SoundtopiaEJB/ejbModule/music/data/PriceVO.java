@@ -3,7 +3,8 @@ package music.data;
 public class PriceVO {
 	private String provider;
 	private String url;
-	private String value;
+	private float value;
+	private String currency;
 	
 	public String getProvider() {
 		return provider;
@@ -17,11 +18,17 @@ public class PriceVO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getValue() {
+	public float getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+	public void setValue(float value) {
 		this.value = value;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 }
