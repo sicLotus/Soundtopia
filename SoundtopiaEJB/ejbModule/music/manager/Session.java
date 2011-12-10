@@ -19,6 +19,7 @@ import music.repository.PriceDAO;
 import music.repository.SongDAO;
 import music.services.AmazonAPI;
 import music.services.GoogleImageAPI;
+import music.services.ItunesAPI;
 import music.services.LyricAPI;
 import music.services.MyVideoAPI;
 import music.services.SevenDigitalsAPI;
@@ -55,8 +56,8 @@ public class Session implements SessionRemote, SessionLocal {
 		ChartEntryVO entry;
 		List<ChartEntryVO> chartList = api.retrieveData();
 		System.out.println("Succeeded: " + chartList.size());
-	//	for (int i = 0; i < chartList.size(); i++) {
-		//	entry = chartList.get(i);
+		for (int i = 0; i < chartList.size(); i++) {
+			entry = chartList.get(i);
 		//	songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
 		//			entry.getMovie_length(), entry.getMovie_url());
 			// addPicture(entry.getInterpreter(), entry.getTitle());
@@ -70,11 +71,21 @@ public class Session implements SessionRemote, SessionLocal {
 			//chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(), entry.getInterpreter(), entry.getTitle());
 		//	chartDAO.test("Singlecharts");
 		//	SevenDigitalsAPI.retrieveData(entry.getInterpreter()+ " "+entry.getTitle());
-		SevenDigitalsAPI.retrieveData("LMFAO Party Rock Anthem");
-	//}
+		//SevenDigitalsAPI.retrieveData("LMFAO Party Rock Anthem");
+			ItunesAPI.retrieveData(entry.getInterpreter()+ " "+entry.getTitle());
+	}
 		
 		
 		
+	}
+	
+	public void addSevenDigitalPrice(String interpreter, String title) {
+		Song song = songDAO.findSong(interpreter, title);
+		if (song != null) {
+			PriceVO item = SevenDigitalsAPI.retrieveData(interpreter + " "
+							+ title);
+			priceDAO.createPrice(song.getId(), item);
+		}
 	}
 
 	public void addAmazonPrice(String interpreter, String title) {
