@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Dezember 2011 um 16:57
+-- Erstellungszeit: 11. Dezember 2011 um 17:07
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -380,6 +380,35 @@ CREATE TABLE IF NOT EXISTS `rating` (
 --
 
 
+--
+-- Trigger `rating`
+--
+DROP TRIGGER IF EXISTS `ratingInsert`;
+DELIMITER //
+CREATE TRIGGER `ratingInsert` AFTER INSERT ON `rating`
+ FOR EACH ROW begin
+	update song set voteTotal = voteTotal + new.rating, voteCount = voteCount + 1 where song.id = new.songID;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `ratingUpdate`;
+DELIMITER //
+CREATE TRIGGER `ratingUpdate` AFTER UPDATE ON `rating`
+ FOR EACH ROW begin
+	update song set voteTotal = voteTotal - old.rating, voteCount = voteCount - 1 where song.id = old.songID;
+	update song set voteTotal = voteTotal + new.rating, voteCount = voteCount + 1 where song.id = new.songID;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `ratingDelete`;
+DELIMITER //
+CREATE TRIGGER `ratingDelete` AFTER DELETE ON `rating`
+ FOR EACH ROW begin
+	update song set voteTotal = voteTotal - old.rating, voteCount = voteCount - 1 where song.id = old.songID;
+end
+//
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -513,6 +542,26 @@ INSERT INTO `song` (`id`, `interpreter`, `title`, `date`, `tracklength`, `video`
 (106, 'Tom Lüneburger & Stefanie Klo&szlig;', 'We Are One', '2011-12-06', 202, '<a href="http://www.myvideo.de/watch/8315824/Tom_Lueneburger_Stefanie_Kloss_We_Are_One">Tom_Lueneburger_Stefanie_Kloss_We_Are_One</a>', 0, 0, 0, NULL),
 (107, 'Usher', 'More', '2011-12-06', 220, '<a href="http://www.myvideo.de/watch/8033015/Usher_More">Usher_More</a>', 0, 0, 0, NULL),
 (108, 'David Guetta', 'Where Them Girls At', '2011-12-06', 228, '<a href="http://www.myvideo.de/watch/8188747/David_Guetta_Where_Them_Girls_At">David_Guetta_Where_Them_Girls_At</a>', 0, 0, 0, NULL);
+
+--
+-- Trigger `song`
+--
+DROP TRIGGER IF EXISTS `updateSong`;
+DELIMITER //
+CREATE TRIGGER `updateSong` BEFORE UPDATE ON `song`
+ FOR EACH ROW begin
+	if (new.voteTotal != old.voteTotal or new.voteCount != old.voteTotal)
+	then
+		if (new.voteTotal > 0)
+		then
+			set new.rating = new.voteTotal / new.voteCount;
+		else
+			set new.rating = 0;
+		end if;
+	end if;
+end
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
