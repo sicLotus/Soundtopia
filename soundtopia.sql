@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Dezember 2011 um 15:32
+-- Erstellungszeit: 11. Dezember 2011 um 16:57
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `chart` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lastUpdated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Daten für Tabelle `chart`
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `lyric` (
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `text` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`songID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `lyric`
@@ -162,13 +162,204 @@ CREATE TABLE IF NOT EXISTS `price` (
   `value` float NOT NULL,
   `currency` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `offerUrl` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`id`),
+  KEY `songID` (`songID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=190 ;
 
 --
 -- Daten für Tabelle `price`
 --
 
+INSERT INTO `price` (`id`, `songID`, `provider`, `value`, `currency`, `offerUrl`) VALUES
+(1, 20, 'Amazon', 0.99, '€', 'http://www.amazon.de/Video-Games/dp/B006AVS5K0%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB006AVS5K0'),
+(2, 20, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/lana-del-rey/video-games-1/01-Video-Games/?partner=2894'),
+(3, 2, 'Amazon', 0.99, '€', 'http://www.amazon.de/Hangover-Explicit/dp/B005VYI5CK%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005VYI5CK'),
+(4, 2, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/taio-cruz-flo-rida/hangover/01-Hangover/?partner=2894'),
+(5, 1, 'Amazon', 0.84, '€', 'http://www.amazon.de/We-Found-Love/dp/B005Q5KQC6%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005Q5KQC6'),
+(6, 1, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/rihanna/we-found-love-1/01-We-Found-Love/?partner=2894'),
+(7, 89, 'Amazon', 0.98, '€', 'http://www.amazon.de/Good-Feeling-Jaywalker-Remix/dp/B0061SISI6%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0061SISI6'),
+(8, 89, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/flo-rida/good-feeling-1/01-Good-Feeling/?partner=2894'),
+(9, 90, 'Amazon', 0.98, '€', 'http://www.amazon.de/Cello-Feat-Clueso-Unplugged-Atmo-Version/dp/B0060LFZEO%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0060LFZEO'),
+(10, 90, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/udo-lindenberg-(2)/cello-feat-clueso-1/01-Cello-(feat-Clueso)-[MTV-Unplugged-Radio-Atmo-Version]/?partner=2894'),
+(11, 92, 'Amazon', 0.99, '€', 'http://www.amazon.de/Pumped-Up-Kicks/dp/B005519I98%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005519I98'),
+(12, 92, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/pumped-up-kicks/id426402812?i=426402831&uo=4'),
+(13, 92, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/foster-the-people/pumped-up-kicks/01-Pumped-Up-Kicks/?partner=2894'),
+(14, 6, 'Amazon', 0.99, '€', 'http://www.amazon.de/Rain-Over-Me/dp/B0055VOC26%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0055VOC26'),
+(15, 6, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/pitbull-featuring-marc-anthony/rain-over-me-1/01-Rain-Over-Me/?partner=2894'),
+(16, 91, 'Amazon', 0.98, '€', 'http://www.amazon.de/When-We-Stand-Together/dp/B0064XRB72%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0064XRB72'),
+(17, 91, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/when-we-stand-together/id467140579?i=467140600&uo=4'),
+(18, 91, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/nickelback/when-we-stand-together/01-When-We-Stand-Together/?partner=2894'),
+(19, 96, 'Amazon', 0.98, '€', 'http://www.amazon.de/It-Will-Rain/dp/B0062NYGFO%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0062NYGFO'),
+(20, 96, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/it-will-rain/id467980710?i=467980717&uo=4'),
+(21, 96, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/bruno-mars/it-will-rain/01-It-Will-Rain/?partner=2894'),
+(22, 12, 'Amazon', 0.99, '€', 'http://www.amazon.de/Sexy-And-I-Know-It/dp/B005BVQM2S%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005BVQM2S'),
+(23, 12, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/lmfao/sexy-and-i-know-it/01-Sexy-And-I-Know-It/?partner=2894'),
+(24, 7, 'Amazon', 0.84, '€', 'http://www.amazon.de/Without-David-Guetta-feat-Usher/dp/B005LA8OYI%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005LA8OYI'),
+(25, 7, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/david-guetta/without-you-feat-usher-remixes/01-Without-You-(feat-Usher)-[Extended]/?partner=2894'),
+(26, 3, 'Amazon', 0.84, '€', 'http://www.amazon.de/Maroon-feat-Christina-Aguilera-Instrumental/dp/B0064XTK4E%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0064XTK4E'),
+(27, 3, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/moves-like-jagger-feat.-christina/id445828194?i=445828290&uo=4'),
+(28, 3, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/maroon-5/moves-like-jagger/01-Moves-Like-Jagger/?partner=2894'),
+(29, 21, 'Amazon', 0.99, '€', 'http://www.amazon.de/Worte-Meine-Sprache-Single-Version/dp/B005NIYKDM%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005NIYKDM'),
+(30, 21, 'iTunes', 0.69, '€', 'http://itunes.apple.com/de/album/wenn-worte-meine-sprache-waren/id439232772?i=439232784&uo=4'),
+(31, 5, 'Amazon', 0.84, '€', 'http://www.amazon.de/Got-2-Luv-You/dp/B0067KAYNK%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0067KAYNK'),
+(32, 19, 'Amazon', 0.99, '€', 'http://www.amazon.de/Nur-Noch-Kurz-Welt-Retten/dp/B00557WP7O%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00557WP7O'),
+(33, 19, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/tim-bendzko/nur-noch-kurz-die-welt-retten/01-Nur-noch-kurz-die-Welt-retten/?partner=2894'),
+(34, 4, 'Amazon', 0.99, '€', 'http://www.amazon.de/New-Age/dp/B005HAFEFY%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005HAFEFY'),
+(35, 4, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/marlon-roudette/new-age/01-New-Age/?partner=2894'),
+(36, 10, 'Amazon', 0.99, '€', 'http://www.amazon.de/Echt/dp/B005I6CIYC%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005I6CIYC'),
+(37, 10, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/echt/id458042995?i=458043001&uo=4'),
+(38, 9, 'Amazon', 0.99, '€', 'http://www.amazon.de/Paradise/dp/B005XK5YSK%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005XK5YSK'),
+(39, 9, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/paradise/id474500800?uo=4'),
+(40, 9, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/coldplay/paradise/01-Paradise/?partner=2894'),
+(41, 18, 'Amazon', 0.99, '€', 'http://www.amazon.de/Called-Out-In-The-Dark/dp/B00640U1N6%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00640U1N6'),
+(42, 18, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/called-out-in-the-dark/id458578212?uo=4'),
+(43, 18, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/snow-patrol/called-out-in-the-dark-1/01-Called-Out-In-The-Dark/?partner=2894'),
+(44, 94, 'Amazon', 0.99, '€', 'http://www.amazon.de/Domino/dp/B0062B9B6A%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0062B9B6A'),
+(45, 94, 'iTunes', 0.69, '€', 'http://itunes.apple.com/de/album/domino/id473682743?i=473682744&uo=4'),
+(46, 94, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/jessie-j/domino-1/01-Domino/?partner=2894'),
+(47, 98, 'Amazon', 0.99, '€', 'http://www.amazon.de/Dont-Gimme-That/dp/B0063WO208%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0063WO208'),
+(48, 87, 'Amazon', 0.99, '€', 'http://www.amazon.de/Ch%C3%A9rie-Antoine-Mark-2k12-Radio/dp/B005XGXPNK%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005XGXPNK'),
+(49, 87, '7Digital', 0.99, '€', 'http://de.7digital.com/artists/dj-antoine/ma-cherie/01-Ma-Ch%c3%a9rie/?partner=2894'),
+(50, 11, 'Amazon', 0.99, '€', 'http://www.amazon.de/I-Wont-Let-You-Go/dp/B005KGQ1TS%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005KGQ1TS'),
+(51, 11, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/i-wont-let-you-go/id463722338?i=463722359&uo=4'),
+(52, 11, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/james-morrison/i-wont-let-you-go-1/01-I-Wont-Let-You-Go/?partner=2894'),
+(53, 8, 'Amazon', 0.89, '€', 'http://www.amazon.de/Turn-This-Club-Around-Video/dp/B006A469NC%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB006A469NC'),
+(54, 8, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/r-i-o-feat-u-jean/turn-this-club-around/01-Turn-This-Club-Around/?partner=2894'),
+(55, 32, 'Amazon', 0.77, '€', 'http://www.amazon.de/Lmfao-Anthem-Lauren-Bennett-Goonrock/dp/B005VA9NWA%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005VA9NWA'),
+(56, 32, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/party-rock-anthem-final-version/id427956198?uo=4'),
+(57, 32, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/lmfao/party-rock-anthem/01-Party-Rock-Anthem/?partner=2894'),
+(58, 17, 'Amazon', 0.99, '€', 'http://www.amazon.de/Wir-Sind-Am-Leben/dp/B005M5PV7U%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005M5PV7U'),
+(59, 17, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/wir-sind-am-leben/id459950830?uo=4'),
+(60, 17, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/rosenstolz/wir-sind-am-leben/01-Wir-sind-am-Leben/?partner=2894'),
+(61, 95, 'Amazon', 0.99, '€', 'http://www.amazon.de/Hungry-Eyes/dp/B005XEBIP4%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005XEBIP4'),
+(62, 95, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/culcha-candela/hungry-eyes/01-Hungry-Eyes/?partner=2894'),
+(63, 16, 'Amazon', 0.89, '€', 'http://www.amazon.de/One-Night-Ibiza-Extended-Mix/dp/B005JDEBK8%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005JDEBK8'),
+(64, 16, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/mike-candys-and-evelyn-feat-patrick-miller-1/one-night-in-ibiza/01-One-Night-in-Ibiza/?partner=2894'),
+(65, 33, 'Amazon', 0.99, '€', 'http://www.amazon.de/Mr-Know-It-All/dp/B005OTRI8Y%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005OTRI8Y'),
+(66, 33, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/mr.-know-it-all/id464532842?i=464532942&uo=4'),
+(67, 33, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/kelly-clarkson/mr-know-it-all/01-Mr-Know-It-All/?partner=2894'),
+(68, 14, 'Amazon', 0.99, '€', 'http://www.amazon.de/Danza-Kuduro-Sagi-Abitbul-Remix/dp/B005HK6JZ8%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005HK6JZ8'),
+(69, 14, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/danza-kuduro-throw-your-hands/id458314141?uo=4'),
+(70, 14, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/lucenzo-don-omar/danza-kuduro/01-Danza-Kuduro/?partner=2894'),
+(71, 40, 'Amazon', 0.99, '€', 'http://www.amazon.de/I-Sing-Liad-F%C3%BCr/dp/B005CDLG2G%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005CDLG2G'),
+(72, 40, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/andreas-gabalier/i-sing-a-liad-fur-di/01-I-sing-a-Liad-f%c3%bcr-di/?partner=2894'),
+(73, 93, 'Amazon', 0.99, '€', 'http://www.amazon.de/Goin-To-L-A/dp/B005Z8LNO4%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005Z8LNO4'),
+(74, 22, 'Amazon', 0.99, '€', 'http://www.amazon.de/Welcome-Tropez-Antoine-Radio-Explicit/dp/B005FQHNA4%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005FQHNA4'),
+(75, 22, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/dj-antoine-vs-timati-feat-kalenna/welcome-to-st-tropez-1/01-Welcome-To-St-Tropez/?partner=2894'),
+(76, 13, 'Amazon', 0.99, '€', 'http://www.amazon.de/Changed-Way-You-Kiss-Extended/dp/B005HY6HEM%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005HY6HEM'),
+(77, 13, 'iTunes', 0.69, '€', 'http://itunes.apple.com/de/album/changed-way-you-kiss-me-radio/id459048144?i=459048146&uo=4'),
+(78, 13, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/example/changed-the-way-you-kiss-me-3/01-Changed-the-Way-You-Kiss-Me/?partner=2894'),
+(79, 15, 'Amazon', 0.99, '€', 'http://www.amazon.de/Loca-People-What-Explicit/dp/B005GT0ZRI%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005GT0ZRI'),
+(80, 15, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/sak-noel/loca-people-4/01-Loca-People-(What-the-F-k-)/?partner=2894'),
+(81, 34, 'Amazon', 0.99, '€', 'http://www.amazon.de/Cant-Stand-The-Silence/dp/B005M9GZ3U%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005M9GZ3U'),
+(82, 34, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/rea-garvey/cant-stand-the-silence/01-Cant-Stand-The-Silence/?partner=2894'),
+(83, 101, 'Amazon', 0.99, '€', 'http://www.amazon.de/Mistletoe/dp/B005ZJXN78%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005ZJXN78'),
+(84, 101, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/mistletoe/id475410465?i=475411069&uo=4'),
+(85, 101, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/justin-bieber/mistletoe/01-Mistletoe/?partner=2894'),
+(86, 23, 'Amazon', 0.84, '€', 'http://www.amazon.de/style-Natalia-Kills-feat-Will-I-Am/dp/B005EQ7E4U%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005EQ7E4U'),
+(87, 23, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/natalia-kills/free-1/01-Free/?partner=2894'),
+(88, 28, 'Amazon', 0.98, '€', 'http://www.amazon.de/Nicht-Reparieren-Feat-Unplugged-Version/dp/B005KF5UBE%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005KF5UBE'),
+(89, 28, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/udo-lindenberg-(2)/ein-herz-kann-man-nicht-reparieren/01-Ein-Herz-kann-man-nicht-reparieren-(feat-Inga-Humpe)-[MTV-Unplugged-Radio-Version]/?partner=2894'),
+(90, 30, 'Amazon', 0.99, '€', 'http://www.amazon.de/Still/dp/B004P3GABQ%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004P3GABQ'),
+(91, 30, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/jupiter-jones/still-2/01-Still/?partner=2894'),
+(92, 38, 'Amazon', 0.77, '€', 'http://www.amazon.de/Jennifer-Lopez-Floor-feat-Pitbull/dp/B004QQZUJA%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004QQZUJA'),
+(93, 38, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/on-the-floor/id424397905?uo=4'),
+(94, 38, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/jennifer-lopez/on-the-floor/01-On-The-Floor/?partner=2894'),
+(95, 31, 'Amazon', 0.99, '€', 'http://www.amazon.de/Give-Me-Everything/dp/B0053VJUOI%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0053VJUOI'),
+(96, 31, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/give-me-everything-feat.-ne/id436457877?uo=4'),
+(97, 31, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/pitbull/give-me-everything/01-Give-Me-Everything/?partner=2894'),
+(98, 24, 'Amazon', 0.98, '€', 'http://www.amazon.de/Wonderful-Life/dp/B005OJ6QQY%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005OJ6QQY'),
+(99, 24, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/seeed/molotov-wonderful-life/01-Molotov/?partner=2894'),
+(100, 25, 'Amazon', 0.69, '€', 'http://www.amazon.de/Mr-Saxobeat-Extended-Version/dp/B004XDFH1W%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004XDFH1W'),
+(101, 25, 'iTunes', 0.69, '€', 'http://itunes.apple.com/de/album/mr.-saxobeat-extended-version/id420618130?i=420618132&uo=4'),
+(102, 25, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/alexandra-stan/mr-saxobeat-7/01-Mr-Saxobeat/?partner=2894'),
+(103, 100, 'Amazon', 0.99, '€', 'http://www.amazon.de/Bei-Bist-Scheen-Single-Edit/dp/B005ZHVSBS%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005ZHVSBS'),
+(104, 41, 'Amazon', 0.99, '€', 'http://www.amazon.de/Wovon-Sollen-Wir-Tr%C3%A4umen/dp/B004TCSHJG%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004TCSHJG'),
+(105, 41, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/frida-gold/wovon-sollen-wir-traumen/01-Wovon-sollen-wir-tr%c3%a4umen/?partner=2894'),
+(106, 35, 'Amazon', 0.99, '€', 'http://www.amazon.de/Sing-Liad-Dich-Single-Version/dp/B005I78I5Y%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005I78I5Y'),
+(107, 35, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/dj-ötzi/i-sing-a-liad-fur-dich-2/01-I-Sing-A-Liad-F%c3%bcr-Dich/?partner=2894'),
+(108, 44, 'Amazon', 0.99, '€', 'http://www.amazon.de/The-Edge-Of-Glory/dp/B0051KMN5E%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0051KMN5E'),
+(109, 44, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/the-edge-glory-a-very-gaga/id486787206?uo=4'),
+(110, 44, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/lady-gaga/the-edge-of-glory-1/01-The-Edge-Of-Glory/?partner=2894'),
+(111, 45, 'Amazon', 0.99, '€', 'http://www.amazon.de/Sweat-Snoop-David-Guetta-Remix/dp/B0053CMKYO%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0053CMKYO'),
+(112, 45, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/snoop-dogg/sweat-david-guetta-remix/01-Sweat-(Snoop-Dogg-vs-David-Guetta)-[Remix]/?partner=2894'),
+(113, 68, 'Amazon', 0.99, '€', 'http://www.amazon.de/Hollywood-Hills/dp/B004P4UHFA%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004P4UHFA'),
+(114, 68, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/sunrise-avenue/hollywood-hills-1/01-Hollywood-Hills/?partner=2894'),
+(115, 27, 'Amazon', 0.99, '€', 'http://www.amazon.de/Eiserner-Steg-Klavier-Version/dp/B005M77NPG%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005M77NPG'),
+(116, 27, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/philipp-poisel/eiserner-steg/01-Eiserner-Steg/?partner=2894'),
+(117, 61, 'Amazon', 0.99, '€', 'http://www.amazon.de/Nur-In-Meinem-Kopf/dp/B0053NYTVU%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0053NYTVU'),
+(118, 61, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/andreas-bourani/nur-in-meinem-kopf/01-Nur-in-meinem-Kopf/?partner=2894'),
+(119, 85, 'Amazon', 0.98, '€', 'http://www.amazon.de/In-Diesem-Moment/dp/B005U98EWC%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005U98EWC'),
+(120, 85, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/roger-cicero/in-diesem-moment/01-In-diesem-Moment-(Radio-Version)/?partner=2894'),
+(121, 26, 'Amazon', 0.99, '€', 'http://www.amazon.de/Yo%C3%BC-And-I/dp/B0051H0DT0%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0051H0DT0'),
+(122, 26, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/you-i-a-very-gaga-thanksgiving/id486784214?uo=4'),
+(123, 26, '7Digital', 1.29, '€', 'http://de.7digital.com/artists/lady-gaga/you-and-i/01-Yo%c3%bc-And-I/?partner=2894'),
+(124, 39, 'Amazon', 0.99, '€', 'http://www.amazon.de/Will-Dance-When-Walk-Away/dp/B005I9IU7S%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005I9IU7S'),
+(125, 39, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/katzenjammer/i-will-dance-when-i-walk-away/01-I-Will-Dance-(When-I-Walk-Away)/?partner=2894'),
+(126, 97, 'Amazon', 0.84, '€', 'http://www.amazon.de/This-is-my-time-Video-Edit/dp/B0060TY8NU%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0060TY8NU'),
+(127, 52, 'Amazon', 0.99, '€', 'http://www.amazon.de/A-Night-Like-This-Instrumental/dp/B004NZOXWE%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004NZOXWE'),
+(128, 52, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/caro-emerald/a-night-like-this-3/01-A-Night-Like-This/?partner=2894'),
+(129, 46, 'Amazon', 0.99, '€', 'http://www.amazon.de/Little-Girl-Feat-Ludacris-Explicit/dp/B005ILZG7I%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005ILZG7I'),
+(130, 46, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/david-guetta/little-bad-girl-feat-taio-cruz-and-ludacris/01-Little-Bad-Girl-(feat-Taio-Cruz-and-Ludacris)/?partner=2894'),
+(131, 72, 'Amazon', 0.98, '€', 'http://www.amazon.de/Grenade/dp/B004KTFRNW%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004KTFRNW'),
+(132, 72, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/grenade/id409143502?uo=4'),
+(133, 72, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/bruno-mars/grenade-2/01-Grenade/?partner=2894'),
+(134, 43, 'Amazon', 0.98, '€', 'http://www.amazon.de/Something-In-The-Water/dp/B00580EK9E%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00580EK9E'),
+(135, 43, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/brooke-fraser/something-in-the-water-1/01-Something-In-The-Water/?partner=2894'),
+(136, 36, 'Amazon', 0.99, '€', 'http://www.amazon.de/Wenn-Wunderkerzen-Brennen-Schlager-Radio/dp/B005I782K0%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005I782K0'),
+(137, 36, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/jürgen-drews/wenn-die-wunderkerzen-brennen/01-Wenn-die-Wunderkerzen-brennen/?partner=2894'),
+(138, 54, 'Amazon', 0.99, '€', 'http://www.amazon.de/Run/dp/B001V7UFE2%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB001V7UFE2'),
+(139, 54, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/run/id342460748?uo=4'),
+(140, 54, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/leona-lewis/run-1/01-Run/?partner=2894'),
+(141, 47, 'Amazon', 0.98, '€', 'http://www.amazon.de/Dont-Wanna-Go-Home/dp/B00574TCEY%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB00574TCEY'),
+(142, 47, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/dont-wanna-go-home/id437708484?i=437708485&uo=4'),
+(143, 47, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/jason-derulo/dont-wanna-go-home/01-Dont-Wanna-Go-Home/?partner=2894'),
+(144, 62, 'Amazon', 0.99, '€', 'http://www.amazon.de/Ph%C3%A4nomen/dp/B005RM06W8%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005RM06W8'),
+(145, 62, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/helene-fischer/phanomen/01-Ph%c3%a4nomen/?partner=2894'),
+(146, 63, 'Amazon', 0.99, '€', 'http://www.amazon.de/Je-Veux/dp/B0040D3MJ4%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB0040D3MJ4'),
+(147, 63, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/zaz/je-veux-2/01-Je-Veux/?partner=2894'),
+(148, 59, 'Amazon', 0.99, '€', 'http://www.amazon.de/I-Dont-Dance-Single-Version/dp/B005EQ9KV0%3FSubscriptionId%3DAKIAJRWULOQJOTTEI66A%26tag%3DAKIAJRWULOQJOTTEI66A%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005EQ9KV0'),
+(149, 59, '7Digital', 1.49, '€', 'http://de.7digital.com/artists/sunrise-avenue/i-dont-dance/01-I-Dont-Dance-(Single-Version)/?partner=2894'),
+(150, 20, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/video-games-performance-edit/id477750462?uo=4'),
+(151, 1, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/we-found-love-feat.-calvin/id470829924?i=470829925&uo=4'),
+(152, 89, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/good-feeling/id476804617?uo=4'),
+(153, 90, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/cello-feat.-clueso/id468641038?uo=4'),
+(154, 6, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/rain-over-me-feat.-marc-anthony/id471686207?uo=4'),
+(155, 12, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/sexy-and-i-know-it/id467064120?uo=4'),
+(156, 7, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/without-you-feat.-usher/id457937190?i=457937230&uo=4'),
+(157, 5, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/got-2-luv-u-got-to-love-you/id484358673?i=484359255&uo=4'),
+(158, 19, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/nur-noch-kurz-die-welt-retten/id433608961?i=433608982&uo=4'),
+(159, 4, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/new-age/id454018027?i=454018028&uo=4'),
+(160, 98, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/dont-gimme-that/id480112621?uo=4'),
+(161, 8, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/turn-this-club-around-feat./id472339113?uo=4'),
+(162, 95, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/hungry-eyes/id479266827?uo=4'),
+(163, 16, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/one-night-in-ibiza-radio-mix/id458355241?i=458355242&uo=4'),
+(164, 40, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/i-sing-a-liad-fur-di/id380296133?i=380296195&uo=4'),
+(165, 93, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/goin-to-l.a./id475700034?uo=4'),
+(166, 22, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/welcome-to-st.-tropez-dj-antoine/id420914946?i=420914955&uo=4'),
+(167, 15, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/loca-people-what-f-k!-radio/id441224477?i=441224480&uo=4'),
+(168, 34, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/cant-stand-the-silence/id462777178?uo=4'),
+(169, 23, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/free/id452222301?uo=4'),
+(170, 28, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/ein-herz-kann-man-nicht-reparieren/id468641024?uo=4'),
+(171, 30, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/still/id420899245?i=420899265&uo=4'),
+(172, 24, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/molotov/id456613062?i=456613063&uo=4'),
+(173, 100, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/bei-mir-bist-du-scheen-single/id476299176?i=476299181&uo=4'),
+(174, 41, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/wovon-sollen-wir-traumen/id427469262?uo=4'),
+(175, 35, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/i-sing-a-liad-fur-dich/id464770835?uo=4'),
+(176, 45, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/sweat-snoop-dogg-vs.-david/id427375040?uo=4'),
+(177, 68, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/hollywood-hills/id413834115?i=413834119&uo=4'),
+(178, 27, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/eiserner-steg-klavier-version/id464242079?uo=4'),
+(179, 61, 'iTunes', 0.69, '€', 'http://itunes.apple.com/de/album/nur-in-meinem-kopf-radio-edit/id436797794?i=436797813&uo=4'),
+(180, 85, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/in-diesem-moment/id475883746?uo=4'),
+(181, 39, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/i-will-dance-when-i-walk-away/id458307419?i=458307562&uo=4'),
+(182, 97, 'iTunes', 0.99, '€', 'http://itunes.apple.com/de/album/this-is-my-time/id476055289?i=476055297&uo=4'),
+(183, 52, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/a-night-like-this/id417394319?uo=4'),
+(184, 46, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/little-bad-girl-feat.-taio/id445346679?i=445346691&uo=4'),
+(185, 43, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/something-in-the-water/id436705616?i=436705653&uo=4'),
+(186, 36, 'iTunes', 1.29, '€', 'http://itunes.apple.com/de/album/wenn-die-wunderkerzen-brennen/id458326058?i=458326059&uo=4'),
+(187, 62, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/phanomen/id473325495?uo=4'),
+(188, 63, 'iTunes', 1.79, '€', 'http://itunes.apple.com/de/music-video/je-veux/id395003811?uo=4'),
+(189, 59, 'iTunes', 2.49, '€', 'http://itunes.apple.com/de/music-video/i-dont-dance/id452382653?uo=4');
 
 -- --------------------------------------------------------
 
@@ -180,8 +371,9 @@ CREATE TABLE IF NOT EXISTS `rating` (
   `userID` int(11) NOT NULL,
   `songID` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
-  PRIMARY KEY (`userID`,`songID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`userID`,`songID`),
+  KEY `songID` (`songID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `rating`
@@ -206,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `song` (
   `voteTotal` int(11) NOT NULL DEFAULT '0',
   `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=109 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=109 ;
 
 --
 -- Daten für Tabelle `song`
@@ -301,23 +493,23 @@ INSERT INTO `song` (`id`, `interpreter`, `title`, `date`, `tracklength`, `video`
 (86, 'Inna', 'Sun Is Up', '2011-11-26', 194, '<a href="http://www.myvideo.de/watch/8055860/Inna_Sun_Is_Up">Inna_Sun_Is_Up</a>', 0, 0, 0, 'onseData'),
 (87, 'DJ Antoine ft. The Beat Shakers', 'Ma Chérie ', '2011-11-26', 201, '<a href="http://www.myvideo.de/watch/8322990/DJ_Antoine_ft_The_Beat_Shakers_Ma_Ch_rie_DJ_Antoine_vs_Mad_Mark_2k12_Edit">DJ_Antoine_ft_The_Beat_Shakers_Ma_Ch_rie_DJ_Antoine_vs_Mad_Mark_2k12_Edit</a>', 0, 0, 0, 'onseData'),
 (88, 'Chris Brown feat Justin Bieber', 'Next To You', '2011-11-26', 361, '<a href="http://www.myvideo.de/watch/8190729/Chris_Brown_feat_Justin_Bieber_Next_To_You">Chris_Brown_feat_Justin_Bieber_Next_To_You</a>', 0, 0, 0, 'onseData'),
-(105, 'Professor Green', 'Read All About It ', '2011-12-06', 234, '<a href="http://www.myvideo.de/watch/8325318/Professor_Green_Read_All_About_It_feat_Emeli_Sand">Professor_Green_Read_All_About_It_feat_Emeli_Sand</a>', 0, 0, 0, NULL),
-(104, 'Michael Mind Project feat. Bobby Anthony & Rozette', 'Rio De Janeiro', '2011-12-06', 198, '<a href="http://www.myvideo.de/watch/8350504/Michael_Mind_Project_feat_Bobby_Anthony_Rozette_Rio_De_Janeiro">Michael_Mind_Project_feat_Bobby_Anthony_Rozette_Rio_De_Janeiro</a>', 0, 0, 0, NULL),
-(103, 'Kool Savas', 'AURA Official HD Video 2011', '2011-12-06', 167, '<a href="http://www.myvideo.de/watch/8338849/Kool_Savas_AURA_Official_HD_Video_2011">Kool_Savas_AURA_Official_HD_Video_2011</a>', 0, 0, 0, NULL),
-(102, 'Remady Feat. Manu-L', 'Give Me A Sign ', '2011-12-06', 235, '<a href="http://www.myvideo.de/watch/8333984/Remady_Feat_Manu_L_Give_Me_A_Sign_Official_Video">Remady_Feat_Manu_L_Give_Me_A_Sign_Official_Video</a>', 0, 0, 0, NULL),
-(101, 'Justin Bieber', 'Mistletoe', '2011-12-06', 192, '<a href="http://www.myvideo.de/watch/8300991/Justin_Bieber_Mistletoe">Justin_Bieber_Mistletoe</a>', 0, 0, 0, NULL),
-(100, 'Ilhama', 'Bei Mir Bist Du Scheen feat. DJ OGB', '2011-12-06', 206, '<a href="http://www.myvideo.de/watch/8326148/Ilhama_Bei_Mir_Bist_Du_Scheen_feat_DJ_OGB">Ilhama_Bei_Mir_Bist_Du_Scheen_feat_DJ_OGB</a>', 0, 0, 0, NULL),
-(99, 'Christian Franke & Edward Simoni', 'Der Apfelbaum', '2011-12-06', 232, '<a href="http://www.myvideo.de/watch/8337524/Christian_Franke_Edward_Simoni_Der_Apfelbaum">Christian_Franke_Edward_Simoni_Der_Apfelbaum</a>', 0, 0, 0, NULL),
-(98, 'The BossHoss', 'Don''t Gimme That', '2011-12-06', 210, '<a href="http://www.myvideo.de/watch/8303845/The_BossHoss_Don_t_Gimme_That">The_BossHoss_Don_t_Gimme_That</a>', 0, 0, 0, NULL),
-(97, 'Ardian Bujupi', 'This Is My Time', '2011-12-06', 209, '<a href="http://www.myvideo.de/watch/8328920/Ardian_Bujupi_This_Is_My_Time">Ardian_Bujupi_This_Is_My_Time</a>', 0, 0, 0, NULL),
-(96, 'Bruno Mars', 'It Will Rain', '2011-12-06', 258, '<a href="http://www.myvideo.de/watch/8344476/Bruno_Mars_It_Will_Rain">Bruno_Mars_It_Will_Rain</a>', 0, 0, 0, NULL),
-(95, 'Culcha Candela', 'Hungry Eyes', '2011-12-06', 256, '<a href="http://www.myvideo.de/watch/8304093/Culcha_Candela_Hungry_Eyes">Culcha_Candela_Hungry_Eyes</a>', 0, 0, 0, NULL),
-(94, 'Jessie J', 'Domino', '2011-12-06', 242, '<a href="http://www.myvideo.de/watch/8295110/Jessie_J_Domino">Jessie_J_Domino</a>', 0, 0, 0, NULL),
-(93, 'Pietro Lombardi', 'Goin'' To L.A.', '2011-12-06', 192, '<a href="http://www.myvideo.de/watch/8322376/Pietro_Lombardi_Goin_To_L_A">Pietro_Lombardi_Goin_To_L_A</a>', 0, 0, 0, NULL),
-(92, 'Foster The People', 'Pumped Up Kicks', '2011-12-06', 241, '<a href="http://www.myvideo.de/watch/8167247/Foster_The_People_Pumped_Up_Kicks">Foster_The_People_Pumped_Up_Kicks</a>', 0, 0, 0, NULL),
-(91, 'Nickelback', 'When We Stand Together ', '2011-12-06', 194, '<a href="http://www.myvideo.de/watch/8328930/Nickelback_When_We_Stand_Together_Official_Video">Nickelback_When_We_Stand_Together_Official_Video</a>', 0, 0, 0, NULL),
-(90, 'Udo Lindenberg', 'Cello ', '2011-12-06', 217, '<a href="http://www.myvideo.de/watch/8296234/Udo_Lindenberg_Cello_feat_Clueso">Udo_Lindenberg_Cello_feat_Clueso</a>', 0, 0, 0, NULL),
 (89, 'Flo Rida', 'Good Feeling ', '2011-12-06', 258, '<a href="http://www.myvideo.de/watch/8317540/Flo_Rida_Good_Feeling_Official_Video">Flo_Rida_Good_Feeling_Official_Video</a>', 0, 0, 0, NULL),
+(90, 'Udo Lindenberg', 'Cello ', '2011-12-06', 217, '<a href="http://www.myvideo.de/watch/8296234/Udo_Lindenberg_Cello_feat_Clueso">Udo_Lindenberg_Cello_feat_Clueso</a>', 0, 0, 0, NULL),
+(91, 'Nickelback', 'When We Stand Together ', '2011-12-06', 194, '<a href="http://www.myvideo.de/watch/8328930/Nickelback_When_We_Stand_Together_Official_Video">Nickelback_When_We_Stand_Together_Official_Video</a>', 0, 0, 0, NULL),
+(92, 'Foster The People', 'Pumped Up Kicks', '2011-12-06', 241, '<a href="http://www.myvideo.de/watch/8167247/Foster_The_People_Pumped_Up_Kicks">Foster_The_People_Pumped_Up_Kicks</a>', 0, 0, 0, NULL),
+(93, 'Pietro Lombardi', 'Goin'' To L.A.', '2011-12-06', 192, '<a href="http://www.myvideo.de/watch/8322376/Pietro_Lombardi_Goin_To_L_A">Pietro_Lombardi_Goin_To_L_A</a>', 0, 0, 0, NULL),
+(94, 'Jessie J', 'Domino', '2011-12-06', 242, '<a href="http://www.myvideo.de/watch/8295110/Jessie_J_Domino">Jessie_J_Domino</a>', 0, 0, 0, NULL),
+(95, 'Culcha Candela', 'Hungry Eyes', '2011-12-06', 256, '<a href="http://www.myvideo.de/watch/8304093/Culcha_Candela_Hungry_Eyes">Culcha_Candela_Hungry_Eyes</a>', 0, 0, 0, NULL),
+(96, 'Bruno Mars', 'It Will Rain', '2011-12-06', 258, '<a href="http://www.myvideo.de/watch/8344476/Bruno_Mars_It_Will_Rain">Bruno_Mars_It_Will_Rain</a>', 0, 0, 0, NULL),
+(97, 'Ardian Bujupi', 'This Is My Time', '2011-12-06', 209, '<a href="http://www.myvideo.de/watch/8328920/Ardian_Bujupi_This_Is_My_Time">Ardian_Bujupi_This_Is_My_Time</a>', 0, 0, 0, NULL),
+(98, 'The BossHoss', 'Don''t Gimme That', '2011-12-06', 210, '<a href="http://www.myvideo.de/watch/8303845/The_BossHoss_Don_t_Gimme_That">The_BossHoss_Don_t_Gimme_That</a>', 0, 0, 0, NULL),
+(99, 'Christian Franke & Edward Simoni', 'Der Apfelbaum', '2011-12-06', 232, '<a href="http://www.myvideo.de/watch/8337524/Christian_Franke_Edward_Simoni_Der_Apfelbaum">Christian_Franke_Edward_Simoni_Der_Apfelbaum</a>', 0, 0, 0, NULL),
+(100, 'Ilhama', 'Bei Mir Bist Du Scheen feat. DJ OGB', '2011-12-06', 206, '<a href="http://www.myvideo.de/watch/8326148/Ilhama_Bei_Mir_Bist_Du_Scheen_feat_DJ_OGB">Ilhama_Bei_Mir_Bist_Du_Scheen_feat_DJ_OGB</a>', 0, 0, 0, NULL),
+(101, 'Justin Bieber', 'Mistletoe', '2011-12-06', 192, '<a href="http://www.myvideo.de/watch/8300991/Justin_Bieber_Mistletoe">Justin_Bieber_Mistletoe</a>', 0, 0, 0, NULL),
+(102, 'Remady Feat. Manu-L', 'Give Me A Sign ', '2011-12-06', 235, '<a href="http://www.myvideo.de/watch/8333984/Remady_Feat_Manu_L_Give_Me_A_Sign_Official_Video">Remady_Feat_Manu_L_Give_Me_A_Sign_Official_Video</a>', 0, 0, 0, NULL),
+(103, 'Kool Savas', 'AURA Official HD Video 2011', '2011-12-06', 167, '<a href="http://www.myvideo.de/watch/8338849/Kool_Savas_AURA_Official_HD_Video_2011">Kool_Savas_AURA_Official_HD_Video_2011</a>', 0, 0, 0, NULL),
+(104, 'Michael Mind Project feat. Bobby Anthony & Rozette', 'Rio De Janeiro', '2011-12-06', 198, '<a href="http://www.myvideo.de/watch/8350504/Michael_Mind_Project_feat_Bobby_Anthony_Rozette_Rio_De_Janeiro">Michael_Mind_Project_feat_Bobby_Anthony_Rozette_Rio_De_Janeiro</a>', 0, 0, 0, NULL),
+(105, 'Professor Green', 'Read All About It ', '2011-12-06', 234, '<a href="http://www.myvideo.de/watch/8325318/Professor_Green_Read_All_About_It_feat_Emeli_Sand">Professor_Green_Read_All_About_It_feat_Emeli_Sand</a>', 0, 0, 0, NULL),
 (106, 'Tom Lüneburger & Stefanie Klo&szlig;', 'We Are One', '2011-12-06', 202, '<a href="http://www.myvideo.de/watch/8315824/Tom_Lueneburger_Stefanie_Kloss_We_Are_One">Tom_Lueneburger_Stefanie_Kloss_We_Are_One</a>', 0, 0, 0, NULL),
 (107, 'Usher', 'More', '2011-12-06', 220, '<a href="http://www.myvideo.de/watch/8033015/Usher_More">Usher_More</a>', 0, 0, 0, NULL),
 (108, 'David Guetta', 'Where Them Girls At', '2011-12-06', 228, '<a href="http://www.myvideo.de/watch/8188747/David_Guetta_Where_Them_Girls_At">David_Guetta_Where_Them_Girls_At</a>', 0, 0, 0, NULL);
@@ -332,97 +524,98 @@ CREATE TABLE IF NOT EXISTS `song_in_chart` (
   `songID` int(11) NOT NULL,
   `chartID` int(11) NOT NULL,
   `ranking` int(11) NOT NULL,
-  PRIMARY KEY (`songID`,`chartID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`songID`,`chartID`),
+  KEY `chartID` (`chartID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `song_in_chart`
 --
 
 INSERT INTO `song_in_chart` (`songID`, `chartID`, `ranking`) VALUES
-(89, 1, 1),
 (1, 1, 2),
-(20, 1, 3),
 (2, 1, 4),
-(6, 1, 5),
-(90, 1, 6),
-(7, 1, 7),
 (3, 1, 8),
-(12, 1, 9),
-(5, 1, 10),
-(18, 1, 11),
 (4, 1, 12),
-(91, 1, 13),
-(92, 1, 14),
+(5, 1, 10),
+(6, 1, 5),
+(7, 1, 7),
+(8, 1, 25),
 (9, 1, 15),
-(93, 1, 16),
 (10, 1, 17),
 (11, 1, 18),
-(17, 1, 19),
-(19, 1, 20),
-(21, 1, 21),
-(33, 1, 22),
-(16, 1, 23),
-(94, 1, 24),
-(8, 1, 25),
+(12, 1, 9),
+(13, 1, 31),
 (14, 1, 26),
 (15, 1, 27),
-(95, 1, 28),
-(96, 1, 29),
-(87, 1, 30),
-(13, 1, 31),
-(97, 1, 32),
+(16, 1, 23),
+(17, 1, 19),
+(18, 1, 11),
+(19, 1, 20),
+(20, 1, 3),
+(21, 1, 21),
 (22, 1, 33),
-(98, 1, 34),
-(99, 1, 35),
-(32, 1, 36),
-(85, 1, 37),
-(100, 1, 38),
 (23, 1, 39),
 (24, 1, 40),
-(28, 1, 41),
-(101, 1, 42),
-(30, 1, 43),
-(35, 1, 44),
-(40, 1, 45),
-(102, 1, 46),
-(31, 1, 47),
-(26, 1, 48),
 (25, 1, 49),
+(26, 1, 48),
 (27, 1, 50),
-(103, 1, 51),
+(28, 1, 41),
+(30, 1, 43),
+(31, 1, 47),
+(32, 1, 36),
+(33, 1, 22),
 (34, 1, 52),
-(38, 1, 53),
-(41, 1, 54),
-(54, 1, 55),
-(45, 1, 56),
-(44, 1, 57),
-(39, 1, 58),
+(35, 1, 44),
 (36, 1, 59),
-(61, 1, 60),
-(104, 1, 61),
-(62, 1, 62),
-(63, 1, 63),
-(43, 1, 64),
-(42, 1, 65),
-(105, 1, 66),
-(52, 1, 67),
-(106, 1, 68),
-(49, 1, 69),
-(46, 1, 70),
-(107, 1, 71),
-(47, 1, 72),
-(73, 1, 73),
 (37, 1, 74),
-(72, 1, 75),
+(38, 1, 53),
+(39, 1, 58),
+(40, 1, 45),
+(41, 1, 54),
+(42, 1, 65),
+(43, 1, 64),
+(44, 1, 57),
+(45, 1, 56),
+(46, 1, 70),
+(47, 1, 72),
+(48, 1, 79),
+(49, 1, 69),
+(52, 1, 67),
+(54, 1, 55),
 (57, 1, 76),
 (59, 1, 77),
-(76, 1, 78),
-(48, 1, 79),
-(68, 1, 80),
-(108, 1, 81),
+(61, 1, 60),
+(62, 1, 62),
+(63, 1, 63),
 (64, 1, 82),
-(80, 1, 83);
+(68, 1, 80),
+(72, 1, 75),
+(73, 1, 73),
+(76, 1, 78),
+(80, 1, 83),
+(85, 1, 37),
+(87, 1, 30),
+(89, 1, 1),
+(90, 1, 6),
+(91, 1, 13),
+(92, 1, 14),
+(93, 1, 16),
+(94, 1, 24),
+(95, 1, 28),
+(96, 1, 29),
+(97, 1, 32),
+(98, 1, 34),
+(99, 1, 35),
+(100, 1, 38),
+(101, 1, 42),
+(102, 1, 46),
+(103, 1, 51),
+(104, 1, 61),
+(105, 1, 66),
+(106, 1, 68),
+(107, 1, 71),
+(108, 1, 81);
 
 -- --------------------------------------------------------
 
@@ -437,7 +630,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `user`
@@ -446,6 +639,36 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `admin`, `email`, `password`) VALUES
 (1, 0, 'asd@asd.de', 'asd'),
 (2, 0, 'Mateful@web.de', '73675debcd8a436be48ec22211dcf44fe0df0a64');
+
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `lyric`
+--
+ALTER TABLE `lyric`
+  ADD CONSTRAINT `lyric_ibfk_1` FOREIGN KEY (`songID`) REFERENCES `song` (`id`);
+
+--
+-- Constraints der Tabelle `price`
+--
+ALTER TABLE `price`
+  ADD CONSTRAINT `price_ibfk_1` FOREIGN KEY (`songID`) REFERENCES `song` (`id`);
+
+--
+-- Constraints der Tabelle `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`songID`) REFERENCES `song` (`id`),
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`id`);
+
+--
+-- Constraints der Tabelle `song_in_chart`
+--
+ALTER TABLE `song_in_chart`
+  ADD CONSTRAINT `song_in_chart_ibfk_2` FOREIGN KEY (`chartID`) REFERENCES `chart` (`id`),
+  ADD CONSTRAINT `song_in_chart_ibfk_1` FOREIGN KEY (`songID`) REFERENCES `song` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -79,6 +79,10 @@ public class Session implements SessionRemote, SessionLocal {
 		}
 
 	}
+	
+	public void rateASong(int userID, int songID, int rating) {
+		
+	}
 
 	public void addItunesPrice(String interpreter, String title) {
 		Song song = songDAO.findSong(interpreter, title);
