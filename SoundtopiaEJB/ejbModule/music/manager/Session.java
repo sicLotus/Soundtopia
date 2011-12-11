@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
 import music.data.Chart;
 import music.data.ChartEntryVO;
 import music.data.LyricVO;
@@ -40,7 +39,7 @@ public class Session implements SessionRemote, SessionLocal {
 
 	@EJB
 	private PriceDAO priceDAO;
-	
+
 	@EJB
 	private ChartDAO chartDAO;
 
@@ -58,32 +57,42 @@ public class Session implements SessionRemote, SessionLocal {
 		System.out.println("Succeeded: " + chartList.size());
 		for (int i = 0; i < chartList.size(); i++) {
 			entry = chartList.get(i);
-		//	songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
-		//			entry.getMovie_length(), entry.getMovie_url());
+			// songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
+			// entry.getMovie_length(), entry.getMovie_url());
 			// addPicture(entry.getInterpreter(), entry.getTitle());
 			// addLyric(entry.getInterpreter(), entry.getTitle());
 			/*
-			 new Charteintrag in ChartTabelle mit neuster ID (natürlich vor der for schleife)
-			 ID an createChartEntry übergeben
-			 die ganze methode soll dann 1x wöchentlich oder so ausgeführt werden
+			 * new Charteintrag in ChartTabelle mit neuster ID (natürlich vor
+			 * der for schleife) ID an createChartEntry übergeben die ganze
+			 * methode soll dann 1x wöchentlich oder so ausgeführt werden
 			 */
-		//	Chart chart = chartDAO.createChartTable();
-			//chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(), entry.getInterpreter(), entry.getTitle());
-		//	chartDAO.test("Singlecharts");
-		//	SevenDigitalsAPI.retrieveData(entry.getInterpreter()+ " "+entry.getTitle());
-		//SevenDigitalsAPI.retrieveData("LMFAO Party Rock Anthem");
-			ItunesAPI.retrieveData(entry.getInterpreter()+ " "+entry.getTitle());
+			// Chart chart = chartDAO.createChartTable();
+			// chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(),
+			// entry.getInterpreter(), entry.getTitle());
+			// chartDAO.test("Singlecharts");
+			//addAmazonPrice(entry.getInterpreter(), entry.getTitle());
+			addItunesPrice(entry.getInterpreter(), entry.getTitle());
+			//addSevenDigitalPrice(entry.getInterpreter(), entry.getTitle());
+			//ItunesAPI.retrieveData(entry.getInterpreter() +" "+ entry.getTitle());
+
+
+		}
+
 	}
-		
-		
-		
+
+	public void addItunesPrice(String interpreter, String title) {
+		Song song = songDAO.findSong(interpreter, title);
+		if (song != null) {
+			PriceVO item = ItunesAPI.retrieveData(interpreter + " " + title);
+			priceDAO.createPrice(song.getId(), item);
+		}
 	}
-	
+
 	public void addSevenDigitalPrice(String interpreter, String title) {
 		Song song = songDAO.findSong(interpreter, title);
 		if (song != null) {
 			PriceVO item = SevenDigitalsAPI.retrieveData(interpreter + " "
-							+ title);
+					+ title);
 			priceDAO.createPrice(song.getId(), item);
 		}
 	}
@@ -113,7 +122,6 @@ public class Session implements SessionRemote, SessionLocal {
 					song.getTitle());
 			lyricDAO.createLyric(song.getId(), lyric);
 		}
-
 	}
 
 }

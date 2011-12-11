@@ -86,12 +86,5 @@ public class ChartDAO {
 		} else
 			return null;
 	}
-	
-	public void test(String name) {
-		
-		//Timestamp a = (Timestamp) em.createNamedQuery("test.myTest").setParameter("name", name).getSingleResult();
-		Chart a = (Chart) em.createNamedQuery("chart.findChart").setParameter("name", name).getResultList().get(0);
-		System.out.println(a.getId()+ " - "+a.getLastUpdated());
-	}
 
 }

@@ -1,0 +1,14 @@
+Lyrics updaten, falls sie beim createn schon existieren?
+
+Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
+
+Adminpanel (Daten eines Songs ändern, neu einlesen aller Daten oder einzelner Songs)
+
+Update Rating in RatingDAO schreiben?
+
+Pictures weiterhin über die Google API einlesen? 
+	Vorteil: Wir haben zu jedem Song definitiv ein Bild
+	Nachteil: Die Bilder könnten falsch sein
+	Lösung: Admin kann den Pfad eines Bildes selbst ändern, falls Bild falsch ist
+
+Trigger für Rating einbauen (SQL?!)

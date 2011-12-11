@@ -9,6 +9,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@NamedQuery(
+		name="price.findBySongIDAndProvider",
+		query="SELECT p FROM Price p WHERE p.song.id = :songID AND p.provider LIKE :provider")
+/*@NamedQuery(
+		name="price.findBySongIDAndProvider",
+		query="SELECT p FROM Price p WHERE p.song = :song AND p.provider LIKE :provider")*/
 public class Price implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,10 +34,10 @@ public class Price implements Serializable {
     @ManyToOne
 	@JoinColumn(name="songID")
 	private Song song;
-
+    
     public Price() {
     }
-
+    
 	public int getId() {
 		return this.id;
 	}
@@ -39,7 +45,7 @@ public class Price implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getOfferUrl() {
 		return this.offerUrl;
 	}
@@ -79,5 +85,6 @@ public class Price implements Serializable {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
+
+		
 }

@@ -33,7 +33,7 @@ public class ItunesAPI {
 				.resource("http://itunes.apple.com/search");
 
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
-		params.add("term", query + " song");
+		params.add("term", query);
 		params.add("country", "DE");
 		params.add("limit", "" + queryCount);
 		params.add("entity", "musicTrack");
@@ -52,16 +52,18 @@ public class ItunesAPI {
 				price.setUrl(json.getString("trackViewUrl"));
 				price.setProvider("iTunes");
 				price.setCurrency("€");
-				System.out.println("Preis von " + query + ": "
-						+ price.getValue());
-				if (price.getValue() < 0)
-					i++;// System.out.println(response);
+				//System.out.println("Preis von " + query + ": "
+				//		+ price.getValue());
+				if (price.getValue() < 0) {
+					i++;
+				//	System.out.println(response);
+				}
 				else
-					i = queryCount;
+					i = queryCount; // HACK! HAHA
 			} while (i < queryCount);
 		} catch (JSONException e) {
 			// e.printStackTrace();
-			System.out.println("Preis von " + query + ": " + "null");
+			//System.out.println("Preis von " + query + ": " + "null");
 
 			return null;
 		}

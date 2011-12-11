@@ -59,7 +59,7 @@ public class SongDAO {
 
 	public boolean addPicture(int songID, String picture) {
 		try {
-			Song song = getSong(songID);
+			Song song = findSong(songID);
 			song.setPicture(picture);
 			em.persist(song);
 			return true;
@@ -82,8 +82,8 @@ public class SongDAO {
 			return null;
 	}
 
-
-	public Song getSong(int id) {
+	
+	public Song findSong(int id) {
 		return em.find(Song.class, id);
 	}
 

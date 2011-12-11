@@ -18,11 +18,12 @@ public class LyricDAO {
 	@PersistenceContext
 	private EntityManager em;
 
+
 	public LyricDAO() {
 	}
 
 	public boolean doesLyricExist(int songID) {
-		if (getLyric(songID) != null)
+		if (findLyric(songID) != null)
 			return true;
 		else
 			return false;
@@ -35,13 +36,25 @@ public class LyricDAO {
 			lyric.setText(lyricVO.getText());
 			lyric.setUrl(lyricVO.getUrl());
 			em.persist(lyric);
-
 			return lyric;
 		} else
 			return null;
 	}
 
-	public Lyric getLyric(int songID) {
+	public Lyric updateLyric(int songID, LyricVO lyricVO) {
+		if (lyricVO != null) {
+			Lyric lyric = findLyric(songID);
+			if (lyric != null) {
+				lyric.setText(lyricVO.getText());
+				lyric.setUrl(lyricVO.getUrl());
+				em.persist(lyric);
+				return lyric;
+			}
+		}
+		return null;
+	}
+
+	public Lyric findLyric(int songID) {
 		return em.find(Lyric.class, songID);
 	}
 }
