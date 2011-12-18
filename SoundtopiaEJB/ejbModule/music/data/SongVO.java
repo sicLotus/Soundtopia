@@ -12,6 +12,7 @@ public class SongVO {
 	private List<PriceVO> prices;
 	private LyricVO lyric;
 	private int ranking;
+	private Integer change;
 	
 	public String getInterpreter() {
 		return interpreter;
@@ -66,6 +67,12 @@ public class SongVO {
 	}
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
+	}
+	public Integer getChange() {
+		return change;
+	}
+	public void setChange(Integer change) {
+		this.change = change;
 	}
 
 }

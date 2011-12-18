@@ -28,6 +28,7 @@ public class SongInChart implements Serializable {
 	private SongInChartPK id;
 
 	private int ranking;
+	private Integer change;
 
 	//bi-directional many-to-one association to Chart
     @ManyToOne
@@ -72,6 +73,14 @@ public class SongInChart implements Serializable {
 
 	public void setSong(Song song) {
 		this.song = song;
+	}
+
+	public Integer getChange() {
+		return change;
+	}
+
+	public void setChange(Integer change) {
+		this.change = change;
 	}
 	
 }

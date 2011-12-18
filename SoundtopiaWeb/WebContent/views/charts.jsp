@@ -7,7 +7,12 @@
 </head>
 <body>
 <jsp:include page="navi.jsp" />
-
+ <div id="contentLoading" class="contentLoading" style="display:none;">
+	<span>
+		<img src="../images/ajaxLoad.gif" align="middle">
+		Loading Please Wait...
+	</span>
+</div>
  <div id="content">
  <c:forEach var="chart" items="${chartList}">
     	<div class="content_item">
@@ -47,11 +52,12 @@
         </div> <!--  Content_Item Ende -->
  </c:forEach>       
  </div> <!-- Content Ende -->
+
  <div id="footer">
   	<div class="platzierungen">
     	<div class="platz76UP">75+</div>   		
         <div class="platz51_75">51-75</div>
-        <div class="platz26_50">26-50</div>
+        <div class="platz26_50"><a href="javascript:loadContent(26,50);">26-50</a></div>
         <div class="platz1_25">1-25</div>
 	    Platzierungen 
    	</div>

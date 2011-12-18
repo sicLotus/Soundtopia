@@ -8,6 +8,8 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://cdn.jquerytools.org/1.2.6/all/jquery.tools.min.js"></script>
 <script src="../assets/soundtopia.js"></script>
+
+
 <title>Soundtopia</title>
 </head>
 <body>

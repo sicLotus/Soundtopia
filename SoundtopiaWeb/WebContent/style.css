@@ -156,6 +156,7 @@ a:hover {
 #content {
 	margin-top:5px;
 	margin-left:69px;
+	z-index:0;
 }
 
 .content_item {
@@ -404,4 +405,13 @@ float:right;
 		height:750px;
 /*		background-color:#ECEDED;*/
 	}
+	
+.contentLoading {
+   background-color: #000000;
+    margin-left: 69px;
+    margin-top: 5px;
+    text-align: center;
+    width: 634px;
+    z-index:1;
+}
 	

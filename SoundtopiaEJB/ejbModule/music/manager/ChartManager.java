@@ -14,6 +14,7 @@ import music.data.LyricVO;
 import music.data.Price;
 import music.data.PriceVO;
 import music.data.Song;
+import music.data.SongInChart;
 import music.data.SongVO;
 import music.repository.ChartDAO;
 import music.repository.LyricDAO;
@@ -45,12 +46,19 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 		System.out.println("vor query");
 		Chart chart = chartDAO.findChart(chartName);
 		System.out.println("Chart: " + chart);
-		List<Song> songList = songDAO.findSongInCharts(chart.getId(), start, end);
+		List<Song> songList = songDAO.findSongInCharts(chart.getId(), start,
+				end);
 		System.out.println("SongList: " + songList);
 		for (int i = 0; i < songList.size(); i++) {
 			chartEntry = new SongVO();
 			chartEntry.setInterpreter(songList.get(i).getInterpreter());
-			chartEntry.setRanking(i + start);
+			// chartEntry.setRanking(i + start);
+			for (SongInChart sic : songList.get(i).getSongInCharts()) {
+				if (sic.getId().getChartID() == chart.getId()) {
+					chartEntry.setRanking(sic.getRanking());
+					chartEntry.setChange(sic.getChange());
+				}
+			}
 			chartEntry.setTitle(songList.get(i).getTitle());
 			chartEntry.setTracklength(songList.get(i).getTracklength());
 			chartEntry.setVideo(songList.get(i).getVideo());
