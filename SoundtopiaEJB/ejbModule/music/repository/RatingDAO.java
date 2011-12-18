@@ -17,7 +17,7 @@ public class RatingDAO {
 
 	public RatingDAO() {
 	}
-	
+
 	public boolean doesRatingExist(RatingPK pk) {
 		if (findRating(pk) != null)
 			return true;
@@ -30,8 +30,24 @@ public class RatingDAO {
 		pk.setSongID(songID);
 		pk.setUserID(userID);
 
-		Rating rating = new Rating();
-		rating.setId(pk);
+		if (!doesRatingExist(pk)) {
+
+			Rating rating = new Rating();
+			rating.setId(pk);
+			rating.setRating(ratingValue);
+			em.persist(rating);
+		} else
+			updateRating(pk, ratingValue);
+	}
+
+	public void updateRating(RatingPK pk, int ratingValue) {
+		Rating rating = findRating(pk);
+		rating.setRating(ratingValue);
+		em.persist(rating);
+	}
+
+	public void updateRating(int userID, int songID, int ratingValue) {
+		Rating rating = findRating(userID, songID);
 		rating.setRating(ratingValue);
 		em.persist(rating);
 	}
@@ -40,7 +56,7 @@ public class RatingDAO {
 		RatingPK pk = new RatingPK();
 		pk.setSongID(songID);
 		pk.setUserID(userID);
-		if(doesRatingExist(pk)) {
+		if (doesRatingExist(pk)) {
 			Rating rating = findRating(pk);
 			em.remove(rating);
 		}

@@ -17,8 +17,10 @@ import java.util.Set;
         query="SELECT s FROM Song s WHERE s.interpreter LIKE :interpreter AND s.title LIKE :title"
 ),
 @NamedQuery(
-		name="test.myTest",
-		query="SELECT max(x.lastUpdated) FROM Chart x WHERE x.name LIKE :name")
+		name="song.findSongsInChart",
+		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND c.ranking >= :start AND c.ranking <= :end ORDER BY c.ranking")
+
+				//AND s.songInChart.ranking >= :start AND s.songInChart.ranking <= :end ORDER BY s.songInChart.ranking")
 
 })
 public class Song implements Serializable {
@@ -49,6 +51,7 @@ public class Song implements Serializable {
 
 	//bi-directional many-to-one association to Price
 	@OneToMany(mappedBy="song", fetch=FetchType.EAGER)
+	@OrderBy("provider ASC")
 	private Set<Price> prices;
 
 	//bi-directional one-to-one association to Lyric

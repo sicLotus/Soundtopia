@@ -1,0 +1,407 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+font-family: "DIN";
+src: url("./assets/DIN-Regular.ttf")
+}
+
+* {
+	padding:0px;
+	margin: 0px;
+}
+
+img {
+    border: 0px;
+}
+
+body {
+	background-image:url(./images/background1.png);
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-color:#1c503d;
+	color:#ffffff;
+	font-size:15px;
+}
+
+a {
+    color:#ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.resize {
+	width:50px;
+	height:17px;
+}
+
+#login_form{
+    position: absolute;
+}
+
+#login_success {
+	float:left;
+}
+
+#search_form {
+    position:  relative;
+}
+
+.navistrich {
+	height:30px;
+	width:773px;
+	background-image:url(./images/navistrich.png);
+	background-repeat:no-repeat;
+	clear:both;
+}
+
+.input {
+    position: absolute;
+    width: 86px;
+	height:14px;
+	padding:3px;
+	font-size: 10px;
+	font-family:Verdana,Arial,sans-serif;
+	color:#4e524e;
+	
+}
+
+#iuser,#ipass, #ilogin, #ireg, #isenter, #isearch {
+    position: absolute;
+}
+
+#iuser{
+    left: 0px;
+/*	font-family:"DIN";
+	font-size:11px;*/
+}
+
+#ipass{
+    left: 99px;
+}
+
+#ilogin{
+    left: 198px;
+}
+
+#ireg{
+    left: 255px;
+	top: 2px;
+}
+
+#isenter{
+    /*height: 23px;*/
+    right: 32px;
+    width: 160px;
+}
+
+#isearch{
+    right: 0px;
+}
+
+.navi_left {
+	position:relative;
+	width:28px;
+	height:20px;
+	float:left;
+}
+
+.navi_right {
+	position:relative;
+	float:left;
+	width:300px;
+	height:20px;
+	margin-left:16px;
+}
+
+.navi_item {
+	float:left;
+	position:relative;
+	margin-left:50px;
+}
+
+.navi_bar {
+	margin-left:69px;
+	background-color:#1f3022;
+	height:48px;
+	width:634px;
+}
+
+.navi_bar_content_left {
+	height:23px;
+	margin-top: 13px;
+	margin-left:13px;
+	float:left;
+}
+
+.navi_bar_content_right {
+	height:23px;
+	margin-top: 13px;
+	float:right;
+	margin-right:13px;
+}
+
+.logo {
+	height:110px;
+	/*background-color:#FFF;*/
+	background-image:url(./images/logo.png);
+	background-repeat:no-repeat;
+	margin:auto;
+	width:273px;
+}
+
+#content {
+	margin-top:5px;
+	margin-left:69px;
+}
+
+.content_item {
+	float:left;
+	margin-top:15px;
+	margin-left:25px;
+}
+
+.chartplatzierung {
+	background-image:url(./images/platzierung.png);
+	background-repeat:no-repeat;
+	height:53px;
+	width:53px;
+	float:left;
+}
+
+.platznummer {
+	font-size:19px;
+	text-align:center;
+	line-height:35px;
+	display:block;
+}
+
+.platz {
+	text-align:center;
+	display:block;
+	line-height:5px;
+	font-size:15px;
+}
+
+.chartbild {
+	width:106px;
+	height:106px;
+	background-color:#55796b;
+	float:left;
+	position:relative;
+}
+
+#cover {
+	width:106px;
+	height:106px;
+}
+
+.kasten {
+	width:423px;
+	height:106px;
+	float:left;
+	background-color:#55796b;
+	position:relative;
+}
+
+.chartautor {
+	font-weight:bold;
+	float:left;
+	margin-left:10px;
+	margin-top:10px;
+}
+
+.platzhalter_autor_name {
+	float:left;
+	margin-left:5px;
+	margin-top:10px;
+	display:block;
+	margin-right:5px;
+}
+
+.chartname {
+	margin-left:20px;
+	margin-top:10px;
+}
+
+.chartbewertung {
+	margin-left:10px;
+	font-style:italic;
+	float:left;
+	position:relative;
+}
+
+.chartstars {
+	position:relative;
+	left:5px;
+	width:150px;
+}
+
+.chartlaenge {
+	margin-left:10px;
+	margin-top: 30px;
+}
+
+.chartplayer {
+	margin-left:10px;
+}
+
+.chart_extend {
+	float:right;
+	margin-top:-18px;
+	margin-right:15px;
+	background-image:url(./images/ein_aus.png);
+	background-repeat:no-repeat;
+	width:30px;
+	cursor:pointer;
+	height:23px;
+	overflow:hidden;
+}
+
+.chart_extend_active {
+	background-position:bottom;
+}
+
+.kasten_extended {
+	margin-top:3px;
+	width:528px;
+	height:212px;
+	background-color:#55796b;
+	float:left;
+	margin-left:54px;
+}
+
+.chartpreise {
+	/*margin-left:11px;*/
+	margin-top:2px;
+	position:absolute;
+	margin-left:240px;
+	float:left;
+}
+
+
+
+.chartpreis {
+	float:left;
+	margin-left:5px;
+}
+
+.chartpreis_preis {
+	width:50px;
+	text-align:right;
+}
+
+/*.chartpreis1 {
+	float:left;
+}
+
+
+.chartpreis3 {
+	float:left;
+	margin-left:5px;
+}
+
+*/
+
+.chartvideo {
+	float:left;
+	width:241px;
+	height:160px;
+	margin-left:10px;
+	margin-top:7px;
+	background-color:#000;
+}
+
+.chartlyrik {
+	margin-top:12px;
+	margin-left:72px;
+	float:left;
+/*	width:150px;
+	overflow:auto;
+	height:160px;*/
+
+}
+
+.lyriktext {
+	margin-top:3px;
+	font-size:11px;
+	height:174px;
+	width:183px;
+	overflow:auto;
+}
+
+#footer {
+	margin-top:10px;
+	float:right;
+	/*font:Arial, Helvetica, sans-serif;*/
+}
+
+.platzierungen {
+	float:right;
+	margin-right:69px;
+}
+
+.platz1_25 {
+	float:right;
+	background-color:#000;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:2px;
+	padding-bottom:2px;
+	width:auto;
+	height:auto;
+	margin-right:5px;
+}
+
+.platz26_50 {
+	float:right;
+	margin-right:5px;
+}
+
+.platz51_75 {
+	float:right;
+	margin-right:5px;
+}
+
+.platz76UP {
+float:right;
+}
+
+.modal {
+		background-color:#55796b;
+		display:none;
+		height:100px;
+		padding:15px;
+		padding-top:10px;
+		padding-left:20px;
+		padding-right:20px;
+		padding-bottom:15px;
+		border:2px solid white;
+		text-align:left;
+		opacity:0.8;
+/*		-moz-border-radius:6px;
+		-webkit-border-radius:6px;*/
+		-moz-box-shadow: 0 0 25px #000;
+		-webkit-box-shadow: 0 0 25px #ccc;
+	}
+	
+		#modalRegister {
+		height:auto;
+		width:auto;	
+		/*overflow:auto;*/
+		opacity:1;
+		border:0;
+		z-index: 10001;
+	}
+
+
+#main {
+		margin:0px auto;
+		width:773px;
+		height:750px;
+/*		background-color:#ECEDED;*/
+	}
+	

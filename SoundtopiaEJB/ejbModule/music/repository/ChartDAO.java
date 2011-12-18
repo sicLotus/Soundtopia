@@ -78,7 +78,6 @@ public class ChartDAO {
 
 	@SuppressWarnings("unchecked")
 	public SongInChart findChartEntry(SongInChartPK pk) {
-
 		List<SongInChart> list = em.createNamedQuery("songInChart.findByIds")
 				.setParameter("id", pk).getResultList();
 		if (list.size() > 0) {
@@ -86,5 +85,6 @@ public class ChartDAO {
 		} else
 			return null;
 	}
+	
 
 }

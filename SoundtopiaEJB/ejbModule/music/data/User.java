@@ -10,6 +10,10 @@ import java.util.Set;
  * 
  */
 @Entity
+@NamedQuery(
+        name="user.findByEmail",
+        query="SELECT u FROM User u WHERE u.email LIKE :email"
+)
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 

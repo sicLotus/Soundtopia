@@ -44,6 +44,7 @@ public class MyServlet extends HttpServlet {
 		System.out.println("fd5dc0798250b169f94fb9d1cde2febe5503f77b");
 		System.out.println(userManager.findByEmail("Mateful@web.de").getPassword());
 		System.out.println(userManager.checkLogin("Mateful@web.de", "ben"));*/
+		
 		test.readChartsFromMyvideo();
 	}
 

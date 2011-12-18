@@ -30,8 +30,6 @@ public class SongDAO {
 		else
 			return false;
 	}
-	
-	
 
 	public Song createSong(String interpreter, String title, int tracklength,
 			String video) {
@@ -53,9 +51,20 @@ public class SongDAO {
 
 			return song;
 		} else
-			return null;
+			return updateSong(interpreter, title, tracklength, video);
 	}
 	
+	public Song updateSong(String interpreter, String title, int tracklength,
+			String video) {
+		Song song = findSong(interpreter, title);
+		song.setInterpreter(interpreter);
+		song.setTitle(title);
+		song.setTracklength(tracklength);
+		song.setVideo(video);
+		em.persist(song);
+
+		return song;
+	}
 
 	public boolean addPicture(int songID, String picture) {
 		try {
@@ -74,17 +83,25 @@ public class SongDAO {
 		List<Song> list = em.createNamedQuery("song.findByInterpreterAndTitle")
 				.setParameter("interpreter", interpreter)
 				.setParameter("title", title).getResultList();
-		if (list.size() > 0){
-			System.out.println("Found:"+interpreter+" - "+title);
+		if (list.size() > 0) {
 			return (Song) list.get(0);
-		}
-		else
+		} else
 			return null;
 	}
 
-	
 	public Song findSong(int id) {
 		return em.find(Song.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Song> findSongInCharts(int chartID, int start, int end) {
+		List<Song> list = em.createNamedQuery("song.findSongsInChart")
+				.setParameter("chartID", chartID).setParameter("start", start)
+				.setParameter("end", end).getResultList();
+		if (list.size() > 0) {
+			return list;
+		} else
+			return null;
 	}
 
 }

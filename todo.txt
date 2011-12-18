@@ -1,14 +1,39 @@
 Lyrics updaten, falls sie beim createn schon existieren?
+	Wenn man sie aktualisieren möchte, dann JA - sinnvoll? z.B. wenn man bei LyricWIKI neue Songtexte hinzufügt
 
 Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
 
 Adminpanel (Daten eines Songs ändern, neu einlesen aller Daten oder einzelner Songs)
 
-Update Rating in RatingDAO schreiben?
-
 Pictures weiterhin über die Google API einlesen? 
 	Vorteil: Wir haben zu jedem Song definitiv ein Bild
 	Nachteil: Die Bilder könnten falsch sein
-	Lösung: Admin kann den Pfad eines Bildes selbst ändern, falls Bild falsch ist
+	Lösung: Admin kann den Pfad eines Bildes selbst ändern oder eine andere API auswählen
 
-Trigger für Rating einbauen (SQL?!)
+Suchsystem
+	Wie soll es überhaupt funktionieren?
+	Suchen wir lediglich Title und Interpret?
+	Wie soll die Ausgabe funktionieren?
+	Verlängerung des Suchfensters bei längerem Text, aber mit MAX_BREITE[JS]
+
+Chartsystem
+	Irgendwo soll definiert werden ob der Song "NEU", "GESTIEGEN" oder "GEFALLEN" ist.
+	"NEU" sollen die Tracks sein, die neu in die Datenbank eingelesen wurden
+	"GESTIEGEN" sind diejenigen, die mehrere Einträge in SongInCharts haben und die Differenz dieser beiden
+	"GEFALLEN" wie bei "GESTIEGEN"
+
+Linksystem
+	Die Chartanzeige muss zum einen sich an die Anzahl der Songs anpassen (1-25, 26-...) [per AJAX]
+	Durch Bilder ersetzen (Geht es dann noch dynamisch? - ja, wenn man auf next klicken würde oder Text auf BG Bilder)
+	
+Bewertungssystem
+	Darstellung durch Sterne [JAVASCRIPT]
+	Kann Bewertung geändert werden, wenn ja WIE? <-> Kritisch wegen der Darstellung
+
+Favoritensystem(Zusatz)
+	Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
+	Favoriten müssen in der Navigation erreichbar sein
+	
+Fehlersystem
+	Welche Fehler könnten überhaupt auftreten?
+	Falls Fehler auftreten, Errorsites anpassen

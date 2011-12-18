@@ -23,8 +23,9 @@ public class UserManager implements UserManagerRemote, UserManagerLocal {
 	}
 
 	public boolean checkLogin(String email, String password) {
+		System.out.println("Aufruf checkLogin mit " + email + " und "
+				+ password);
 		User u = userDAO.findByEmail(email);
-		
 		try {
 			if (u != null && SHA1Convert.SHA1(password).equals(u.getPassword()))
 				return true;
@@ -45,10 +46,9 @@ public class UserManager implements UserManagerRemote, UserManagerLocal {
 			return false;
 		}
 	}
-	
-	
 
-	public boolean changePassword(String email, String oldPassword, String newPassword) {
+	public boolean changePassword(String email, String oldPassword,
+			String newPassword) {
 		try {
 			if (checkLogin(email, oldPassword)) {
 				userDAO.setPassword(email, SHA1Convert.SHA1(newPassword));

@@ -1,6 +1,7 @@
 package music.manager;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,6 +16,7 @@ import music.data.Song;
 import music.repository.ChartDAO;
 import music.repository.LyricDAO;
 import music.repository.PriceDAO;
+import music.repository.RatingDAO;
 import music.repository.SongDAO;
 import music.services.AmazonAPI;
 import music.services.GoogleImageAPI;
@@ -42,6 +44,9 @@ public class Session implements SessionRemote, SessionLocal {
 
 	@EJB
 	private ChartDAO chartDAO;
+	
+	@EJB
+	private RatingDAO ratingDAO;
 
 	public Session() {
 	}
@@ -55,33 +60,41 @@ public class Session implements SessionRemote, SessionLocal {
 		ChartEntryVO entry;
 		List<ChartEntryVO> chartList = api.retrieveData();
 		System.out.println("Succeeded: " + chartList.size());
+		//Chart chart = chartDAO.createChartTable();
 		for (int i = 0; i < chartList.size(); i++) {
 			entry = chartList.get(i);
-			// songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
-			// entry.getMovie_length(), entry.getMovie_url());
+			 songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
+			 entry.getMovie_length(), entry.getVideo());
 			// addPicture(entry.getInterpreter(), entry.getTitle());
-			// addLyric(entry.getInterpreter(), entry.getTitle());
+			 //addLyric(entry.getInterpreter(), entry.getTitle());
 			/*
 			 * new Charteintrag in ChartTabelle mit neuster ID (natürlich vor
 			 * der for schleife) ID an createChartEntry übergeben die ganze
 			 * methode soll dann 1x wöchentlich oder so ausgeführt werden
 			 */
-			// Chart chart = chartDAO.createChartTable();
 			// chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(),
-			// entry.getInterpreter(), entry.getTitle());
+		//	 entry.getInterpreter(), entry.getTitle());
 			// chartDAO.test("Singlecharts");
-			//addAmazonPrice(entry.getInterpreter(), entry.getTitle());
-			addItunesPrice(entry.getInterpreter(), entry.getTitle());
-			//addSevenDigitalPrice(entry.getInterpreter(), entry.getTitle());
+		//	addAmazonPrice(entry.getInterpreter(), entry.getTitle());
+		//	addItunesPrice(entry.getInterpreter(), entry.getTitle());
+		//	addSevenDigitalPrice(entry.getInterpreter(), entry.getTitle());
 			//ItunesAPI.retrieveData(entry.getInterpreter() +" "+ entry.getTitle());
-
+			//rateASong(1,entry.getInterpreter(), entry.getTitle(), 1);
 
 		}
 
 	}
 	
+	public void rateASong(int userID, String interpreter, String title, int rating) {
+		Song song = songDAO.findSong(interpreter, title);
+		if (song != null)
+		rateASong(userID, song.getId(), rating);
+	}
+	
 	public void rateASong(int userID, int songID, int rating) {
-		
+		Random rnd = new Random();
+		int value = rnd.nextInt(5)+1;
+		ratingDAO.createRating(userID, songID, value);
 	}
 
 	public void addItunesPrice(String interpreter, String title) {

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name="song_in_chart")
 @NamedQuery(
 		name="songInChart.findByIds",
-		query="SELECT s FROM SongInChart s WHERE s.id LIKE :id"
+		query="SELECT s FROM SongInChart s WHERE s.id = :id"
 		)
 public class SongInChart implements Serializable {
 	private static final long serialVersionUID = 1L;

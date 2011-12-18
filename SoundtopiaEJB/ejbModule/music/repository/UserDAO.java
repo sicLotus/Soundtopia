@@ -41,7 +41,7 @@ public class UserDAO {
 		List<User> list = em.createNamedQuery("user.findByEmail")
 				.setParameter("email", email).getResultList();
 		
-		if (list.size() > 0)
+		if (list != null && list.size() > 0)
 			return (User) list.get(0);
 		else
 			return null;

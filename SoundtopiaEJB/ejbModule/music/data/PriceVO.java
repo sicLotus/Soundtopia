@@ -7,7 +7,7 @@ public class PriceVO {
 	private String currency;
 	
 	public String getProvider() {
-		return provider;
+		return provider.toLowerCase();
 	}
 	public void setProvider(String provider) {
 		this.provider = provider;

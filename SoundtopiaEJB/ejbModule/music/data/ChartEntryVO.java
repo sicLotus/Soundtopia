@@ -26,6 +26,7 @@ public class ChartEntryVO {
 	private String coverUrl;
 	private LyricVO lyricVO;
 	private List<PriceVO> priceVO;
+	private String video;
 	
 
 	public void setMovie_title(String movie_title) {
@@ -179,6 +180,12 @@ public class ChartEntryVO {
 	}
 
 	public void setPermalink(String permalink) {
+		String temp = permalink;
+		temp = temp.substring(temp.indexOf("\"")+1, temp.lastIndexOf("\""));
+		temp = temp.replaceAll("/watch/", "/movie/");
+		temp = temp.substring(0, temp.lastIndexOf("/"));
+		//temp = temp.replaceAll("<a href=\"", "").replaceAll("\">.*", "");
+		setVideo(temp);
 		this.permalink = permalink;
 	}
 
@@ -209,6 +216,14 @@ public class ChartEntryVO {
 
 		return interpreter + "|" + title;
 
+	}
+
+	public String getVideo() {
+		return video;
+	}
+
+	public void setVideo(String video) {
+		this.video = video;
 	}
 
 }
