@@ -61,7 +61,6 @@ public class ChartDAO {
 			SongInChart sic = new SongInChart();
 			sic.setId(pk);
 			sic.setRanking(chartPlacing);
-
 			em.persist(sic);
 		}
 	}

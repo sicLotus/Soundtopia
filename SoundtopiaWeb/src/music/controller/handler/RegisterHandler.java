@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import music.controller.Controller;
+import music.data.UserVO;
 import music.manager.UserManagerLocal;
 
 @WebServlet("/RegisterHandler")
@@ -36,18 +38,17 @@ public class RegisterHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-		boolean registered = false;
 		HttpSession session = request.getSession();
 
-		String email = request.getParameter("emailRegister");
-		String password = request.getParameter("passwordRegister");
+		String email = request.getParameter("emailR");
+		String password = request.getParameter("passwordR");
 
-		registered = userManager.createUser(email, password);
+		UserVO user = Controller.userManager.createUser(email, password);
 
-		if (registered) {
-			session.setAttribute("email", email);
-			session.setAttribute("loggedIn", new Boolean(registered));
-			view = "../views/registerdone.jsp";
+		if (user != null) {
+			session.setAttribute("user", user);
+			session.setAttribute("loggedIn", new Boolean(true));
+			view = "../controller/showCharts";
 		} else
 			view = "../error/registerErr.jsp";
 

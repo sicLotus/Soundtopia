@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import music.data.Price;
 import music.data.PriceVO;
@@ -66,7 +65,7 @@ public class PriceDAO {
 			return null;
 	}
 
-	public Price getPrice(int id) {
+	public Price findPrice(int id) {
 		return em.find(Price.class, id);
 	}
 
@@ -77,18 +76,15 @@ public class PriceDAO {
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Price findPriceBySongIDAndProvider(int songID, String provider) {
 		try {
 			Price price = (Price) em.createNamedQuery("price.findBySongIDAndProvider").setParameter("songID", songID)
 					.setParameter("provider", provider).getSingleResult();
-			System.out.println("price: "+price);
 			return price;
 		} catch (NoResultException e) {
-			return null;
-		//Query q = em.createQuery("SELECT c FROM Price c WHERE c.songID = "+songID+" AND provider="+provider);
-		
+			return null;	
 		}
-		//return null;
 	}
+	
+	
 }

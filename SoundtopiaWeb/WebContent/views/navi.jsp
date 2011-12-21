@@ -10,22 +10,19 @@
 
 	<div class="navi_bar">
 		<div class="navi_bar_content_left">
-			<%if (session.getAttribute("loggedIn") != null){
-					boolean loggedIn = false; 
-					loggedIn = (Boolean) session.getAttribute("loggedIn");
-					if (loggedIn==true){ 
+			<%
+				boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
+				if (loggedIn==true){ 
 						String email = (String) session.getAttribute("email");
-						
 					%>
-					
 					<div id="login_success">Angemeldet unter <u><%=email %></u> (<a href="../controller/logout">Logout</a>)</div>
 					</div>
-					<% }} else { %>
+					<% } else { %>
 
 			<form id="login_form" action="../controller/login" Method="post">
-				<input id="iuser" name="iuser" class="input" value="Username"
+				<input id="iuser" name="iuser" class="input" value="lotus"
 					type="text">&nbsp; <input id="ipass" name="ipass"
-					class="input" value="Passwort" type="password">&nbsp; <input
+					class="input" value="lotus" type="password">&nbsp; <input
 					id="ilogin" type="image" src="../images/login.png">&nbsp; <span
 					id="ireg"><a class="modalInput" rel="#modalRegister"
 					href="javascript:void(0);">Registrierung</a></span>

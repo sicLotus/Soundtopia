@@ -3,9 +3,10 @@ package music.data;
 import java.util.List;
 
 public class SongVO {
+	private int id;
 	private String interpreter;
 	private String title;
-	private int tracklength;
+	private String tracklength;
 	private String video;
 	private float rating;
 	private String picture;
@@ -13,6 +14,7 @@ public class SongVO {
 	private LyricVO lyric;
 	private int ranking;
 	private Integer change;
+	private int userRating;
 	
 	public String getInterpreter() {
 		return interpreter;
@@ -26,10 +28,10 @@ public class SongVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getTracklength() {
+	public String getTracklength() {
 		return tracklength;
 	}
-	public void setTracklength(int tracklength) {
+	public void setTracklength(String tracklength) {
 		this.tracklength = tracklength;
 	}
 	public String getVideo() {
@@ -73,6 +75,18 @@ public class SongVO {
 	}
 	public void setChange(Integer change) {
 		this.change = change;
+	}
+	public int getUserRating() {
+		return userRating;
+	}
+	public void setUserRating(int userRating) {
+		this.userRating = userRating;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

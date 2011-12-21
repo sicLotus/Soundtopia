@@ -7,6 +7,6 @@ import music.data.SongVO;
 
 @Local
 public interface ChartManagerLocal {
-	public List<SongVO> showCharts(String chartName, int start, int end);
+	public List<SongVO> showCharts(String chartName, int start, int end, int userID);
 
 }

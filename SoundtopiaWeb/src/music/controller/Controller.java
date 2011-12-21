@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import music.controller.handler.LoginHandler;
 import music.controller.handler.LogoutHandler;
+import music.controller.handler.RateSongHandler;
 import music.controller.handler.RegisterHandler;
 import music.controller.handler.ShowChartsHandler;
 import music.manager.ChartManagerLocal;
+import music.manager.SongManagerLocal;
 import music.manager.UserManagerLocal;
 
 @WebServlet("/controller")
@@ -28,6 +30,9 @@ public class Controller extends HttpServlet {
 	
 	@EJB
 	public static ChartManagerLocal chartManager;
+	
+	@EJB
+	public static SongManagerLocal songManager;
 	
 /*
 //EJB injezieren
@@ -92,6 +97,13 @@ public class Controller extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	private void initializeSession(HttpSession session) {
+		if (session.getAttribute("loggedIn") == null) {
+			session.setAttribute("loggedIn", new Boolean(false));
+		}
+	}
+	
 	/*	
 	private void initializeSession(HttpSession session) {
 		if (session.getAttribute("userBO") == null) {
@@ -146,7 +158,7 @@ public class Controller extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		//initializeSession(session);
+		initializeSession(session);
 				
 		if (pathInfo == null || "/".equals(pathInfo))
 			   response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -167,6 +179,11 @@ public class Controller extends HttpServlet {
 		
 		if(servlet.equals("showCharts")){
 			ShowChartsHandler handler = new ShowChartsHandler();
+			view = handler.processRequest(request, response);
+		}
+		
+		if(servlet.equals("rateSong")){
+			RateSongHandler handler = new RateSongHandler();
 			view = handler.processRequest(request, response);
 		}
 		

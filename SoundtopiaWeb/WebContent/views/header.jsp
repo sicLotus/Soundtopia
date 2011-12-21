@@ -5,9 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../style.css" rel="stylesheet" type="text/css">
+<link href="../jquery.ui.stars.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://cdn.jquerytools.org/1.2.6/all/jquery.tools.min.js"></script>
 <script src="../assets/soundtopia.js"></script>
+<script src="../assets/jquery-ui-1.8.16.custom.js"></script>
+<script src="../assets/jquery.ui.stars.js"></script>
 
 
 <title>Soundtopia</title>
@@ -18,7 +21,7 @@
 		<div class="logo"></div>
 	    <div class="navi">
         	<div class="navi_left"></div>
-      		<div class="navi_item">Singlecharts</div>
+      		<div class="navi_item"><a href="../controller/showCharts">Singlecharts</a></div>
             <div class="navi_item">Albumcharts</div>
             <div class="navi_item">Neuheiten</div>
         	<div class="navi_right"></div>

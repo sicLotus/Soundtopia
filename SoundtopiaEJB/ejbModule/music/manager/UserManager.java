@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import music.data.User;
+import music.data.UserVO;
 import music.repository.UserDAO;
 import music.util.SHA1Convert;
 
@@ -22,35 +23,48 @@ public class UserManager implements UserManagerRemote, UserManagerLocal {
 	public UserManager() {
 	}
 
-	public boolean checkLogin(String email, String password) {
+	public UserVO checkLogin(String email, String password) {
 		System.out.println("Aufruf checkLogin mit " + email + " und "
 				+ password);
 		User u = userDAO.findByEmail(email);
 		try {
-			if (u != null && SHA1Convert.SHA1(password).equals(u.getPassword()))
-				return true;
+			if (u != null && SHA1Convert.SHA1(password).equals(u.getPassword())){
+				UserVO user = new UserVO();
+				user.setAdmin(u.getAdmin());
+				user.setEmail(u.getEmail());
+				user.setId(u.getId());
+				user.setPassword(u.getPassword());
+				return user;
+			}
+				
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
-		return false;
+		return null;
 	}
 
-	public boolean createUser(String email, String password) {
+	public UserVO createUser(String email, String password) {
 		try {
-			userDAO.createUser(email, SHA1Convert.SHA1(password));
-			return true;
+			User user = userDAO.createUser(email, SHA1Convert.SHA1(password));
+			UserVO vo = new UserVO();
+			vo.setAdmin(user.getAdmin());
+			vo.setEmail(user.getEmail());
+			vo.setId(user.getId());
+			vo.setPassword(user.getPassword());
+			return vo;
 		} catch (Exception e) {
-			return false;
+			e.printStackTrace();
+			return null;
 		}
 	}
 
 	public boolean changePassword(String email, String oldPassword,
 			String newPassword) {
 		try {
-			if (checkLogin(email, oldPassword)) {
+			if (checkLogin(email, oldPassword) != null) {
 				userDAO.setPassword(email, SHA1Convert.SHA1(newPassword));
 				return true;
 			}

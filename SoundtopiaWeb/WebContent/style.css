@@ -414,4 +414,33 @@ float:right;
     width: 634px;
     z-index:1;
 }
+
+.chartState {
+	float:left;
+	margin-left: -35px;
+    margin-top: -10px;
+    width: 19px;
+}
+
+.chartStateText {
+	float:left;
+}
+
+.new {
+	float:left;
+}
+
+.equal {
+	float:left;	
+}
+
+.up {
+	float:left;
+}
+
+.down {
+	float:left;
+}
+
+
 	

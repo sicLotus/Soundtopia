@@ -16,19 +16,9 @@ Suchsystem
 	Wie soll die Ausgabe funktionieren?
 	Verlängerung des Suchfensters bei längerem Text, aber mit MAX_BREITE[JS]
 
-Chartsystem
-	Irgendwo soll definiert werden ob der Song "NEU", "GESTIEGEN" oder "GEFALLEN" ist.
-	"NEU" sollen die Tracks sein, die neu in die Datenbank eingelesen wurden
-	"GESTIEGEN" sind diejenigen, die mehrere Einträge in SongInCharts haben und die Differenz dieser beiden
-	"GEFALLEN" wie bei "GESTIEGEN"
-
 Linksystem
 	Die Chartanzeige muss zum einen sich an die Anzahl der Songs anpassen (1-25, 26-...) [per AJAX]
 	Durch Bilder ersetzen (Geht es dann noch dynamisch? - ja, wenn man auf next klicken würde oder Text auf BG Bilder)
-	
-Bewertungssystem
-	Darstellung durch Sterne [JAVASCRIPT]
-	Kann Bewertung geändert werden, wenn ja WIE? <-> Kritisch wegen der Darstellung
 
 Favoritensystem(Zusatz)
 	Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
@@ -37,3 +27,17 @@ Favoritensystem(Zusatz)
 Fehlersystem
 	Welche Fehler könnten überhaupt auftreten?
 	Falls Fehler auftreten, Errorsites anpassen
+
+Prüfen ob man eingeloggt ist per JSTL und nicht EL
+Darstellung des Users der eingeloggt ist wird zurzeit "null" ausgegeben, da die Sessionvariable gar nicht mehr existiert (UserVO wird doch jetzt zurückgegeben)
+	Eventuell beim alten Projekt nachschauen ob man DATA Objekte injezieren muss?!
+
+
+Anpassen des AJAX Rerquest bei showCharts in der Soundtopia.js (siehe charts.jsp)
+
+DF.format mit . anstatt , in showChartsHandler und rateSongHandler
+	wieviel komma nachstellen? und beim ersten mal in jstl auch schon formatieren!
+
+Defaultwerte vom Loginformular wieder auf Username und passwort ändern
+
+showChartsHandler bisher alles redundant

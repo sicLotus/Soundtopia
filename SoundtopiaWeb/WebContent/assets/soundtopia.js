@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
 	hideKasten();
-	 
+	
 	 $('#iuser').focus(function() {
   		$(this).select();
 	 });
@@ -21,6 +21,19 @@ jQuery(document).ready(function(){
 		},
 		closeOnClick: true
 	});
+	  
+	/*    $("#stars-wrapper1").stars({
+	        cancelShow: false,
+	        captionEl: $("#stars-cap"),
+	        callback: function(ui, type, value)
+	        {
+	            $.getJSON("ratings.php", {rate: value}, function(json)
+	            {
+	                $("#fake-stars-on").width(Math.round( $("#fake-stars-off").width() / ui.options.items * parseFloat(json.avg) ));
+	                $("#fake-stars-cap").text(json.avg + " (" + json.votes + ")");
+	            });
+	        }
+	    });*/
 
 });
 
@@ -29,6 +42,42 @@ function hideKasten() {
 	 $('.chart_extend').click(function(){
 		$(this).toggleClass("chart_extend_active").parent().next('.kasten_extended').slideToggle('normal');
 	 });
+}
+
+function rate(divID, value) {
+	$("#stars-wrapper"+divID).stars('select', parseInt(value));
+	document.getElementById('#fake-stars-off'+divID).style.display = "none";
+}
+
+function rateFake(divID, value) { 
+	$("#fake-stars-on"+divID).width(Math.round( $("#fake-stars-off"+divID).width() / 5 * parseFloat(value) ));
+}
+
+function showStars (divID, songID) {
+	$("#stars-wrapper"+divID).stars({
+        inputType: "select",
+        callback: function(ui, type, value){
+        	var ui = $("#stars-wrapper"+divID).data("stars");
+        	var _data = "songID="+songID+"&rating="+ui.options.value;
+        	jQuery.ajax({
+        				url: "../controller/rateSong",
+        				type: "POST",
+        				data: _data,
+        				success: function (reqCode) {
+        					//aktualisieren des durchschnittwertes
+        					var html = reqCode.meanRating;
+        					updateChartstars(divID, html);
+        				}
+        	})
+        	
+        }
+    });
+}
+
+function disableStars() {
+    $(".stars-wrapper").stars({
+        disabled: true
+    });
 }
 
 function startLoading() {
@@ -94,4 +143,9 @@ function showCharts(start, end) {
 function updateChartList(chartList){
 	document.getElementById('content').innerHTML = chartList;
 	hideKasten();
-}	
+}
+
+function updateChartstars(id, html) {
+	ele = 'chartstars'+id;
+	document.getElementById(ele).innerHTML = html;
+}
