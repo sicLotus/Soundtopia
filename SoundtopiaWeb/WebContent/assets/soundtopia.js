@@ -13,6 +13,18 @@ jQuery(document).ready(function(){
   		$(this).select();
 	 });
 	 
+	 $('#txtCover').focus(function() {
+	  		$(this).select();
+		 });
+	 
+	 $('#txtInterpreter').focus(function() {
+	  		$(this).select();
+		 });
+	 
+	 $('#txtTitle').focus(function() {
+	  		$(this).select();
+		 });
+	 
 	  var triggers = jQuery(".modalInput").overlay({
 		mask: {
 			color: '#113d2b',
@@ -21,6 +33,7 @@ jQuery(document).ready(function(){
 		},
 		closeOnClick: true
 	});
+	  
 	  
 	/*    $("#stars-wrapper1").stars({
 	        cancelShow: false,
@@ -68,7 +81,7 @@ function showStars (divID, songID) {
         					var html = reqCode.meanRating;
         					updateChartstars(divID, html);
         				}
-        	})
+        	});
         	
         }
     });
@@ -148,4 +161,58 @@ function updateChartList(chartList){
 function updateChartstars(id, html) {
 	ele = 'chartstars'+id;
 	document.getElementById(ele).innerHTML = html;
+}
+
+function fillText(songID) {
+	var _data = "songID="+songID;
+	jQuery.ajax({
+		url: "../controller/showInfo",
+		type: "POST",
+		data: _data,
+		success: function (reqCode) {
+			document.getElementById("txtID").value = songID;
+			document.getElementById("txtCover").value = reqCode.songAddition.cover;
+			document.getElementById("txtInterpreter").value = reqCode.songAddition.interpreter;
+			document.getElementById("txtTitle").value = reqCode.songAddition.title;
+		}
+	});
+	
+}
+
+function changeSongInformation() {
+	var songID = document.getElementById("txtID").value;
+	var cover = document.getElementById("txtCover").value;
+	var interpreter = document.getElementById("txtInterpreter").value;
+	var title = document.getElementById("txtTitle").value;
+	
+	var _data = "songID="+songID+"&cover="+cover+"&interpreter="+interpreter+"&title="+title;
+	jQuery.ajax({
+		url: "../controller/changeSongInformation",
+		type: "POST",
+		data: _data,
+		success: function (reqCode) {
+			document.getElementById("cover"+songID).setAttribute("src", reqCode.cover);
+			document.getElementById("chartautor"+songID).innerHTML = reqCode.interpreter;
+			document.getElementById("chartname"+songID).innerHTML = reqCode.title;
+			var priceHtml = "";
+			if (reqCode.prices != null) {
+			jQuery.each(reqCode.prices, function(i, value) {
+				priceHtml +="<div class=\"chartpreis\"><a target=\"_blank\" href=\""+reqCode.prices[i].url+
+				"\"><img class=\"resize\" src=\"../images/"+reqCode.prices[i].provider+"_resize.png\" /></a><div class=\"chartpreis_preis\"><a target=\"_blank\" "+
+				"href=\""+reqCode.prices[i].url+"\">"+reqCode.prices[i].value+" "+reqCode.prices[i].currency+"</a></div></div>";
+			});
+			
+		}
+			document.getElementById("chartpreise"+songID).innerHTML = priceHtml;
+			var lyricHtml = reqCode.lyric.text+"<br><br><a target=\"_blank\" href=\""+reqCode.lyric.url+"\">"+reqCode.interpreter+" - "+reqCode.title+"</a>";
+			
+			document.getElementById("lyriktext"+songID).innerHTML = lyricHtml;
+			
+
+			
+			document.getElementById("closeModalEdit").click();
+		}
+	});
+	
+	
 }

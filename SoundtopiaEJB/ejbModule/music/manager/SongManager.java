@@ -3,9 +3,22 @@ package music.manager;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import music.data.LyricVO;
 import music.data.Song;
+import music.data.SongAddition;
+import music.data.SongAdditionVO;
+import music.data.SongVO;
+import music.repository.LyricDAO;
+import music.repository.PriceDAO;
 import music.repository.RatingDAO;
+import music.repository.SongAdditionDAO;
 import music.repository.SongDAO;
+import music.services.AmazonAPI;
+import music.services.ItunesAPI;
+import music.services.LyricAPI;
+import music.services.SevenDigitalsAPI;
+
+
 
 /**
  * Session Bean implementation class SongManager
@@ -13,33 +26,95 @@ import music.repository.SongDAO;
 @Stateless
 public class SongManager implements SongManagerRemote, SongManagerLocal {
 
+	
 	@EJB
 	private RatingDAO ratingDAO;
-	
+
 	@EJB
 	private SongDAO songDAO;
+
+	@EJB
+	private SongAdditionDAO songAdditionDAO;
+
+	@EJB
+	private LyricDAO lyricDAO;
+
+	@EJB
+	private PriceDAO priceDAO;
+
+	/**
+	 * Default constructor.
+	 */
+	public SongManager() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * 
+	 * @return Durchschnittsbewertung eines Songs geht nicht, da der trigger
+	 *         scheinbar zu langsam ist oO
+	 */
+	public void rateASong(int userID, int songID, int rating) {
+		ratingDAO.createRating(userID, songID, rating);
+		// Song song = songDAO.findSong(songID);
+		// return song.getRating();
+	}
+
+	public float getMeanRate(int songID) {
+		Song song = songDAO.findSong(songID);
+		return song.getRating();
+	}
+
+	public SongAdditionVO getSongInformation(int songID) {
+		SongAdditionVO songAdditionVO = new SongAdditionVO();
+		SongAddition songAddition = songAdditionDAO.findSongAddition(songID);
+
+		if (songAddition != null) {
+			songAdditionVO.setCover(songAddition.getCover());
+			songAdditionVO.setTitle(songAddition.getTitle());
+			songAdditionVO.setInterpreter(songAddition.getInterpreter());
+		} else {
+			Song song = songDAO.findSong(songID);
+			if (song != null) {
+				songAdditionVO.setCover(song.getPicture());
+				songAdditionVO.setTitle(song.getTitle());
+				songAdditionVO.setInterpreter(song.getInterpreter());
+			}
+		}
+		return songAdditionVO;
+	}
+
+	public SongVO changeSongInformation(int songID, String interpreter,
+			String title, String cover) {
+		songAdditionDAO.createSongAddition(songID, interpreter, title, cover);
+
+		readNewSongInformationFromAPIs(songID, interpreter, title, cover);
+		
+		Song song = songDAO.findSong(songID);
+		SongVO songVO = new SongVO();
+		songVO.valueOf(song);
+
+		return songVO;
+	}
+
+	private void readNewSongInformationFromAPIs(int songID, String interpreter,
+			String title, String cover) {
+		LyricVO lyric = LyricAPI.retrieveData(interpreter, title);
+		lyricDAO.createLyric(songID, lyric);
+
+		priceDAO.removeAllPrices(songID);
+		priceDAO.createPrice(songID, AmazonAPI.retrieveData(
+				AmazonAPI.SearchIndex.MP3Downloads, interpreter + " " + title));
+		priceDAO.createPrice(songID, ItunesAPI.retrieveData(interpreter, title));
+		priceDAO.createPrice(songID,
+				SevenDigitalsAPI.retrieveData(interpreter, title));
+	}
 	
-    /**
-     * Default constructor. 
-     */
-    public SongManager() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    /**
-     * 
-     * @return Durchschnittsbewertung eines Songs
-     * geht nicht, da der trigger scheinbar zu langsam ist oO
-     */
-    public void rateASong(int userID, int songID, int rating) {
-    	ratingDAO.createRating(userID, songID, rating);
-    	//Song song = songDAO.findSong(songID);
-    	//return song.getRating();
-    }
-    
-    public float getMeanRate(int songID) {
-    	Song song = songDAO.findSong(songID);
-    	return song.getRating(); 
-    }
+	public SongVO getSong(int songID) {
+		Song song = songDAO.findSong(songID);
+		SongVO songVO = new SongVO();
+		songVO.valueOf(song);
+		return songVO;
+	}
 
 }

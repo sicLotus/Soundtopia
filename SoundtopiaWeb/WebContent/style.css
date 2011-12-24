@@ -195,7 +195,7 @@ a:hover {
 	position:relative;
 }
 
-#cover {
+.cover {
 	width:106px;
 	height:106px;
 }
@@ -389,10 +389,18 @@ float:right;
 		-webkit-box-shadow: 0 0 25px #ccc;
 	}
 	
-		#modalRegister {
+	#modalRegister {
 		height:auto;
 		width:auto;	
 		/*overflow:auto;*/
+		opacity:1;
+		border:0;
+		z-index: 10001;
+	}
+	
+	#modalEdit {
+		height:auto;
+		width:auto;	
 		opacity:1;
 		border:0;
 		z-index: 10001;
@@ -442,5 +450,11 @@ float:right;
 	float:left;
 }
 
+.edit {
+	float:left;
+	width:27px;
+	margin-top:60px;
+	margin-left:-27px;
+}
 
 	

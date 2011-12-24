@@ -12,6 +12,7 @@
 	<class>music.data.SongInChartPK</class>
 	<class>music.data.Rating</class>
 	<class>music.data.RatingPK</class>
+	<class>music.data.SongAddition</class>
 	<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 	

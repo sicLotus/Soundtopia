@@ -46,8 +46,6 @@ public class ShowChartsHandler extends HttpServlet {
 		String operation = "";
 		operation = request.getParameter("op");
 
-		System.out.println(operation);
-
 		if (operation != null && operation.equals("update")) {
 			updateChartList(request, response);
 			view = null;
@@ -65,8 +63,6 @@ public class ShowChartsHandler extends HttpServlet {
 				end = 25;
 			}
 
-			System.out.println("EJB: " + Controller.chartManager);
-
 			HttpSession session = request.getSession();
 			boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
 
@@ -78,10 +74,10 @@ public class ShowChartsHandler extends HttpServlet {
 				chartList = Controller.chartManager.showCharts("Singlecharts",
 						start, end, -1);
 			}
-			for (SongVO s : chartList) {
-				System.out.println(s.getRanking() + ": " + s.getInterpreter()
-						+ " " + s.getTitle());
-			}
+//			for (SongVO s : chartList) {
+//				System.out.println(s.getRanking() + ": " + s.getInterpreter()
+//						+ " " + s.getTitle());
+//			}
 
 			request.setAttribute("chartList", chartList);
 
@@ -124,10 +120,10 @@ public class ShowChartsHandler extends HttpServlet {
 					start, end, -1);
 		}
 		
-		for (SongVO s : chartList) {
-			System.out.println(s.getRanking() + ": " + s.getInterpreter() + " "
-					+ s.getTitle());
-		}
+//		for (SongVO s : chartList) {
+//			System.out.println(s.getRanking() + ": " + s.getInterpreter() + " "
+//					+ s.getTitle());
+//		}
 
 		try {
 			JSONObject json = new JSONObject();

@@ -17,14 +17,14 @@ public class ItunesAPI {
 	final static int queryCount = 3;
 
 	public static void main(String[] args) {
-		retrieveData("Tim Bendzko Wenn Worte meine Sprache wären song");
+		//retrieveData("Tim Bendzko Wenn Worte meine Sprache wären song");
 	}
 
 	/**
 	 * @param query
 	 *            e.g. "Lady Gaga Poker Face"
 	 */
-	public static PriceVO retrieveData(String query) {
+	public static PriceVO retrieveData(String interpreter, String title) {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		PriceVO price;
@@ -33,7 +33,7 @@ public class ItunesAPI {
 				.resource("http://itunes.apple.com/search");
 
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
-		params.add("term", query);
+		params.add("term", interpreter+" "+title);
 		params.add("country", "DE");
 		params.add("limit", "" + queryCount);
 		params.add("entity", "musicTrack");

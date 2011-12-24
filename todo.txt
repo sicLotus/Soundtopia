@@ -1,14 +1,8 @@
-Lyrics updaten, falls sie beim createn schon existieren?
-	Wenn man sie aktualisieren möchte, dann JA - sinnvoll? z.B. wenn man bei LyricWIKI neue Songtexte hinzufügt
+VALIDIERUNG von Forumularen
 
 Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
 
 Adminpanel (Daten eines Songs ändern, neu einlesen aller Daten oder einzelner Songs)
-
-Pictures weiterhin über die Google API einlesen? 
-	Vorteil: Wir haben zu jedem Song definitiv ein Bild
-	Nachteil: Die Bilder könnten falsch sein
-	Lösung: Admin kann den Pfad eines Bildes selbst ändern oder eine andere API auswählen
 
 Suchsystem
 	Wie soll es überhaupt funktionieren?
@@ -28,11 +22,6 @@ Fehlersystem
 	Welche Fehler könnten überhaupt auftreten?
 	Falls Fehler auftreten, Errorsites anpassen
 
-Prüfen ob man eingeloggt ist per JSTL und nicht EL
-Darstellung des Users der eingeloggt ist wird zurzeit "null" ausgegeben, da die Sessionvariable gar nicht mehr existiert (UserVO wird doch jetzt zurückgegeben)
-	Eventuell beim alten Projekt nachschauen ob man DATA Objekte injezieren muss?!
-
-
 Anpassen des AJAX Rerquest bei showCharts in der Soundtopia.js (siehe charts.jsp)
 
 DF.format mit . anstatt , in showChartsHandler und rateSongHandler
@@ -41,3 +30,38 @@ DF.format mit . anstatt , in showChartsHandler und rateSongHandler
 Defaultwerte vom Loginformular wieder auf Username und passwort ändern
 
 showChartsHandler bisher alles redundant
+
+edit mit choose ersetzen (in charts.jsp, weil nur wenn admin eingeloggt ist soll editieren können): 
+<c:choose>
+	        	<c:when test="${sessionScope.user.admin == 1 }">
+	        		<a class="modalInput" rel="#modalEdit" href="javascript:void(0);">
+	        			<img class="edit" src="../images/edit.png" />
+	        		</a>
+	        	</c:when>
+        	</c:choose>
+
+in soundtopia.js fillText weiterschreiben:
+	übergabe parameter an fillText: songID
+	ajax request an eine action, welche mir die werte aus song_addition oder aus song wieder gibt..
+	buttons einfügen für nutzung anderer api's wo dann per ajax wiederum die url direkt eingetragen wird
+	wenn man auf speichern klickt, wird der song gleich neu eingelesen! (lyrics,prices)
+	
+	Wo valueOf hinschreiben? in VO darf mans ja nich hinschreiben, kennen die manager sich gegenseitig? kann ein manager auf einen anderen zuzgreifen?
+	wenn ja, dann sollte man die ganzen funktionen wohl in den songmanager schreiben..
+	
+	alle api's static?
+	
+	transaktionen? lösung finden
+	
+	edit rückgängig machen, also einfach songaddition löschen
+	im songmanager noch abfragen ob title oder interpreter geändert wurden, nur dann brauchen wir lyrics+price neu einlesen
+	
+	in der navigation nen link, um daten neu einlesen
+	
+	usercharts (sortiert nach bewertung)
+	
+	bei editformular noch buttons für die api einfügen
+	
+	Chart 21: Preis bei Itunes ist -1? (itunesAPI < 0 checken?!)
+	
+	lade-animation in edit formular, damit man feedback bekommt

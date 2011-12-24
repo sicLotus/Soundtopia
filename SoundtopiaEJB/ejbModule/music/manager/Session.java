@@ -100,7 +100,7 @@ public class Session implements SessionRemote, SessionLocal {
 	public void addItunesPrice(String interpreter, String title) {
 		Song song = songDAO.findSong(interpreter, title);
 		if (song != null) {
-			PriceVO item = ItunesAPI.retrieveData(interpreter + " " + title);
+			PriceVO item = ItunesAPI.retrieveData(interpreter, title);
 			priceDAO.createPrice(song.getId(), item);
 		}
 	}
@@ -108,8 +108,7 @@ public class Session implements SessionRemote, SessionLocal {
 	public void addSevenDigitalPrice(String interpreter, String title) {
 		Song song = songDAO.findSong(interpreter, title);
 		if (song != null) {
-			PriceVO item = SevenDigitalsAPI.retrieveData(interpreter + " "
-					+ title);
+			PriceVO item = SevenDigitalsAPI.retrieveData(interpreter, title);
 			priceDAO.createPrice(song.getId(), item);
 		}
 	}

@@ -7,6 +7,26 @@
 </head>
 <body>
 <jsp:include page="navi.jsp" />
+<div id="modalEdit" class="songAddition modal">
+	<form action="javascript:void(0);" onSubmit="javascript:changeSongInformation();" method="post">
+		<input id="txtID" name="txtID" type="text" style="display: none" />
+		<div class="songAdditionCover">
+			Cover<br>
+			<input id="txtCover" name="txtCover" type="text" />
+		</div>
+		<div class="songAdditionInterpreter">
+			Interpreter<br>
+			<input id="txtInterpreter" name="txtInterpreter" type="text" />
+		</div>
+		<div class="songAdditionTitle">
+			Title<br>
+			<input id="txtTitle" name="txtTitle" type="text" />
+		</div>
+		<input src="../images/save.jpg" type="image" />
+		<button style="display: none" type="reset" id="closeModalEdit"  class="close"> Abbrechen </button>
+	</form>
+</div>
+
  <div id="contentLoading" class="contentLoading" style="display:none;">
 	<span>
 		<img src="../images/ajaxLoad.gif" align="middle">
@@ -15,7 +35,7 @@
 </div>
  <div id="content">
  <c:forEach var="chart" items="${chartList}">
-    	<div class="content_item">
+    	<div id="so" class="content_item">
         	<div class="chartplatzierung">
         		<div class="chartState">
         		<c:choose>
@@ -40,10 +60,16 @@
         		<span class="platznummer">${chart.ranking}.</span>
         		<span class="platz">Platz</span>
         	</div>
-            <div class="chartbild"><img id="cover" alt="Cover" src="${chart.picture}" /></div>
+	        		<a class="modalInput" onclick="fillText('${chart.id}');" rel="#modalEdit" href="javascript:void();">
+	        			<img class="edit" src="../images/edit.png" />
+	        		</a>
+
+            <div class="chartbild">
+            	<img id="cover${chart.id}" class="cover" alt="Coverlink:${chart.picture}" src="${chart.picture}" />	
+            </div>
             <div class="kasten">
-                <div class="chartautor">${chart.interpreter}</div><span class="platzhalter_autor_name"> | </span><div class="chartname">${chart.title}</div>
-                <div class="chartpreise">
+                <div id="chartautor${chart.id}" class="chartautor">${chart.interpreter}</div><span class="platzhalter_autor_name"> | </span><div id="chartname${chart.id}" class="chartname">${chart.title}</div>
+                <div id="chartpreise${chart.id}" class="chartpreise">
                 <c:forEach var="price" items="${chart.prices}">
                 	<div class="chartpreis"><a target="_blank" href="${price.url}"><img class="resize" src="../images/${price.provider}_resize.png" /></a><div class="chartpreis_preis"><a target="_blank" href="${price.url}">${price.value} ${price.currency}</a></div></div>
                 </c:forEach>
@@ -98,7 +124,7 @@
 					</object>
 				</div>
                 <div class="chartlyrik">Lyrik
-                	<div class="lyriktext">
+                	<div id="lyriktext${chart.id}" class="lyriktext">
                     	${chart.lyric.text}<br><br>
                     	<a target="_blank" href="${chart.lyric.url}">${chart.interpreter} - ${chart.title}</a>
 					</div>

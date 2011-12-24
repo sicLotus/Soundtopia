@@ -9,9 +9,15 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@NamedQueries({
 @NamedQuery(
 		name="price.findBySongIDAndProvider",
-		query="SELECT p FROM Price p WHERE p.song.id = :songID AND p.provider LIKE :provider")
+		query="SELECT p FROM Price p WHERE p.song.id = :songID AND p.provider LIKE :provider"),
+@NamedQuery(
+		name="price.findBySongID",
+		query="SELECT p FROM Price p WHERE p.song.id = :songID")
+})
+
 /*@NamedQuery(
 		name="price.findBySongIDAndProvider",
 		query="SELECT p FROM Price p WHERE p.song = :song AND p.provider LIKE :provider")*/

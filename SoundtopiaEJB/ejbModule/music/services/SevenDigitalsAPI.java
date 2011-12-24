@@ -24,7 +24,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class SevenDigitalsAPI {
 	
 	public static void main(String[] args) {
-		retrieveData("");
+		//retrieveData("");
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -33,7 +33,7 @@ public class SevenDigitalsAPI {
 	 * @param query e.g. Lady Gaga Poker Face
 	 * @return
 	 */
-	public static PriceVO retrieveData(String query) {
+	public static PriceVO retrieveData(String interpreter, String title) {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
@@ -45,7 +45,7 @@ public class SevenDigitalsAPI {
 		// http://api.7digital.com/1.2/?q=Happy
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("oauth_consumer_key", "7dt3fmzvh3cy");
-		params.add("q", query);
+		params.add("q", interpreter+" "+title);
 		params.add("country", "DE");
 
 		String response = webResource.queryParams(params)

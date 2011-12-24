@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import music.controller.handler.ChangeSongHandler;
 import music.controller.handler.LoginHandler;
 import music.controller.handler.LogoutHandler;
 import music.controller.handler.RateSongHandler;
 import music.controller.handler.RegisterHandler;
+import music.controller.handler.ShowAdditionalInformation;
 import music.controller.handler.ShowChartsHandler;
 import music.manager.ChartManagerLocal;
 import music.manager.SongManagerLocal;
@@ -189,6 +191,16 @@ public class Controller extends HttpServlet {
 		
 		if(servlet.equals("logout")){
 			LogoutHandler handler = new LogoutHandler();
+			view = handler.processRequest(request, response);
+		}
+		
+		if(servlet.equals("showInfo")){
+			ShowAdditionalInformation handler = new ShowAdditionalInformation();
+			view = handler.processRequest(request, response);
+		}
+		
+		if(servlet.equals("changeSongInformation")){
+			ChangeSongHandler handler = new ChangeSongHandler();
 			view = handler.processRequest(request, response);
 		}
 /*		

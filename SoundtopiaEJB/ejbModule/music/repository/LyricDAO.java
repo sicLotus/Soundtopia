@@ -38,7 +38,7 @@ public class LyricDAO {
 			em.persist(lyric);
 			return lyric;
 		} else
-			return null;
+			return updateLyric(songID,lyricVO);
 	}
 
 	public Lyric updateLyric(int songID, LyricVO lyricVO) {

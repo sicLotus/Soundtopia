@@ -40,11 +40,6 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 
 	public List<SongVO> showCharts(String chartName, int start, int end, int userID) {
 		List<SongVO> chartList = new ArrayList<SongVO>();
-		LyricVO lyricVO;
-		Lyric lyric;
-		PriceVO priceVO;
-		List<PriceVO> pricesVO;
-		Set<Price> prices;
 		SongVO chartEntry;
 		Rating rating;
 		Chart chart = chartDAO.findChart(chartName);
@@ -52,20 +47,15 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 				end);
 		for (int i = 0; i < songList.size(); i++) {
 			chartEntry = new SongVO();
-			chartEntry.setId(songList.get(i).getId());
-			chartEntry.setInterpreter(songList.get(i).getInterpreter());
+
+			chartEntry.valueOf(songList.get(i));
+			
 			for (SongInChart sic : songList.get(i).getSongInCharts()) {
 				if (sic.getId().getChartID() == chart.getId()) {
 					chartEntry.setRanking(sic.getRanking());
 					chartEntry.setChange(sic.getChangeInRanking());
 				}
 			}
-			chartEntry.setTitle(songList.get(i).getTitle());
-			chartEntry.setTracklength(convertToTime(songList.get(i).getTracklength()));
-			chartEntry.setVideo(songList.get(i).getVideo());
-			chartEntry.setPicture(songList.get(i).getPicture());
-			
-			chartEntry.setRating(songList.get(i).getRating());
 			
 			if (userID >= 0) {
 				rating = ratingDAO.findRating(userID, songList.get(i).getId());
@@ -73,41 +63,47 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 					chartEntry.setUserRating(rating.getRating());
 				else chartEntry.setUserRating(0);
 			} else chartEntry.setUserRating(0);
-
-			lyric = songList.get(i).getLyric();
-			if (lyric != null) {
-				lyricVO = new LyricVO();
-				lyricVO.setText(lyric.getText());
-				lyricVO.setUrl(lyric.getUrl());
-				chartEntry.setLyric(lyricVO);
-			}
-
-			prices = songList.get(i).getPrices();
-			if (prices != null) {
-				pricesVO = new ArrayList<PriceVO>();
-				for (Price p : prices) {
-					priceVO = new PriceVO();
-					priceVO.setCurrency(p.getCurrency());
-					priceVO.setProvider(p.getProvider());
-					priceVO.setUrl(p.getOfferUrl());
-					priceVO.setValue(p.getValue());
-					pricesVO.add(priceVO);
-				}
-				chartEntry.setPrices(pricesVO);
-			}
+			
 			chartList.add(chartEntry);
 		}
 		return chartList;
 	}
-	
-	private String convertToTime(int sec) {
-		String result;
-		int minutes = sec / 60;
-		int seconds = sec % 60;
-		if (seconds < 10)
-			result = minutes+":0"+seconds;
-		else result = minutes+":"+seconds;
-		return result;
-	}
+
 
 }
+
+//chartEntry.setId(songList.get(i).getId());
+//chartEntry.setInterpreter(songList.get(i).getChangedInterpreter());
+//chartEntry.setTitle(songList.get(i).getChangedTitle());
+//chartEntry.setTracklength(convertToTime(songList.get(i).getTracklength()));
+//chartEntry.setVideo(songList.get(i).getVideo());
+//chartEntry.setPicture(songList.get(i).getChangedPicture());
+
+//chartEntry.setRating(songList.get(i).getRating());
+
+
+
+
+
+//lyric = songList.get(i).getLyric();
+//if (lyric != null) {
+//	lyricVO = new LyricVO();
+//	lyricVO.setText(lyric.getText());
+//	lyricVO.setUrl(lyric.getUrl());
+//	chartEntry.setLyric(lyricVO);
+//}
+
+
+//prices = songList.get(i).getPrices();
+//if (prices != null) {
+//	pricesVO = new ArrayList<PriceVO>();
+//	for (Price p : prices) {
+//		priceVO = new PriceVO();
+//		priceVO.setCurrency(p.getCurrency());
+//		priceVO.setProvider(p.getProvider());
+//		priceVO.setUrl(p.getOfferUrl());
+//		priceVO.setValue(p.getValue());
+//		pricesVO.add(priceVO);
+//	}
+//	chartEntry.setPrices(pricesVO);
+//}

@@ -59,6 +59,11 @@ public class Song implements Serializable {
 	@JoinColumn(name="id")
 	private Lyric lyric;
 
+	@OneToOne
+	@JoinColumn(name="id")
+	private SongAddition songAddition;
+	
+	
 	//bi-directional many-to-one association to SongInChart
 	@OneToMany(mappedBy="song", fetch=FetchType.EAGER)
 	private Set<SongInChart> songInCharts;
@@ -181,5 +186,53 @@ public class Song implements Serializable {
 	public void setRatings(Set<Rating> ratings) {
 		this.ratings = ratings;
 	}
+
+	public SongAddition getSongAddition() {
+		return songAddition;
+	}
+
+	public void setSongAddition(SongAddition songAddition) {
+		this.songAddition = songAddition;
+	}
+	
+	@Transient
+	public String getChangedPicture() {
+		String result = null;
+		
+		if (songAddition != null)
+			result = this.songAddition.getCover();
+		
+		if (result == null)
+			result = this.getPicture();
+		
+		return result;
+	}
+	
+	@Transient
+	public String getChangedInterpreter() {
+		String result = null;
+		
+		if (songAddition != null)
+			result = this.songAddition.getInterpreter();
+		
+		if (result == null)
+			result = this.getInterpreter();
+		
+		return result;
+	}
+	
+	@Transient
+	public String getChangedTitle() {
+		String result = null;
+		
+		if (songAddition != null)
+			result = this.songAddition.getTitle();
+		
+		if (result == null)
+			result = this.getTitle();
+		
+		return result;
+	}
+	
 	
 }

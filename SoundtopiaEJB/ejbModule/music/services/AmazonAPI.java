@@ -80,6 +80,7 @@ public class AmazonAPI {
 					.getOfferListing().get(0).getPrice().getAmount().intValue()/100.f);
 			returnPrice.setCurrency("€");
 		} catch (Exception e) {
+			System.out.println("amazon return null");
 			return null;
 		}
 
