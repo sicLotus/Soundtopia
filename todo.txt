@@ -30,38 +30,23 @@ DF.format mit . anstatt , in showChartsHandler und rateSongHandler
 Defaultwerte vom Loginformular wieder auf Username und passwort ändern
 
 showChartsHandler bisher alles redundant
+redundanzen auch bei cahngesonghandler und undochangeshandler (bei der ausgabe ist alles gleich.. ?)
 
-edit mit choose ersetzen (in charts.jsp, weil nur wenn admin eingeloggt ist soll editieren können): 
-<c:choose>
-	        	<c:when test="${sessionScope.user.admin == 1 }">
-	        		<a class="modalInput" rel="#modalEdit" href="javascript:void(0);">
-	        			<img class="edit" src="../images/edit.png" />
-	        		</a>
-	        	</c:when>
-        	</c:choose>
-
-in soundtopia.js fillText weiterschreiben:
-	übergabe parameter an fillText: songID
-	ajax request an eine action, welche mir die werte aus song_addition oder aus song wieder gibt..
-	buttons einfügen für nutzung anderer api's wo dann per ajax wiederum die url direkt eingetragen wird
-	wenn man auf speichern klickt, wird der song gleich neu eingelesen! (lyrics,prices)
-	
-	Wo valueOf hinschreiben? in VO darf mans ja nich hinschreiben, kennen die manager sich gegenseitig? kann ein manager auf einen anderen zuzgreifen?
-	wenn ja, dann sollte man die ganzen funktionen wohl in den songmanager schreiben..
 	
 	alle api's static?
 	
-	transaktionen? lösung finden
+	transaktionen? lösung finden ganz wichtig in undochangeshandler und changesonghandler
 	
-	edit rückgängig machen, also einfach songaddition löschen
 	im songmanager noch abfragen ob title oder interpreter geändert wurden, nur dann brauchen wir lyrics+price neu einlesen
 	
-	in der navigation nen link, um daten neu einlesen
+	in der navigation nen link, um daten neu einlesen (zugriff auf myvideo und neue charts holen)
 	
-	usercharts (sortiert nach bewertung)
+	usercharts (sortiert nach bewertung) + navigation
 	
-	bei editformular noch buttons für die api einfügen
-	
-	Chart 21: Preis bei Itunes ist -1? (itunesAPI < 0 checken?!)
-	
-	lade-animation in edit formular, damit man feedback bekommt
+	<c:choose>
+					<c:when test="${sessionScope.user.admin == 1 }">
+					<div class="navi_item">Neue Charts einlesen</div>
+	</c:when>
+				</c:choose>
+
+				warum wird showCharts am anfang immer 2x aufgerufen???!?

@@ -17,8 +17,10 @@ public class ItunesAPI {
 	final static int queryCount = 3;
 
 	public static void main(String[] args) {
-		//retrieveData("Tim Bendzko Wenn Worte meine Sprache wären song");
+		retrieveData("Lana Del Rey", "Video Games");
 	}
+	
+
 
 	/**
 	 * @param query
@@ -40,6 +42,8 @@ public class ItunesAPI {
 
 		String response = webResource.queryParams(params)
 				.accept(MediaType.TEXT_PLAIN).get(String.class);
+		
+		System.out.println(response);
 
 		try {
 			JSONObject json;
@@ -61,6 +65,10 @@ public class ItunesAPI {
 				else
 					i = queryCount; // HACK! HAHA
 			} while (i < queryCount);
+			
+			if(price.getValue() < 0) 
+				return null;
+			
 		} catch (JSONException e) {
 			// e.printStackTrace();
 			//System.out.println("Preis von " + query + ": " + "null");

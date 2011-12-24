@@ -15,6 +15,11 @@ public interface SongManagerLocal {
 
 	public SongVO changeSongInformation(int songID, String interpreter,
 			String title, String cover);
-	
+
 	public SongVO getSong(int songID);
+
+	public SongVO undoChanges(int songID);
+
+	public void readNewSongInformationFromAPIs(int songID, String interpreter,
+			String title);
 }

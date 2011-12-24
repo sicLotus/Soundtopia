@@ -41,6 +41,7 @@ public class LoginHandler extends HttpServlet {
 		String password = request.getParameter("ipass");
 
 		System.out.println("UserManager:\n" + Controller.userManager);
+		System.out.println("loginhandler: "+email+ " "+password);
 
 		UserVO user = Controller.userManager.checkLogin(email, password);
 

@@ -19,33 +19,25 @@ import music.util.JSONException;
 import music.util.JSONObject;
 
 /**
- * Servlet implementation class ChangeSongHandler
+ * Servlet implementation class UndoChangesHandler
  */
-@WebServlet("/ChangeSongHandler")
-public class ChangeSongHandler extends HttpServlet {
+@WebServlet("/UndoChangesHandler")
+public class UndoChangesHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UndoChangesHandler() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ChangeSongHandler() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
+    protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
@@ -54,22 +46,23 @@ public class ChangeSongHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-
+		
 		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(
 				Locale.GERMAN);
 		otherSymbols.setDecimalSeparator('.');
 		otherSymbols.setGroupingSeparator(',');
 		DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
-
-		String interpreter = request.getParameter("interpreter");
-		String title = request.getParameter("title");
-		String cover = request.getParameter("cover");
+		
 		int songID = Integer.valueOf(request.getParameter("songID"));
-
-		SongVO song = Controller.songManager.changeSongInformation(songID,
-				interpreter, title, cover);
+		SongVO song = Controller.songManager.undoChanges(songID);
 		song = Controller.songManager.getSong(songID);
-
+		System.out.println(song.getInterpreter());
+		
+		Controller.songManager.readNewSongInformationFromAPIs(songID, song.getInterpreter(), song.getTitle());
+		
+		song = Controller.songManager.getSong(songID);
+		
+		
 		try {
 			JSONObject json = new JSONObject();
 			PrintWriter out;
@@ -101,7 +94,7 @@ public class ChangeSongHandler extends HttpServlet {
 			io.printStackTrace();
 		}
 
+		
 		return view;
 	}
-
 }

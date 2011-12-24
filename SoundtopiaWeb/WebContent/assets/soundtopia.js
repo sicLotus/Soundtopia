@@ -25,7 +25,7 @@ jQuery(document).ready(function(){
 	  		$(this).select();
 		 });
 	 
-	  var triggers = jQuery(".modalInput").overlay({
+	jQuery(".modalInput").overlay({
 		mask: {
 			color: '#113d2b',
 			loadSpeed: 200,
@@ -98,6 +98,26 @@ function startLoading() {
 	$(document.getElementById('content')).fadeOut();
 }
 
+function startLoadingEdit() {
+	$(document.getElementById('saveEdit')).fadeOut('slow');
+	$(document.getElementById('loadingEdit')).fadeIn('slow');
+}
+
+function finishLoadingEdit() {
+	$(document.getElementById('saveEdit')).fadeIn();
+	$(document.getElementById('loadingEdit')).fadeOut();
+}
+
+function startLoadingUndo() {
+	$(document.getElementById('undoButtons')).fadeOut('slow');
+	$(document.getElementById('loadingUndo')).fadeIn('slow');
+}
+
+function finishLoadingUndo() {
+	$(document.getElementById('undoButtons')).fadeIn();
+	$(document.getElementById('loadingUndo')).fadeOut();
+}
+
 function finishLoading() {
 
 	
@@ -163,6 +183,10 @@ function updateChartstars(id, html) {
 	document.getElementById(ele).innerHTML = html;
 }
 
+function setUndoID(songID) {
+	document.getElementById("undoID").value = songID;
+}
+
 function fillText(songID) {
 	var _data = "songID="+songID;
 	jQuery.ajax({
@@ -174,12 +198,76 @@ function fillText(songID) {
 			document.getElementById("txtCover").value = reqCode.songAddition.cover;
 			document.getElementById("txtInterpreter").value = reqCode.songAddition.interpreter;
 			document.getElementById("txtTitle").value = reqCode.songAddition.title;
+			changePreview(reqCode.songAddition.cover);
 		}
 	});
 	
 }
 
+function hidePreview() {
+	document.getElementById("editPreview").style.display = "none";
+}
+
+function showPreview() {
+	document.getElementById("editPreview").style.display = "block";
+}
+
+function changePreview(preview) {
+	document.getElementById("editPreviewSmall").setAttribute("src", preview);
+	document.getElementById("editPreview").setAttribute("src", preview);
+}
+
+function getURLfromAPI() {
+	startLoadingEdit();
+	var api = document.getElementById('txtAPI').options[document.getElementById('txtAPI').selectedIndex].value;
+	var interpreter = document.getElementById("txtInterpreter").value;
+	var title = document.getElementById("txtTitle").value;
+	var _data = "api="+api+"&interpreter="+interpreter+"&title="+title;
+	jQuery.ajax({
+		url: "../controller/getPictureURL",
+		type: "POST",
+		data: _data,
+		success: function (reqCode) {
+			document.getElementById("txtCover").value = reqCode.url;
+			changePreview(reqCode.url);
+			finishLoadingEdit();
+		}
+	});
+}
+
+function undoChanges() {
+	startLoadingUndo();
+	var songID = document.getElementById("undoID").value;
+	var _data = "songID="+songID;
+	jQuery.ajax({
+		url: "../controller/undoChanges",
+		type: "POST",
+		data: _data,
+		success: function (reqCode) {
+			document.getElementById("cover"+songID).setAttribute("src", reqCode.cover);
+			document.getElementById("chartautor"+songID).innerHTML = reqCode.interpreter;
+			document.getElementById("chartname"+songID).innerHTML = reqCode.title;
+			var priceHtml = "";
+			if (reqCode.prices != null) {
+			jQuery.each(reqCode.prices, function(i, value) {
+				priceHtml +="<div class=\"chartpreis\"><a target=\"_blank\" href=\""+reqCode.prices[i].url+
+				"\"><img class=\"resize\" src=\"../images/"+reqCode.prices[i].provider+"_resize.png\" /></a><div class=\"chartpreis_preis\"><a target=\"_blank\" "+
+				"href=\""+reqCode.prices[i].url+"\">"+reqCode.prices[i].value+" "+reqCode.prices[i].currency+"</a></div></div>";
+			});
+			
+		}
+			document.getElementById("chartpreise"+songID).innerHTML = priceHtml;
+			var lyricHtml = reqCode.lyric.text+"<br><br><a target=\"_blank\" href=\""+reqCode.lyric.url+"\">"+reqCode.interpreter+" - "+reqCode.title+"</a>";
+			
+			document.getElementById("lyriktext"+songID).innerHTML = lyricHtml;
+			document.getElementById("closeUndoChanges").click();
+			finishLoadingUndo();
+		}
+	});
+}
+
 function changeSongInformation() {
+	startLoadingEdit();
 	var songID = document.getElementById("txtID").value;
 	var cover = document.getElementById("txtCover").value;
 	var interpreter = document.getElementById("txtInterpreter").value;
@@ -209,7 +297,7 @@ function changeSongInformation() {
 			document.getElementById("lyriktext"+songID).innerHTML = lyricHtml;
 			
 
-			
+			finishLoadingEdit();
 			document.getElementById("closeModalEdit").click();
 		}
 	});

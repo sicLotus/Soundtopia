@@ -1,31 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-</head>
-<body>
+
 <jsp:include page="navi.jsp" />
-<div id="modalEdit" class="songAddition modal">
-	<form action="javascript:void(0);" onSubmit="javascript:changeSongInformation();" method="post">
-		<input id="txtID" name="txtID" type="text" style="display: none" />
-		<div class="songAdditionCover">
-			Cover<br>
-			<input id="txtCover" name="txtCover" type="text" />
-		</div>
-		<div class="songAdditionInterpreter">
-			Interpreter<br>
-			<input id="txtInterpreter" name="txtInterpreter" type="text" />
-		</div>
-		<div class="songAdditionTitle">
-			Title<br>
-			<input id="txtTitle" name="txtTitle" type="text" />
-		</div>
-		<input src="../images/save.jpg" type="image" />
-		<button style="display: none" type="reset" id="closeModalEdit"  class="close"> Abbrechen </button>
-	</form>
-</div>
+<jsp:include page="modals.jsp" />
 
  <div id="contentLoading" class="contentLoading" style="display:none;">
 	<span>
@@ -60,10 +37,16 @@
         		<span class="platznummer">${chart.ranking}.</span>
         		<span class="platz">Platz</span>
         	</div>
-	        		<a class="modalInput" onclick="fillText('${chart.id}');" rel="#modalEdit" href="javascript:void();">
+        	<c:choose>
+	        	<c:when test="${sessionScope.user.admin == 1 }">
+	        		<a class="modalInput" onclick="javascript:fillText('${chart.id}');" rel="#modalEdit" href="javascript:void(0);">
 	        			<img class="edit" src="../images/edit.png" />
 	        		</a>
-
+	        		<a onclick="javascript:setUndoID('${chart.id}')" class="modalInput" rel="#modalUndo" href="javascript:void(0);">
+	        			<img class="undo" src="../images/undo.png" />
+	        		</a>
+   				</c:when>
+        	</c:choose>
             <div class="chartbild">
             	<img id="cover${chart.id}" class="cover" alt="Coverlink:${chart.picture}" src="${chart.picture}" />	
             </div>

@@ -139,5 +139,13 @@ public class Session implements SessionRemote, SessionLocal {
 			lyricDAO.createLyric(song.getId(), lyric);
 		}
 	}
+	
+	public String getPictureFromGoogle(String interpreter, String title) {
+		return GoogleImageAPI.retrieveData(interpreter, title);
+	}
+	
+	public String getPictureFromAmazon(String interpreter, String title) {
+		return AmazonAPI.getPicture(interpreter, title);
+	}
 
 }

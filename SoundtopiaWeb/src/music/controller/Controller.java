@@ -15,11 +15,14 @@ import javax.servlet.http.HttpSession;
 import music.controller.handler.ChangeSongHandler;
 import music.controller.handler.LoginHandler;
 import music.controller.handler.LogoutHandler;
+import music.controller.handler.PictureHandler;
 import music.controller.handler.RateSongHandler;
 import music.controller.handler.RegisterHandler;
 import music.controller.handler.ShowAdditionalInformation;
 import music.controller.handler.ShowChartsHandler;
+import music.controller.handler.UndoChangesHandler;
 import music.manager.ChartManagerLocal;
+import music.manager.SessionLocal;
 import music.manager.SongManagerLocal;
 import music.manager.UserManagerLocal;
 
@@ -36,6 +39,8 @@ public class Controller extends HttpServlet {
 	@EJB
 	public static SongManagerLocal songManager;
 	
+	@EJB
+	public static SessionLocal sessionManager;
 /*
 //EJB injezieren
 	@EJB UserDAO userHelper;
@@ -203,17 +208,17 @@ public class Controller extends HttpServlet {
 			ChangeSongHandler handler = new ChangeSongHandler();
 			view = handler.processRequest(request, response);
 		}
+	
+		if(servlet.equals("getPictureURL")){
+			PictureHandler handler = new PictureHandler();
+			view = handler.processRequest(request, response);
+		}
+			
+		if(servlet.equals("undoChanges")){
+			UndoChangesHandler handler = new UndoChangesHandler();
+			view = handler.processRequest(request, response);
+		}
 /*		
-		if(servlet.equals("editProfile")){
-			EditProfileHandler handler = new EditProfileHandler();
-			view = handler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("changePassword")){
-			ChangePasswordHandler handler = new ChangePasswordHandler();
-			view = handler.processRequest(request, response);
-		}
-		
 		if(servlet.equals("addBook")){
 			AddBookHandler handler = new AddBookHandler();
 			view = handler.processRequest(request, response);

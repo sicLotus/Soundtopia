@@ -88,7 +88,7 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 			String title, String cover) {
 		songAdditionDAO.createSongAddition(songID, interpreter, title, cover);
 
-		readNewSongInformationFromAPIs(songID, interpreter, title, cover);
+		readNewSongInformationFromAPIs(songID, interpreter, title);
 		
 		Song song = songDAO.findSong(songID);
 		SongVO songVO = new SongVO();
@@ -97,17 +97,27 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 		return songVO;
 	}
 
-	private void readNewSongInformationFromAPIs(int songID, String interpreter,
-			String title, String cover) {
+	public void readNewSongInformationFromAPIs(int songID, String interpreter,
+			String title) {
 		LyricVO lyric = LyricAPI.retrieveData(interpreter, title);
 		lyricDAO.createLyric(songID, lyric);
 
+		System.out.println("readnew:"+interpreter+" "+title);
+		
 		priceDAO.removeAllPrices(songID);
 		priceDAO.createPrice(songID, AmazonAPI.retrieveData(
 				AmazonAPI.SearchIndex.MP3Downloads, interpreter + " " + title));
 		priceDAO.createPrice(songID, ItunesAPI.retrieveData(interpreter, title));
 		priceDAO.createPrice(songID,
 				SevenDigitalsAPI.retrieveData(interpreter, title));
+	}
+	
+	public SongVO undoChanges(int songID) {
+		SongVO songVO = new SongVO();
+		
+		songAdditionDAO.deleteSongAddition(songID);
+		songVO = getSong(songID);		
+		return songVO;
 	}
 	
 	public SongVO getSong(int songID) {

@@ -40,12 +40,12 @@ public class LogoutHandler extends HttpServlet {
 	}
 	
 	public String processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession();
 		System.out.println("logout");
 		String view = "../controller/showCharts";
 		
-		session.removeAttribute("email");
-		session.removeAttribute("loggedIn");
+		session.removeAttribute("user");
+		session.setAttribute("loggedIn", new Boolean(false));
 
 		return view;
 		
