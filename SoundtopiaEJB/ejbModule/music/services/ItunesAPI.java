@@ -20,8 +20,6 @@ public class ItunesAPI {
 		retrieveData("Lana Del Rey", "Video Games");
 	}
 	
-
-
 	/**
 	 * @param query
 	 *            e.g. "Lady Gaga Poker Face"
@@ -42,8 +40,6 @@ public class ItunesAPI {
 
 		String response = webResource.queryParams(params)
 				.accept(MediaType.TEXT_PLAIN).get(String.class);
-		
-		System.out.println(response);
 
 		try {
 			JSONObject json;
@@ -70,7 +66,7 @@ public class ItunesAPI {
 				return null;
 			
 		} catch (JSONException e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			//System.out.println("Preis von " + query + ": " + "null");
 
 			return null;

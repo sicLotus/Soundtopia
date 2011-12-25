@@ -1,18 +1,13 @@
+Defaultwerte vom Loginformular wieder auf Username und passwort ändern
 VALIDIERUNG von Forumularen
 
 Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
-
-Adminpanel (Daten eines Songs ändern, neu einlesen aller Daten oder einzelner Songs)
 
 Suchsystem
 	Wie soll es überhaupt funktionieren?
 	Suchen wir lediglich Title und Interpret?
 	Wie soll die Ausgabe funktionieren?
 	Verlängerung des Suchfensters bei längerem Text, aber mit MAX_BREITE[JS]
-
-Linksystem
-	Die Chartanzeige muss zum einen sich an die Anzahl der Songs anpassen (1-25, 26-...) [per AJAX]
-	Durch Bilder ersetzen (Geht es dann noch dynamisch? - ja, wenn man auf next klicken würde oder Text auf BG Bilder)
 
 Favoritensystem(Zusatz)
 	Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
@@ -22,12 +17,9 @@ Fehlersystem
 	Welche Fehler könnten überhaupt auftreten?
 	Falls Fehler auftreten, Errorsites anpassen
 
-Anpassen des AJAX Rerquest bei showCharts in der Soundtopia.js (siehe charts.jsp)
-
 DF.format mit . anstatt , in showChartsHandler und rateSongHandler
 	wieviel komma nachstellen? und beim ersten mal in jstl auch schon formatieren!
 
-Defaultwerte vom Loginformular wieder auf Username und passwort ändern
 
 showChartsHandler bisher alles redundant
 redundanzen auch bei cahngesonghandler und undochangeshandler (bei der ausgabe ist alles gleich.. ?)
@@ -39,14 +31,10 @@ redundanzen auch bei cahngesonghandler und undochangeshandler (bei der ausgabe i
 	
 	im songmanager noch abfragen ob title oder interpreter geändert wurden, nur dann brauchen wir lyrics+price neu einlesen
 	
-	in der navigation nen link, um daten neu einlesen (zugriff auf myvideo und neue charts holen)
-	
 	usercharts (sortiert nach bewertung) + navigation
 	
-	<c:choose>
-					<c:when test="${sessionScope.user.admin == 1 }">
-					<div class="navi_item">Neue Charts einlesen</div>
-	</c:when>
-				</c:choose>
-
-				warum wird showCharts am anfang immer 2x aufgerufen???!?
+	wenn man modal ajax ausführt -> modale NICHT mehr schließen können!! <-- fucking js
+	
+	weiterleitung in ajax auf controller/showCharts (muss nur noch getestet werden)
+	
+	in der session speichern welche chartStart und chartEnd als letztes aufgerufen wurden

@@ -68,6 +68,12 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 		}
 		return chartList;
 	}
+	
+	public int getMaxSongsInChart(String chartName) {
+		Chart chart = chartDAO.findChart(chartName);
+		return chart.getSongInCharts().size();
+		
+	}
 
 
 }

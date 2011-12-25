@@ -40,12 +40,22 @@
 <div id="modalUndo" class="modal">
 	<input id="undoID" name="undoID" type="text" style="display: none" />
 	<span>Möchten Sie wirklich alle Änderungen rückgängig machen?</span>
-	<div id="undoButtons">
-		<img class="button" onclick="javascript:undoChanges()"
+	<div id="undoButtons" class="modalButtons">
+		<img class="button" onclick="javascript:undoChanges();"
 			src="../images/yes.jpg" />&nbsp;<img id="closeUndoChanges"
 			class="close button" src="../images/no.jpg" />
 	</div>
 	<img id="loadingUndo" class="loading" src="../images/loading.gif" />
+</div>
+
+<div id="modalNew" class="modal">
+	<span id="modalNewTxt">Möchten Sie wirklich die neusten Charts manuell laden?</span>
+	<div id="newButtons" class="modalButtons">
+		<img class="button" onclick="javascript:readCharts();"
+			src="../images/yes.jpg" />&nbsp;<img id="closeNewChanges"
+			class="close button" src="../images/no.jpg" />
+	</div>
+	<img id="loadingNew" class="loading" src="../images/loading.gif" />
 </div>
 
 <div id="modalEdit" class="songAddition modal">

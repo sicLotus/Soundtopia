@@ -125,7 +125,6 @@ public class SongVO {
 			setTracklength(convertToTime(song.getTracklength()));
 			valueOf(song.getLyric());
 			valueOf(song.getPrices());
-
 		}
 	}
 

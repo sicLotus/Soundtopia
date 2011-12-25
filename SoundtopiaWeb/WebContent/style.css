@@ -316,14 +316,12 @@ a:hover {
 }
 
 #footer {
-	margin-top: 10px;
-	float: right;
-	/*font:Arial, Helvetica, sans-serif;*/
-}
-
-.platzierungen {
-	float: right;
-	margin-right: 69px;
+	clear: left;
+	height: 20px;
+	margin-right: 96px;
+	padding-top: 6px;
+	text-align: right;
+	padding-bottom: 10px;
 }
 
 .platz1_25 {
@@ -381,6 +379,14 @@ a:hover {
 
 #modalEdit {
 	height: auto;
+	width: auto;
+	opacity: 1;
+	border: 0;
+	z-index: 10001;
+}
+
+#modalNew {
+	height: 40px;
 	width: auto;
 	opacity: 1;
 	border: 0;
@@ -504,7 +510,7 @@ a:hover {
 	cursor: pointer;
 }
 
-#undoButtons {
+.modalButtons {
 	margin-bottom: -10px;
 	margin-left: 39%;
 	margin-top: 4px;
@@ -512,11 +518,17 @@ a:hover {
 }
 
 .button {
-	cursor:pointer;
+	cursor: pointer;
 }
 
 #loadingUndo {
 	margin-bottom: 16px;
-    margin-left: 48%;
-    position: absolute;
+	margin-left: 48%;
+	position: absolute;
+}
+
+#loadingNew {
+	margin-bottom: 16px;
+	margin-left: 48%;
+	position: absolute;
 }

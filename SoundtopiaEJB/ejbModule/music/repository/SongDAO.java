@@ -4,14 +4,11 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import music.data.Song;
-import music.data.SongInChart;
-import music.data.SongInChartPK;
+
 
 /**
  * Session Bean implementation class SongDAO

@@ -28,9 +28,14 @@
 				</div>
 				<div class="navi_item">Albumcharts</div>
 				<div class="navi_item">Neuheiten</div>
-
-				<div class="navi_item">Neue Charts einlesen</div>
-
+				<c:choose>
+					<c:when test="${sessionScope.user.admin == 1 }">
+						<div class="navi_item">
+							<a class="modalInput" href="javascript:void(0);" rel="#modalNew">Neue
+								Charts einlesen</a>
+						</div>
+					</c:when>
+				</c:choose>
 				<div class="navi_right"></div>
 			</div>
 

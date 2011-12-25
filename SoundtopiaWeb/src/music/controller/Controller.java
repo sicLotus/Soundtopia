@@ -17,6 +17,7 @@ import music.controller.handler.LoginHandler;
 import music.controller.handler.LogoutHandler;
 import music.controller.handler.PictureHandler;
 import music.controller.handler.RateSongHandler;
+import music.controller.handler.ReadChartsHandler;
 import music.controller.handler.RegisterHandler;
 import music.controller.handler.ShowAdditionalInformation;
 import music.controller.handler.ShowChartsHandler;
@@ -218,12 +219,12 @@ public class Controller extends HttpServlet {
 			UndoChangesHandler handler = new UndoChangesHandler();
 			view = handler.processRequest(request, response);
 		}
-/*		
-		if(servlet.equals("addBook")){
-			AddBookHandler handler = new AddBookHandler();
+		
+		if(servlet.equals("readNewCharts")){
+			ReadChartsHandler handler = new ReadChartsHandler();
 			view = handler.processRequest(request, response);
 		}
-		
+/*		
 		if(servlet.equals("addGenre")){
 			AddGenreHandler handler = new AddGenreHandler();
 			handler.processRequest(request, response);

@@ -44,7 +44,7 @@ public class Session implements SessionRemote, SessionLocal {
 
 	@EJB
 	private ChartDAO chartDAO;
-	
+
 	@EJB
 	private RatingDAO ratingDAO;
 
@@ -55,6 +55,9 @@ public class Session implements SessionRemote, SessionLocal {
 		return em.find(Song.class, id);
 	}
 
+	/**
+	 * Diese Methode sollte noch einen Timer (1x wöchentlich oder so bekommen!)
+	 */
 	public void readChartsFromMyvideo() {
 		MyVideoAPI api = new MyVideoAPI();
 		ChartEntryVO entry;
@@ -63,37 +66,35 @@ public class Session implements SessionRemote, SessionLocal {
 		Chart chart = chartDAO.createChartTable();
 		for (int i = 0; i < chartList.size(); i++) {
 			entry = chartList.get(i);
-			 songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
-			 entry.getMovie_length(), entry.getVideo());
-			 addPicture(entry.getInterpreter(), entry.getTitle());
+			songDAO.createSong(entry.getInterpreter(), entry.getTitle(),
+					entry.getMovie_length(), entry.getVideo());
+			addPicture(entry.getInterpreter(), entry.getTitle());
 			addLyric(entry.getInterpreter(), entry.getTitle());
-			/*
-			 * new Charteintrag in ChartTabelle mit neuster ID (natürlich vor
-			 * der for schleife) ID an createChartEntry übergeben die ganze
-			 * methode soll dann 1x wöchentlich oder so ausgeführt werden
-			 */
-			 chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(),
-			 entry.getInterpreter(), entry.getTitle());
+
+			chartDAO.createChartEntry(chart.getId(), entry.getChartPlacing(),
+					entry.getInterpreter(), entry.getTitle());
 			// chartDAO.test("Singlecharts");
 			addAmazonPrice(entry.getInterpreter(), entry.getTitle());
 			addItunesPrice(entry.getInterpreter(), entry.getTitle());
 			addSevenDigitalPrice(entry.getInterpreter(), entry.getTitle());
-			//ItunesAPI.retrieveData(entry.getInterpreter() +" "+ entry.getTitle());
-			rateASong(1,entry.getInterpreter(), entry.getTitle(), 1);
+			// ItunesAPI.retrieveData(entry.getInterpreter() +" "+
+			// entry.getTitle());
+			//rateASong(1, entry.getInterpreter(), entry.getTitle(), 1);
 
 		}
 
 	}
-	
-	public void rateASong(int userID, String interpreter, String title, int rating) {
+
+	public void rateASong(int userID, String interpreter, String title,
+			int rating) {
 		Song song = songDAO.findSong(interpreter, title);
 		if (song != null)
-		rateASong(userID, song.getId(), rating);
+			rateASong(userID, song.getId(), rating);
 	}
-	
+
 	public void rateASong(int userID, int songID, int rating) {
 		Random rnd = new Random();
-		int value = rnd.nextInt(5)+1;
+		int value = rnd.nextInt(5) + 1;
 		ratingDAO.createRating(userID, songID, value);
 	}
 
@@ -139,11 +140,11 @@ public class Session implements SessionRemote, SessionLocal {
 			lyricDAO.createLyric(song.getId(), lyric);
 		}
 	}
-	
+
 	public String getPictureFromGoogle(String interpreter, String title) {
 		return GoogleImageAPI.retrieveData(interpreter, title);
 	}
-	
+
 	public String getPictureFromAmazon(String interpreter, String title) {
 		return AmazonAPI.getPicture(interpreter, title);
 	}
