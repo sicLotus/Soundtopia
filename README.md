@@ -32,3 +32,8 @@ Hinweise
 Für die Anbindung von Web Services: 
 * Editieren der standalone.xml (http://jbossws.blogspot.com/2011/07/jboss-as-7-webservices-features.html)
 * Module hinzufügen (http://www.jboss.org/jbossas/downloads/ -> "Everything (NOT Java EE6 Certified)" aus module-Unterodner herauskopieren)
+
+Probleme
+--------
+Am 25.Dezember gegen 22 Uhr wurden .settings im WebContent überschrieben.
+Falls es damit Probleme geben sollte, müssen diese mit einem früheren Commit wieder zurückgesetzt werden.
