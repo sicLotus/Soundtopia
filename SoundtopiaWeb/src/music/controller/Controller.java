@@ -255,8 +255,8 @@ public class Controller extends HttpServlet {
 		
 		*/
 		if (view != null) {
-		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-	    dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+			dispatcher.forward(request, response);
 		}			
 	}
 }

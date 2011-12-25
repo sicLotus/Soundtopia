@@ -38,17 +38,19 @@
 </div>
 
 <div id="modalUndo" class="modal">
-<input id="undoID" name="undoID" type="text" style="display: none" />
-<span>Möchten Sie wirklich alle Änderungen rückgängig machen?</span>
-<div id="undoButtons">
-<img class="button" onclick="javascript:undoChanges()" src="../images/yes.jpg" />&nbsp;<img id="closeUndoChanges" class="close button" src="../images/no.jpg" />
-</div>
-<img id="loadingUndo" class="loading" src="../images/loading.gif" />
+	<input id="undoID" name="undoID" type="text" style="display: none" />
+	<span>Möchten Sie wirklich alle Änderungen rückgängig machen?</span>
+	<div id="undoButtons">
+		<img class="button" onclick="javascript:undoChanges()"
+			src="../images/yes.jpg" />&nbsp;<img id="closeUndoChanges"
+			class="close button" src="../images/no.jpg" />
+	</div>
+	<img id="loadingUndo" class="loading" src="../images/loading.gif" />
 </div>
 
 <div id="modalEdit" class="songAddition modal">
 	<form action="javascript:void(0);"
-		onSubmit="javascript:changeSongInformation();" method="post">
+		onsubmit="javascript:changeSongInformation();" method="post">
 		<input id="txtID" name="txtID" type="text" style="display: none" />
 		<div class="songAdditionInterpreter">
 			Interpreter<br> <input id="txtInterpreter" name="txtInterpreter"
@@ -59,23 +61,20 @@
 			<br>
 		</div>
 		<div class="songAdditionCover">
-			Cover<br> 
-			<input id="txtCover" name="txtCover" type="text"
-				onChange="javascript:changePreview(this.value)" />
-				<img id="editPreviewSmall" src=""
-					onmouseout="javascript:hidePreview();"
-					onmouseover="javascript:showPreview();" /><br> 
-					
-				<select id="txtAPI" name="editAPI">
-					<option>Google Picture API</option>
-					<option>Amazon API</option>
-				</select> 
-				<input onclick="javascript:getURLfromAPI();" id="enterAPI" type="button">
+			Cover<br> <input id="txtCover" name="txtCover" type="text"
+				onChange="javascript:changePreview(this.value)" /> <img
+				id="editPreviewSmall" onmouseout="javascript:hidePreview();"
+				onmouseover="javascript:showPreview();" /><br> <select
+				id="txtAPI" name="editAPI">
+				<option>Google Picture API</option>
+				<option>Amazon API</option>
+			</select> <input onclick="javascript:getURLfromAPI();" id="enterAPI"
+				type="button">
 		</div>
 		<img id="loadingEdit" class="loading" src="../images/loading.gif" />
 		<input id="saveEdit" src="../images/save.jpg" type="image" />
 		<button style="display: none" type="reset" id="closeModalEdit"
 			class="close">Abbrechen</button>
 	</form>
-	<img id="editPreview" src="" />
+	<img id="editPreview" />
 </div>

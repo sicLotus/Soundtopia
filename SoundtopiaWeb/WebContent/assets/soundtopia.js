@@ -25,7 +25,7 @@ jQuery(document).ready(function(){
 	  		$(this).select();
 		 });
 	 
-	jQuery(".modalInput").overlay({
+	var triggers = jQuery(".modalInput").overlay({
 		mask: {
 			color: '#113d2b',
 			loadSpeed: 200,
