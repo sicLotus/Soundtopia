@@ -66,6 +66,8 @@ public class ChangeSongHandler extends HttpServlet {
 		String cover = request.getParameter("cover");
 		int songID = Integer.valueOf(request.getParameter("songID"));
 
+		System.out.println(songID+" "+interpreter+" "+title+" "+cover);
+		
 		SongVO song = Controller.songManager.changeSongInformation(songID,
 				interpreter, title, cover);
 		song = Controller.songManager.getSong(songID);

@@ -17,6 +17,10 @@ import java.util.Set;
         query="SELECT s FROM Song s WHERE s.interpreter LIKE :interpreter AND s.title LIKE :title"
 ),
 @NamedQuery(
+		name="song.findSearchResults",
+		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND ( s.interpreter LIKE :search OR s.title LIKE :search ) "
+),
+@NamedQuery(
 		name="song.findSongsInChart",
 		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND c.ranking >= :start AND c.ranking <= :end ORDER BY c.ranking")
 

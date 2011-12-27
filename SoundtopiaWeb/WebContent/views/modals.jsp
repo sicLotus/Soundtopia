@@ -1,6 +1,7 @@
 <div class="modal" id="modalRegister">
-	<form id="validRegistrationForm" action="../controller/register"
-		Method="post">
+<a class="close myClose"></a>
+	<form id="validRegistrationForm" name="validRegistrationForm"
+		action="../controller/register" Method="post">
 		<fieldset>
 			<legend>Registration</legend>
 			<table>
@@ -20,15 +21,17 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td id="terms"><label>AGB gelesen und aktzeptiert</label></td>
-					<td><input type="checkbox" name="agbR"
-						data-message="Please accept our terms" /></td>
+					<td id="terms"><label>Adminrechte</label></td>
+					<td><input type="checkbox" name="adminR" /></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>
-						<button type="submit">Submit form</button>
+						<!-- <button type="submit">Submit form</button>
 						<button type="reset">Reset</button>
+						--> <input type="image"
+						onclick="$('#validRegistrationForm').valid()"
+						src="../images/enter.jpg" />
 					</td>
 				</tr>
 			</table>
@@ -49,7 +52,8 @@
 </div>
 
 <div id="modalNew" class="modal">
-	<span id="modalNewTxt">Möchten Sie wirklich die neusten Charts manuell laden?</span>
+	<span id="modalNewTxt">Möchten Sie wirklich die neusten Charts
+		manuell laden?</span>
 	<div id="newButtons" class="modalButtons">
 		<img class="button" onclick="javascript:readCharts();"
 			src="../images/yes.jpg" />&nbsp;<img id="closeNewChanges"
@@ -59,6 +63,7 @@
 </div>
 
 <div id="modalEdit" class="songAddition modal">
+	<a id="closeEdit" class="close myClose"></a>
 	<form action="javascript:void(0);"
 		onsubmit="javascript:changeSongInformation();" method="post">
 		<input id="txtID" name="txtID" type="text" style="display: none" />

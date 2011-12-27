@@ -26,6 +26,12 @@ import music.util.JSONObject;
 public class ShowChartsHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int SONGS_PER_SITE = 10;
+	private int start, end;
+	private String view = null;
+	private List<SongVO> chartList = new ArrayList<SongVO>();
+	private UserVO user;
+	private int chartAnz;
+	private boolean loggedIn;
 
 	public ShowChartsHandler() {
 		super();
@@ -43,67 +49,64 @@ public class ShowChartsHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String view = null;
 		String operation = "";
 		operation = request.getParameter("op");
+		HttpSession session = request.getSession();
 
-		if (operation != null && operation.equals("update")) {
-			updateChartList(request, response);
-			view = null;
-		} else {
-			List<SongVO> chartList = new ArrayList<SongVO>();
-			int start, end;
-			try {
-				start = Integer.valueOf(request.getParameter("start"));
-			} catch (NumberFormatException e) {
-				start = 1;
-			}
-			try {
-				end = Integer.valueOf(request.getParameter("end"));
-			} catch (NumberFormatException e) {
-				end = SONGS_PER_SITE;
-			}
-
-			HttpSession session = request.getSession();
-			boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-
-			if (loggedIn) {
-				UserVO user = (UserVO) session.getAttribute("user");
-				chartList = Controller.chartManager.showCharts("Singlecharts",
-						start, end, user.getId());
-			} else {
-				chartList = Controller.chartManager.showCharts("Singlecharts",
-						start, end, -1);
-			}
-
-			int chartAnz = Controller.chartManager
-					.getMaxSongsInChart("Singlecharts");
-
-			System.out.println("start:"+start+" + "+SONGS_PER_SITE +" <= max:"+chartAnz);
-			if (start + SONGS_PER_SITE <= chartAnz) {
-				System.out.println("next");
-				request.setAttribute("nextStart", start + SONGS_PER_SITE);
-				request.setAttribute("nextEnd", end + SONGS_PER_SITE);
-			}
-
-			if (start - SONGS_PER_SITE > 0) {
-				System.out.println("prev");
-				request.setAttribute("prevStart", start - SONGS_PER_SITE);
-				request.setAttribute("prevEnd", end - SONGS_PER_SITE);
-			}
-			
-			for(SongVO s : chartList) {
-				System.out.println(s.getInterpreter());
-			}
-
-			request.setAttribute("chartList", chartList);
-
-			view = "../views/charts.jsp";
+		try {
+			start = Integer.valueOf(request.getParameter("start"));
+		} catch (NumberFormatException e) {
+			start = (Integer) session.getAttribute("lastVisitSong");
 		}
+		
+		session.setAttribute("lastVisitSong", start);
+		
+		try {
+			end = Integer.valueOf(request.getParameter("end"));
+		} catch (NumberFormatException e) {
+			end = (Integer) session.getAttribute("lastVisitSong")
+					+ SONGS_PER_SITE - 1;
+		}
+
+		loggedIn = (Boolean) session.getAttribute("loggedIn");
+
+		if (loggedIn) {
+			user = (UserVO) session.getAttribute("user");
+			chartList = Controller.chartManager.showCharts("Singlecharts",
+					start, end, user.getId());
+		} else {
+			chartList = Controller.chartManager.showCharts("Singlecharts",
+					start, end, -1);
+		}
+
+		chartAnz = Controller.chartManager.getMaxSongsInChart("Singlecharts");
+		
+		if (operation != null && operation.equals("update"))
+			view = updateChartList(request, response);
+		else
+			view = showChartList(request, response);
+
 		return view;
 	}
 
-	private void updateChartList(HttpServletRequest request,
+	private String showChartList(HttpServletRequest request,
+			HttpServletResponse response) {
+		if (start + SONGS_PER_SITE <= chartAnz) {
+			request.setAttribute("nextStart", start + SONGS_PER_SITE);
+			request.setAttribute("nextEnd", end + SONGS_PER_SITE);
+		}
+
+		if (start - SONGS_PER_SITE > 0) {
+			request.setAttribute("prevStart", start - SONGS_PER_SITE);
+			request.setAttribute("prevEnd", end - SONGS_PER_SITE);
+		}
+
+		request.setAttribute("chartList", chartList);
+		return "../views/charts.jsp";
+
+	}
+
+	private String updateChartList(HttpServletRequest request,
 			HttpServletResponse response) {
 		System.out.println("update chartlist");
 		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(
@@ -111,55 +114,22 @@ public class ShowChartsHandler extends HttpServlet {
 		otherSymbols.setDecimalSeparator('.');
 		otherSymbols.setGroupingSeparator(',');
 		DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
-		List<SongVO> chartList = new ArrayList<SongVO>();
-		int start, end;
-		try {
-			start = Integer.valueOf(request.getParameter("start"));
-		} catch (NumberFormatException e) {
-			start = 1;
-		}
-		try {
-			end = Integer.valueOf(request.getParameter("end"));
-		} catch (NumberFormatException e) {
-			end = SONGS_PER_SITE;
-		}
 
 		System.out.println("EJB: " + Controller.chartManager);
-		HttpSession session = request.getSession();
-		boolean loggedIn = (Boolean) session.getAttribute("loggedIn");
-		UserVO user;
-		if (loggedIn) {
-			user = (UserVO) session.getAttribute("user");
-			chartList = Controller.chartManager.showCharts("Singlecharts",
-					start, end, user.getId());
-		} else {
-			user = null;
-			chartList = Controller.chartManager.showCharts("Singlecharts",
-					start, end, -1);
-		}
-		int chartAnz = Controller.chartManager
-				.getMaxSongsInChart("Singlecharts");
-		
-		System.out.println("max:"+chartAnz+" start:"+start+" end:"+end);
 
-		for(SongVO s : chartList) {
-			System.out.println(s.getInterpreter());
-		}
-		
 		try {
 			JSONObject json = new JSONObject();
 			PrintWriter out;
 			out = response.getWriter();
-			
+
 			json.put("loggedIn", loggedIn);
-			
+
 			if (user != null) {
 				JSONObject userJSON = new JSONObject();
 				userJSON.put("admin", user.getAdmin());
 				json.put("user", userJSON);
 			}
-			
-			
+
 			for (SongVO s : chartList) {
 				JSONObject chart = new JSONObject();
 				chart.put("id", s.getId());
@@ -167,11 +137,10 @@ public class ShowChartsHandler extends HttpServlet {
 				chart.put("title", s.getTitle());
 				chart.put("tracklength", s.getTracklength());
 				chart.put("video", s.getVideo());
-				chart.put("rating", s.getRating());
 				chart.put("picture", s.getPicture());
 				chart.put("ranking", s.getRanking());
-				chart.put("rating", s.getRating());
-				chart.put("userRating", s.getUserRating());
+				chart.put("rating", df.format(s.getRating()));
+				chart.put("userRating", df.format(s.getUserRating()));
 				JSONObject lyric = new JSONObject();
 				lyric.put("text", s.getLyric().getText());
 				lyric.put("url", s.getLyric().getUrl());
@@ -206,11 +175,13 @@ public class ShowChartsHandler extends HttpServlet {
 
 			response.setContentType("application/json");
 			out.println(json);
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException io) {
 			io.printStackTrace();
 		}
+		return null;
 	}
 
 }

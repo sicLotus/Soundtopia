@@ -24,11 +24,13 @@
 			</c:choose>
 		</div>
 		<div class="navi_bar_content_right">
-			<form id="search_form">
-				<input id="isenter" class="input" value="Suchbegriff eingeben"
-					type="text">&nbsp; <input id="isearch" type="image"
+			<form id="search_form" onsubmit="return false;" name="searchform">
+				<input id="search_input" class="input search_box" value="Suchbegriff eingeben" onkeyup="javascript:search(searchform.searchinput)"
+					onblur="javascript:loseFocus()" onfocus="javascript:getFocus()"
+					type="text" name="searchinput" autocomplete="off" maxlength="30">&nbsp; <input id="isearch" type="image"
 					src="../images/suche.png">&nbsp;
 			</form>
+			<div id="search_results" style="display: none;"></div>
 		</div>
 	</div>
 	</div>

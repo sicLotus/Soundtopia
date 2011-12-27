@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 
 import music.data.Song;
 
-
 /**
  * Session Bean implementation class SongDAO
  */
@@ -52,7 +51,7 @@ public class SongDAO {
 		} else
 			return updateSong(interpreter, title, tracklength, video);
 	}
-	
+
 	public Song updateSong(String interpreter, String title, int tracklength,
 			String video) {
 		Song song = findSong(interpreter, title);
@@ -102,5 +101,14 @@ public class SongDAO {
 		} else
 			return null;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<Song> searchSongs(int chartID, String search) {
+		List<Song> list = em.createNamedQuery("song.findSearchResults")
+				.setParameter("chartID", chartID).setParameter("search", "%"+search+"%").getResultList();
+		if (list.size() > 0) {
+			return list;
+		} else
+			return null;
+	}
 }

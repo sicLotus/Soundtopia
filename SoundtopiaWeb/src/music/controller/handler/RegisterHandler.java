@@ -37,11 +37,16 @@ public class RegisterHandler extends HttpServlet {
 
 		String email = request.getParameter("emailR");
 		String password = request.getParameter("passwordR");
+		String adminStr = request.getParameter("adminR");
+		byte admin;
+		if (adminStr != null && adminStr.equals("on"))
+			admin = 1;
+		else admin = 0;
 		
-		System.out.println("register: "+email+" "+password);
+		System.out.println("register: "+email+" "+password + " "+admin);
 
-		UserVO user = Controller.userManager.createUser(email, password);
-
+		UserVO user = Controller.userManager.createUser(email, password, admin);
+		
 		if (user != null) {
 			session.setAttribute("user", user);
 			session.setAttribute("loggedIn", new Boolean(true));

@@ -1,40 +1,38 @@
-Defaultwerte vom Loginformular wieder auf Username und passwort ändern
-VALIDIERUNG von Forumularen
-
-Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
-
-Suchsystem
-	Wie soll es überhaupt funktionieren?
-	Suchen wir lediglich Title und Interpret?
-	Wie soll die Ausgabe funktionieren?
-	Verlängerung des Suchfensters bei längerem Text, aber mit MAX_BREITE[JS]
-
-Favoritensystem(Zusatz)
-	Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
-	Favoriten müssen in der Navigation erreichbar sein
+Datenbanksystem
+	Transaktionen - Lösung finden ganz wichtig in undochangeshandler und changesonghandler
 	
 Fehlersystem
 	Welche Fehler könnten überhaupt auftreten?
 	Falls Fehler auftreten, Errorsites anpassen
-
-DF.format mit . anstatt , in showChartsHandler und rateSongHandler
-	wieviel komma nachstellen? und beim ersten mal in jstl auch schon formatieren!
-
-
-showChartsHandler bisher alles redundant
-redundanzen auch bei cahngesonghandler und undochangeshandler (bei der ausgabe ist alles gleich.. ?)
-
+	Redundanzen vermindern (showChartsHandler, changeSongHandler, undoChangeHandler)
+	Defaultwerte im gesamten System überprüfen
 	
-	alle api's static?
-	
-	transaktionen? lösung finden ganz wichtig in undochangeshandler und changesonghandler
-	
+Adminsystem	
 	im songmanager noch abfragen ob title oder interpreter geändert wurden, nur dann brauchen wir lyrics+price neu einlesen
 	
-	usercharts (sortiert nach bewertung) + navigation
+Linksystem
+	Usercharts (sortiert nach Bewertungen (global und für mich als User)
+
+Songstiges
+	Controller in der View so lassen wie er ist, oder wie Stefan das hat mit den Actions?
+	Alle API's static?
+	"Singlecharts" in allen Servlets am besten durch eine static Variable im Controller ersetzen? oder array oder sowas
+	Test der Weiterleitung in der soundtopia.js (showCharts)
 	
-	wenn man modal ajax ausführt -> modale NICHT mehr schließen können!! <-- fucking js
+Suchsystem
+	Wenn Suchfeld leer ist, die searchResults auf Empty setzen oder weiterhin die Liste merken?
+	Suche noch auf songaddition tabelle erweitern! (http://www.objectdb.com/java/jpa/query/jpql/from)
+	FETCH nutzen (oder besser s.interpreter) und OUTER JOIN mit songAddition
+	ENTER und BoxClick Suche per AJAX losschicken --> Ausgabe
+
+Design
+	Sobald wir mehrere Links haben (in der Navigation) muss der Navibalken sich ändern
 	
-	weiterleitung in ajax auf controller/showCharts (muss nur noch getestet werden)
-	
-	in der session speichern welche chartStart und chartEnd als letztes aufgerufen wurden
+=================================================	
+
+ZUSATZ
+	Timer anlegen, der automatisch jede Woche neue Charts und alle anderen Daten einliest
+
+	Favoritensystem(Zusatz)
+		Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
+		Favoriten müssen in der Navigation erreichbar sein

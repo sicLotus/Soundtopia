@@ -45,10 +45,13 @@ public class UserManager implements UserManagerRemote, UserManagerLocal {
 
 		return null;
 	}
-
 	public UserVO createUser(String email, String password) {
+		return createUser(email,password, (byte) 0);
+	}
+
+	public UserVO createUser(String email, String password, byte admin) {
 		try {
-			User user = userDAO.createUser(email, SHA1Convert.SHA1(password));
+			User user = userDAO.createUser(email, SHA1Convert.SHA1(password), admin);
 			UserVO vo = new UserVO();
 			vo.setAdmin(user.getAdmin());
 			vo.setEmail(user.getEmail());
