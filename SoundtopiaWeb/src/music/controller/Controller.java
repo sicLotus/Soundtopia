@@ -19,6 +19,7 @@ import music.controller.handler.PictureHandler;
 import music.controller.handler.RateSongHandler;
 import music.controller.handler.ReadChartsHandler;
 import music.controller.handler.RegisterHandler;
+import music.controller.handler.SearchHandler;
 import music.controller.handler.ShowAdditionalInformation;
 import music.controller.handler.ShowChartsHandler;
 import music.controller.handler.UndoChangesHandler;
@@ -110,6 +111,11 @@ public class Controller extends HttpServlet {
 		if (session.getAttribute("loggedIn") == null) {
 			session.setAttribute("loggedIn", new Boolean(false));
 		}
+		
+		if(session.getAttribute("lastVisitSong") == null) {
+			session.setAttribute("lastVisitSong", 1);
+		}
+				
 	}
 	
 	/*	
@@ -224,13 +230,13 @@ public class Controller extends HttpServlet {
 			ReadChartsHandler handler = new ReadChartsHandler();
 			view = handler.processRequest(request, response);
 		}
-/*		
-		if(servlet.equals("addGenre")){
-			AddGenreHandler handler = new AddGenreHandler();
+		
+		if(servlet.equals("suggestSearch")){
+			SearchHandler handler = new SearchHandler();
 			handler.processRequest(request, response);
 			view = null;
 		}
-		
+/*		
 		if(servlet.equals("addVerlag")){
 			AddVerlagHandler handler = new AddVerlagHandler();
 			handler.processRequest(request, response);

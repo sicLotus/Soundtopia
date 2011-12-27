@@ -9,5 +9,6 @@ import music.data.SongVO;
 public interface ChartManagerLocal {
 	public List<SongVO> showCharts(String chartName, int start, int end, int userID);
 	public int getMaxSongsInChart(String chartName);
+	public String suggestSearch(String[] search, String chartName);
 
 }

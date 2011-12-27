@@ -22,10 +22,11 @@ public class UserDAO {
 	public UserDAO() {
 	}
 	
-	public User createUser(String email, String password) {
+	public User createUser(String email, String password, byte admin) {
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(password);
+		user.setAdmin(admin);
 		
 		em.persist(user);
 

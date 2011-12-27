@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="en_US" />
 <jsp:include page="navi.jsp" />
 <jsp:include page="modals.jsp" />
 
 <div id="contentLoading" class="contentLoading" style="display: none;">
-	<span> <img src="../images/ajaxLoad.gif" align="middle">
+	<span> <img src="../images/loading.gif" align="middle"><br>
 		Loading Please Wait...
 	</span>
 </div>
@@ -18,20 +19,20 @@
 				<div class="chartState">
 					<c:choose>
 						<c:when test="${chart.change > '0'}">
-							<span class="chartStateText">${chart.change}</span>
 							<img class="up" src="../images/up.png">
+							<span class="chartStateUp">${chart.change}</span>
 						</c:when>
 						<c:when test="${chart.change < '0' }">
-							<span class="chartStateText">${chart.change}</span>
 							<img class="down" src="../images/down.png">
+							<span class="chartStateDown">${chart.change}</span>
 						</c:when>
 						<c:when test="${chart.change == '0' }">
-							<span class="chartStateText"></span>
 							<img class="equal" src="../images/equal.png">
+							<span class="chartStateEqual">-</span>
 						</c:when>
 						<c:otherwise>
-							<span class="chartStateText">Neu</span>
 							<img class="new" src="../images/new.png">
+							<span class="chartStateNew">Neu</span>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -64,7 +65,7 @@
 							<a target="_blank" href="${price.url}"><img class="resize"
 								src="../images/${price.provider}_resize.png" /></a>
 							<div class="chartpreis_preis">
-								<a target="_blank" href="${price.url}">${price.value}
+								<a target="_blank" href="${price.url}"><fmt:formatNumber pattern="0.00" type="number" value="${price.value}" />
 									${price.currency}</a>
 							</div>
 						</div>
@@ -104,7 +105,7 @@
 						</c:choose>
 					</form>
 				</div>
-				<div id="chartstars${chart.ranking}" class="chartstars">${chart.rating}</div>
+				<div id="chartstars${chart.ranking}" class="chartstars"><fmt:formatNumber pattern="0.00" type="number" value="${chart.rating}" /></div>
 
 				<div class="chartlaenge">Trackl&auml;nge:
 					${chart.tracklength}min</div>

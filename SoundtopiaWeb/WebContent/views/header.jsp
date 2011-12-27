@@ -11,6 +11,10 @@
 	src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://cdn.jquerytools.org/1.2.6/all/jquery.tools.min.js"></script>
 <script src="../assets/soundtopia.js"></script>
+<script src="../assets/jquery.validate.js"></script>
+<script src="../assets/additional-methods.js"></script>
+<script src="../assets/validation.js"></script>
+<script src="../assets/search.js"></script>
 <script src="../assets/jquery-ui-1.8.16.custom.js"></script>
 <script src="../assets/jquery.ui.stars.js"></script>
 
@@ -24,7 +28,7 @@
 			<div class="navi">
 				<div class="navi_left"></div>
 				<div class="navi_item">
-					<a href="../controller/showCharts">Singlecharts</a>
+					<a href="../controller/showCharts?start=1">Singlecharts</a>
 				</div>
 				<div class="navi_item">Albumcharts</div>
 				<div class="navi_item">Neuheiten</div>
