@@ -18,14 +18,12 @@ import java.util.Set;
 ),
 @NamedQuery(
 		name="song.findSearchResults",
-		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND ( s.interpreter LIKE :search OR s.title LIKE :search ) "
+		query="SELECT s FROM Song s JOIN s.songInCharts c LEFT JOIN s.songAddition sa where c.id.chartID = :chartID AND " +
+		"( s.interpreter LIKE :search OR s.title LIKE :search OR sa.interpreter LIKE :search OR sa.title LIKE :search ) "
 ),
 @NamedQuery(
 		name="song.findSongsInChart",
 		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND c.ranking >= :start AND c.ranking <= :end ORDER BY c.ranking")
-
-				//AND s.songInChart.ranking >= :start AND s.songInChart.ranking <= :end ORDER BY s.songInChart.ranking")
-
 })
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;

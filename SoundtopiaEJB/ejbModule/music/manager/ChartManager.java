@@ -77,9 +77,9 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 		List<Song> result = new ArrayList<Song>();
 		for (Song sa : a) {
 			for (Song sb : b) {
-				if (sa.getChangedInterpreter().equals(
-						sb.getChangedInterpreter())
-						&& sa.getChangedTitle().equals(sb.getChangedTitle())) {
+				if (sa.getInterpreter().equals(
+						sb.getInterpreter())
+						&& sa.getTitle().equals(sb.getTitle())) {
 					result.add(sa);
 					continue;
 				}

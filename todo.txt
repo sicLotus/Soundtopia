@@ -15,14 +15,11 @@ Linksystem
 
 Songstiges
 	Controller in der View so lassen wie er ist, oder wie Stefan das hat mit den Actions?
-	Alle API's static?
+	Alle API's static? - JA
 	"Singlecharts" in allen Servlets am besten durch eine static Variable im Controller ersetzen? oder array oder sowas
 	Test der Weiterleitung in der soundtopia.js (showCharts)
 	
 Suchsystem
-	Wenn Suchfeld leer ist, die searchResults auf Empty setzen oder weiterhin die Liste merken?
-	Suche noch auf songaddition tabelle erweitern! (http://www.objectdb.com/java/jpa/query/jpql/from)
-	FETCH nutzen (oder besser s.interpreter) und OUTER JOIN mit songAddition
 	ENTER und BoxClick Suche per AJAX losschicken --> Ausgabe
 
 Design
@@ -36,3 +33,6 @@ ZUSATZ
 	Favoritensystem(Zusatz)
 		Angemeldete User können Songs zu ihren Favoriten hinzufügen (benötigt DB-Tabelle)
 		Favoriten müssen in der Navigation erreichbar sein
+		
+	Suchsystem
+		Sortiertes ausgeben, Bewertung der Suchbegriffe BSP: bei featu wird auch feat gefunden (in SongAddition), aber zuerst ausgegeben
