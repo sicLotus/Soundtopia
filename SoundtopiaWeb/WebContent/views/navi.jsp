@@ -24,7 +24,7 @@
 			</c:choose>
 		</div>
 		<div class="navi_bar_content_right">
-			<form id="search_form" onsubmit="return false;" name="searchform">
+			<form id="search_form" method="post" action="../controller/searchSongs" name="searchform">
 				<input id="search_input" class="input search_box" value="Suchbegriff eingeben" onkeyup="javascript:search(searchform.searchinput)"
 					onblur="javascript:loseFocus()" onfocus="javascript:getFocus()"
 					type="text" name="searchinput" autocomplete="off" maxlength="30">&nbsp; <input id="isearch" type="image"

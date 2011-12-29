@@ -114,7 +114,7 @@ public class SongVO {
 		this.id = id;
 	}
 
-	public void valueOf(Song song) {
+	public SongVO valueOf(Song song) {
 		if (song != null) {
 			setId(song.getId());
 			setInterpreter(song.getChangedInterpreter());
@@ -125,7 +125,9 @@ public class SongVO {
 			setTracklength(convertToTime(song.getTracklength()));
 			valueOf(song.getLyric());
 			valueOf(song.getPrices());
+			return this;
 		}
+		else return null;
 	}
 
 	private void valueOf(Lyric lyric) {

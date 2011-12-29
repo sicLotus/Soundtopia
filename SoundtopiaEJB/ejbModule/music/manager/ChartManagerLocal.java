@@ -10,5 +10,5 @@ public interface ChartManagerLocal {
 	public List<SongVO> showCharts(String chartName, int start, int end, int userID);
 	public int getMaxSongsInChart(String chartName);
 	public String suggestSearch(String[] search, String chartName);
-
+	public List<SongVO> searchSongs(int userID, String[] search, String chartName);
 }

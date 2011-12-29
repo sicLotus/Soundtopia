@@ -31,7 +31,7 @@ public class SongAdditionDAO {
 			return false;
 	}
 
-	public void createSongAddition(int songID, String interpreter,
+	public SongAddition createSongAddition(int songID, String interpreter,
 			String title, String cover) {
 		if (!doesSongAdditionExists(songID)) {
 			SongAddition songAddition = new SongAddition();
@@ -48,11 +48,12 @@ public class SongAdditionDAO {
 				songAddition.setCover(cover);
 
 			em.persist(songAddition);
+			return songAddition;
 		} else
-			updateSongAddition(songID, interpreter, title, cover);
+			return updateSongAddition(songID, interpreter, title, cover);
 	}
 
-	public void updateSongAddition(int songID, String interpreter,
+	public SongAddition updateSongAddition(int songID, String interpreter,
 			String title, String cover) {
 		SongAddition s = findSongAddition(songID);
 		if (!interpreter.equals(""))
@@ -65,6 +66,7 @@ public class SongAdditionDAO {
 			s.setCover(cover);
 
 		em.persist(s);
+		return s;
 	}
 
 	public void deleteSongAddition(int songID) {

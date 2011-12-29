@@ -4,11 +4,8 @@ Datenbanksystem
 Fehlersystem
 	Welche Fehler könnten überhaupt auftreten?
 	Falls Fehler auftreten, Errorsites anpassen
-	Redundanzen vermindern (showChartsHandler, changeSongHandler, undoChangeHandler)
+	Redundanzen vermindern (showChartsHandler, changeSongHandler, undoChangeHandler, chartmanager(suche))
 	Defaultwerte im gesamten System überprüfen
-	
-Adminsystem	
-	im songmanager noch abfragen ob title oder interpreter geändert wurden, nur dann brauchen wir lyrics+price neu einlesen
 	
 Linksystem
 	Usercharts (sortiert nach Bewertungen (global und für mich als User)
@@ -17,10 +14,8 @@ Songstiges
 	Controller in der View so lassen wie er ist, oder wie Stefan das hat mit den Actions?
 	Alle API's static? - JA
 	"Singlecharts" in allen Servlets am besten durch eine static Variable im Controller ersetzen? oder array oder sowas
+	SessionManager noch richtigen Namen finden
 	Test der Weiterleitung in der soundtopia.js (showCharts)
-	
-Suchsystem
-	ENTER und BoxClick Suche per AJAX losschicken --> Ausgabe
 
 Design
 	Sobald wir mehrere Links haben (in der Navigation) muss der Navibalken sich ändern

@@ -141,8 +141,8 @@ public class Session implements SessionRemote, SessionLocal {
 		}
 	}
 
-	public String getPictureFromGoogle(String interpreter, String title) {
-		return GoogleImageAPI.retrieveData(interpreter, title);
+	public String getPictureFromGoogle(String interpreter, String title, int index) {
+		return GoogleImageAPI.retrieveData(interpreter, title, index);
 	}
 
 	public String getPictureFromAmazon(String interpreter, String title) {

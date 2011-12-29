@@ -6,17 +6,11 @@
 <jsp:include page="navi.jsp" />
 <jsp:include page="modals.jsp" />
 
-<div id="contentLoading" class="contentLoading" style="display: none;">
-	<span> <img src="../images/loading.gif" align="middle"><br>
-		Loading Please Wait...
-	</span>
-</div>
-
 <div id="content">
-	<c:forEach var="chart" items="${chartList}">
+<c:forEach var="chart" items="${chartList}">
 		<div class="content_item">
 			<div class="chartplatzierung">
-				<div class="chartState">
+			<!-- <div class="chartState">
 					<c:choose>
 						<c:when test="${chart.change > '0'}">
 							<img class="up" src="../images/up.png">
@@ -35,7 +29,7 @@
 							<span class="chartStateNew">Neu</span>
 						</c:otherwise>
 					</c:choose>
-				</div>
+				</div> -->
 				<span class="platznummer">${chart.ranking}.</span> <span
 					class="platz">Platz</span>
 			</div>
@@ -139,24 +133,11 @@
 		</div>
 		<!--  Content_Item Ende -->
 	</c:forEach>
+
 </div>
 <!-- Content Ende -->
-
-
 <div id="footer">
 	<div id="platzierungen">
-		<c:choose>
-			<c:when test="${prevStart != null}">
-				<a href="javascript:loadContent('${prevStart}','${prevEnd}');"><img
-					alt="Vorherige" src="../images/prev.jpg" /></a>
-			</c:when>
-		</c:choose>
-		<c:choose>
-			<c:when test="${nextStart != null }">
-				<a href="javascript:loadContent('${nextStart}','${nextEnd}');"><img
-					alt="Nächste" src="../images/next.jpg" /></a>
-			</c:when>
-		</c:choose>
 	</div>
 </div>
 <!-- Footer Ende -->

@@ -20,6 +20,7 @@ import music.controller.handler.RateSongHandler;
 import music.controller.handler.ReadChartsHandler;
 import music.controller.handler.RegisterHandler;
 import music.controller.handler.SearchHandler;
+import music.controller.handler.SearchSongHandler;
 import music.controller.handler.ShowAdditionalInformation;
 import music.controller.handler.ShowChartsHandler;
 import music.controller.handler.UndoChangesHandler;
@@ -233,17 +234,15 @@ public class Controller extends HttpServlet {
 		
 		if(servlet.equals("suggestSearch")){
 			SearchHandler handler = new SearchHandler();
-			handler.processRequest(request, response);
-			view = null;
+			view = handler.processRequest(request, response);
 		}
+		
+		if(servlet.equals("searchSongs")){
+			SearchSongHandler handler = new SearchSongHandler();
+			view = handler.processRequest(request, response);
+		}
+		
 /*		
-		if(servlet.equals("addVerlag")){
-			AddVerlagHandler handler = new AddVerlagHandler();
-			handler.processRequest(request, response);
-			view = null;
-		}
-		
-		
 		
 		if(servlet.equals("uploadPicture")){
 			UploadHandler handler = new UploadHandler();

@@ -18,15 +18,12 @@ import music.services.ItunesAPI;
 import music.services.LyricAPI;
 import music.services.SevenDigitalsAPI;
 
-
-
 /**
  * Session Bean implementation class SongManager
  */
 @Stateless
 public class SongManager implements SongManagerRemote, SongManagerLocal {
 
-	
 	@EJB
 	private RatingDAO ratingDAO;
 
@@ -42,11 +39,7 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 	@EJB
 	private PriceDAO priceDAO;
 
-	/**
-	 * Default constructor.
-	 */
 	public SongManager() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -86,11 +79,15 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 
 	public SongVO changeSongInformation(int songID, String interpreter,
 			String title, String cover) {
-		songAdditionDAO.createSongAddition(songID, interpreter, title, cover);
-
-		readNewSongInformationFromAPIs(songID, interpreter, title);
-		
 		Song song = songDAO.findSong(songID);
+		SongAddition sa = songAdditionDAO.createSongAddition(songID,
+				interpreter, title, cover);
+
+		if (!(song.getInterpreter().equals(sa.getInterpreter()) && song
+				.getTitle().equals(sa.getTitle())))
+			readNewSongInformationFromAPIs(songID, interpreter, title);
+
+		song = songDAO.findSong(songID);
 		SongVO songVO = new SongVO();
 		songVO.valueOf(song);
 
@@ -99,11 +96,10 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 
 	public void readNewSongInformationFromAPIs(int songID, String interpreter,
 			String title) {
+		System.out.println("red new informations");
 		LyricVO lyric = LyricAPI.retrieveData(interpreter, title);
 		lyricDAO.createLyric(songID, lyric);
 
-		System.out.println("readnew:"+interpreter+" "+title);
-		
 		priceDAO.removeAllPrices(songID);
 		priceDAO.createPrice(songID, AmazonAPI.retrieveData(
 				AmazonAPI.SearchIndex.MP3Downloads, interpreter + " " + title));
@@ -111,15 +107,15 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 		priceDAO.createPrice(songID,
 				SevenDigitalsAPI.retrieveData(interpreter, title));
 	}
-	
+
 	public SongVO undoChanges(int songID) {
 		SongVO songVO = new SongVO();
-		
+
 		songAdditionDAO.deleteSongAddition(songID);
-		songVO = getSong(songID);		
+		songVO = getSong(songID);
 		return songVO;
 	}
-	
+
 	public SongVO getSong(int songID) {
 		Song song = songDAO.findSong(songID);
 		SongVO songVO = new SongVO();

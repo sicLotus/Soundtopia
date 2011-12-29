@@ -67,6 +67,7 @@
 	<form action="javascript:void(0);"
 		onsubmit="javascript:changeSongInformation();" method="post">
 		<input id="txtID" name="txtID" type="text" style="display: none" />
+		<input id="txtIndex" name="txtIndex" type="text" style="display: none" />
 		<div class="songAdditionInterpreter">
 			Interpreter<br> <input id="txtInterpreter" name="txtInterpreter"
 				type="text" />

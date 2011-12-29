@@ -27,6 +27,10 @@ jQuery(document).ready(function() {
 		$(this).select();
 	});
 
+setTriggers();
+});
+
+function setTriggers() {
 	triggers = jQuery(".modalInput").overlay({
 		mask : {
 			color : '#113d2b',
@@ -36,7 +40,19 @@ jQuery(document).ready(function() {
 		closeOnEsc : false,
 		closeOnClick : false
 	});
-});
+	
+	$("a[rel]").each(function(i) {	
+		$(this).overlay({
+			mask : {
+				color : '#113d2b',
+				loadSpeed : 200,
+				opacity : 0.7
+			},
+			closeOnEsc : false,
+			closeOnClick : false
+		});			
+	});	
+}
 
 function hideKasten() {
 	$(".kasten_extended").hide();
@@ -141,7 +157,7 @@ function showCharts(start, end) {
 													+ reqCode.chart[i].change
 													+ "</span>";
 										} else if (reqCode.chart[i].change == 0) {
-											chartList += "<img class=\"equal\" src=\"../images/equal.png\"><span class=\"chartStateEqual\">-</span>";
+											chartList += "<img class=\"equal\" src=\"../images/equal.png\"><span class=\"chartStateEqual\"></span>";
 										} else {
 											chartList += "<img class=\"new\" src=\"../images/new.png\"><span class=\"chartStateNew\">Neu</span>";
 										}
@@ -151,9 +167,9 @@ function showCharts(start, end) {
 
 										if (reqCode.user != null) {
 											if (reqCode.user.admin == 1) {
-												chartList += "<a class=\"modalInput\" onclick=\"javascript:fillText("
+												chartList += "<a class=\"modalInput\" onclick=\"fillText('"
 														+ reqCode.chart[i].id
-														+ "); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
+														+ "'); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
 														+ reqCode.chart[i].id
 														+ ")\" class=\"modalInput\" rel=\"#modalUndo\" href=\"javascript:void(0);\"><img class=\"undo\" src=\"../images/undo.png\" /></a>";
 											}
@@ -245,6 +261,7 @@ function showCharts(start, end) {
 									});
 
 					updateChartList(chartList);
+					
 					if (ids.length > 0) {
 						jQuery.each(ids, function(i, value) {
 							showStars(rankings[i], ids[i]);
@@ -269,6 +286,7 @@ function showCharts(start, end) {
 						nextE = reqCode.next.end;
 					}
 					setFooter(prevS, prevE, nextS, nextE);
+					setTriggers();
 				}
 			});
 }
@@ -311,6 +329,7 @@ function fillText(songID) {
 				data : _data,
 				success : function(reqCode) {
 					document.getElementById("txtID").value = songID;
+					document.getElementById("txtIndex").value = 0;
 					document.getElementById("txtCover").value = reqCode.songAddition.cover;
 					document.getElementById("txtInterpreter").value = reqCode.songAddition.interpreter;
 					document.getElementById("txtTitle").value = reqCode.songAddition.title;
@@ -337,19 +356,24 @@ function changePreview(preview) {
 
 function getURLfromAPI() {
 	startLoadingModal('saveEdit', 'loadingEdit');
+	//0 - google, 1 - amazon
 	var api = document.getElementById('txtAPI').options[document
 			.getElementById('txtAPI').selectedIndex].value;
 	var interpreter = document.getElementById("txtInterpreter").value.replace(
 			/[\<\>]/g, "");
 	var title = document.getElementById("txtTitle").value
 			.replace(/[\<\>]/g, "");
+	var index = document.getElementById("txtIndex").value;
 	var _data = "api=" + api + "&interpreter=" + interpreter + "&title="
-			+ title;
+			+ title + "&index=" + index;
 	jQuery.ajax({
 		url : "../controller/getPictureURL",
 		type : "POST",
 		data : _data,
-		success : function(reqCode) {
+		success : function(reqCode) {		
+			if (api == 'Google Picture API')
+				document.getElementById("txtIndex").value = parseInt(index)+1;
+			
 			document.getElementById("txtCover").value = reqCode.url;
 			changePreview(reqCode.url);
 			finishLoadingModal('saveEdit', 'loadingEdit');

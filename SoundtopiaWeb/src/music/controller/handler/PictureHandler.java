@@ -45,12 +45,13 @@ public class PictureHandler extends HttpServlet {
 		String interpreter = request.getParameter("interpreter");
 		String title = request.getParameter("title");
 		String api = request.getParameter("api");
+		int index = Integer.valueOf(request.getParameter("index"));
 
 		String url = "";
 
 		if (api.equals(apis[0])) {
 			url = Controller.sessionManager.getPictureFromGoogle(interpreter,
-					title);
+					title, index);
 		} else if (api.equals(apis[1])) {
 			url = Controller.sessionManager.getPictureFromAmazon(interpreter,
 					title);
