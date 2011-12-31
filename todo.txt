@@ -9,6 +9,7 @@ Fehlersystem
 	
 Linksystem
 	Usercharts (sortiert nach Bewertungen (global und für mich als User)
+		- sortieren
 
 Songstiges
 	Controller in der View so lassen wie er ist, oder wie Stefan das hat mit den Actions?
@@ -16,9 +17,8 @@ Songstiges
 	"Singlecharts" in allen Servlets am besten durch eine static Variable im Controller ersetzen? oder array oder sowas
 	SessionManager noch richtigen Namen finden
 	Test der Weiterleitung in der soundtopia.js (showCharts)
+	login verlinkt immer auf singlecharts site.. auch wenn man zuletzt auf der top user charts seite war.. kann man das umgehen?
 
-Design
-	Sobald wir mehrere Links haben (in der Navigation) muss der Navibalken sich ändern
 	
 =================================================	
 
@@ -31,3 +31,6 @@ ZUSATZ
 		
 	Suchsystem
 		Sortiertes ausgeben, Bewertung der Suchbegriffe BSP: bei featu wird auch feat gefunden (in SongAddition), aber zuerst ausgegeben
+	
+	Usercharts
+		Sortieren nach beste/schlechteste und meist bewerteste

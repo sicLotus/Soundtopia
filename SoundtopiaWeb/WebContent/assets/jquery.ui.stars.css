@@ -24,7 +24,7 @@
   width: 16px;
   height: 15px;
   display: block;
-  background: url(./images/jquery.ui.stars.gif) no-repeat 0 0;
+  background: url(../images/jquery.ui.stars.gif) no-repeat 0 0;
 }
 .ui-stars-star a {
   background-position: 0 -32px;
@@ -47,7 +47,7 @@
 .stars-off, .stars-on {
     position: relative;
     height: 16px;
-    background: url(./images/jquery.ui.stars.gif) repeat-x 0 -32px;
+    background: url(../images/jquery.ui.stars.gif) repeat-x 0 -32px;
 }
 
 .stars-on {

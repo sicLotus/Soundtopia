@@ -26,6 +26,10 @@ jQuery(document).ready(function() {
 	$('#txtTitle').focus(function() {
 		$(this).select();
 	});
+	
+	$('select#sortTopUserCharts').selectmenu({
+		width: 119
+	});
 
 setTriggers();
 });
@@ -52,6 +56,37 @@ function setTriggers() {
 			closeOnClick : false
 		});			
 	});	
+}
+
+/*
+
+function changeNavistrich() {
+	
+}
+
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+} */
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
 }
 
 function hideKasten() {
@@ -85,7 +120,12 @@ function showStars(divID, songID) {
 				data : _data,
 				success : function(reqCode) {
 					// aktualisieren des durchschnittwertes
-					var html = reqCode.meanRating;
+					var html = reqCode.meanRating + " / "+reqCode.voteCount;
+					
+					if(reqCode.voteCount == 1)
+						html += " Vote";
+					else html += " Votes";
+					
 					updateChartstars(divID, html);
 				}
 			});
@@ -138,7 +178,6 @@ function showCharts(start, end) {
 				type : "POST",
 				data : _data,
 				success : function(reqCode) {
-					var rankings = [];
 					var ratings = [];
 					var ids = [];
 					var chartList = "";
@@ -216,31 +255,31 @@ function showCharts(start, end) {
 
 										if (reqCode.loggedIn == false) {
 											chartList += " <br> <div id=\"fake-stars-off"
-													+ reqCode.chart[i].ranking
+													+ reqCode.chart[i].id
 													+ "\" class=\"stars-off\" style=\"width: 81px;\"> <div id=\"fake-stars-on"
-													+ reqCode.chart[i].ranking
+													+ reqCode.chart[i].id
 													+ "\" class=\"stars-on\"></div></div>";
-											rankings
-													.push(reqCode.chart[i].ranking);
+										
 											ratings
 													.push(reqCode.chart[i].rating);
 										} else {
 											chartList += " <div class=\"stars-wrapper\" id=\"stars-wrapper"
-													+ reqCode.chart[i].ranking
+													+ reqCode.chart[i].id
 													+ "\"> <select name=\"selrate\"> <option value=\"1\">Very poor</option> <option value=\"2\">Not that bad</option> <option value=\"3\">Average</option> <option value=\"4\">Good</option> <option value=\"5\">Perfect</option> </select> </div>";
 
-											rankings
-													.push(reqCode.chart[i].ranking);
 											ratings
 													.push(reqCode.chart[i].userRating);
-											ids.push(reqCode.chart[i].id);
+											
 										}
-
+										ids.push(reqCode.chart[i].id);
 										chartList += "</form> </div> <div id=\"chartstars"
-												+ reqCode.chart[i].ranking
+												+ reqCode.chart[i].id
 												+ "\" class=\"chartstars\">"
-												+ reqCode.chart[i].rating
-												+ "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
+												+ reqCode.chart[i].rating + " / "+reqCode.chart[i].voteCount;
+												if(reqCode.chart[i].voteCount ==1)
+													chartList+=" Vote";
+												else chartList+=" Votes";
+												chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
 												+ reqCode.chart[i].tracklength
 												+ "min</div> <!-- <div class=\"chartplayer\">Play | Stop | Volume</div> --> <div class=\"chart_extend\"></div> </div> <div class=\"kasten_extended\"> <div class=\"chartvideo\"> <object style='width: 301px; height: 200px;' width='301' height='200'> <embed src='"
 												+ reqCode.chart[i].video
@@ -262,14 +301,14 @@ function showCharts(start, end) {
 
 					updateChartList(chartList);
 					
-					if (ids.length > 0) {
+					if (reqCode.loggedIn) {
 						jQuery.each(ids, function(i, value) {
-							showStars(rankings[i], ids[i]);
-							rate(rankings[i], ratings[i]);
+							showStars(ids[i], ids[i]);
+							rate(ids[i], ratings[i]);
 						});
 					} else {
 						jQuery.each(ratings, function(i, value) {
-							rateFake(rankings[i], ratings[i]);
+							rateFake(ids[i], ratings[i]);
 						});
 					}
 
@@ -499,6 +538,143 @@ function readCharts() {
 
 			finishLoadingModal('newButtons', 'loadingNew');
 			self.location.href = '../controller/showCharts';
+		}
+	});
+}
+
+function showUserCharts(sort) {
+	var _data = "mode=ajax&sortType="+sort;
+	jQuery.ajax({
+		url : "../controller/showUserCharts",
+		type : "POST",
+		data : _data,
+		success : function(reqCode) {
+		//	var rankings = [];
+			var ratings = [];
+			var ids = [];
+			var chartList = "";
+			var index = 1;
+			jQuery
+					.each(
+							reqCode.chart,
+							function(i, value) {
+								
+								chartList += "<div class=\"content_item\"><div class=\"chartplatzierung\"><span class=\"platznummer\">"
+										+ index++
+										+ ".</span><span class=\"platz\">Platz</span></div>";
+
+								if (reqCode.user != null) {
+									if (reqCode.user.admin == 1) {
+										chartList += "<a class=\"modalInput\" onclick=\"fillText('"
+												+ reqCode.chart[i].id
+												+ "'); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
+												+ reqCode.chart[i].id
+												+ ")\" class=\"modalInput\" rel=\"#modalUndo\" href=\"javascript:void(0);\"><img class=\"undo\" src=\"../images/undo.png\" /></a>";
+									}
+								}
+
+								chartList += "<div class=\"chartbild\"> <img id=\"cover"
+										+ reqCode.chart[i].id
+										+ "\" class=\"cover\" alt=\"Coverlink:"
+										+ reqCode.chart[i].picture
+										+ "\" src=\""
+										+ reqCode.chart[i].picture
+										+ "\" /> </div>";
+								chartList += "<div class=\"kasten\"> <div id=\"chartautor"
+										+ reqCode.chart[i].id
+										+ "\" class=\"chartautor\">"
+										+ reqCode.chart[i].interpreter
+										+ "</div> <span class=\"platzhalter_autor_name\"> | </span> <div id=\"chartname"
+										+ reqCode.chart[i].id
+										+ "\" class=\"chartname\">"
+										+ reqCode.chart[i].title
+										+ "</div> <div id=\"chartpreise"
+										+ reqCode.chart[i].id
+										+ "\" class=\"chartpreise\">";
+
+								if (reqCode.chart[i].prices != null) {
+									jQuery
+											.each(
+													reqCode.chart[i].prices,
+													function(j, value) {
+														chartList += " <div class=\"chartpreis\"> <a target=\"_blank\" href=\""
+																+ reqCode.chart[i].prices[j].url
+																+ "\"><img class=\"resize\" src=\"../images/"
+																+ reqCode.chart[i].prices[j].provider
+																+ "_resize.png\" /></a> <div class=\"chartpreis_preis\"> <a target=\"_blank\" href=\""
+																+ reqCode.chart[i].prices[j].url
+																+ "\">"
+																+ reqCode.chart[i].prices[j].value
+																+ " "
+																+ reqCode.chart[i].prices[j].currency
+																+ "</a></div></div>";
+													});
+								}
+								chartList += "</div><div class=\"chartbewertung\"><form>Bewertung: &oslash;";
+
+								if (reqCode.loggedIn == false) {
+									chartList += " <br> <div id=\"fake-stars-off"
+											+ reqCode.chart[i].id
+											+ "\" class=\"stars-off\" style=\"width: 81px;\"> <div id=\"fake-stars-on"
+											+ reqCode.chart[i].id
+											+ "\" class=\"stars-on\"></div></div>";
+									//rankings
+									//		.push(reqCode.chart[i].ranking);
+									ratings
+											.push(reqCode.chart[i].rating);
+								} else {
+									chartList += " <div class=\"stars-wrapper\" id=\"stars-wrapper"
+											+ reqCode.chart[i].id
+											+ "\"> <select name=\"selrate\"> <option value=\"1\">Very poor</option> <option value=\"2\">Not that bad</option> <option value=\"3\">Average</option> <option value=\"4\">Good</option> <option value=\"5\">Perfect</option> </select> </div>";
+
+									//rankings
+									//		.push(reqCode.chart[i].ranking);
+									ratings
+											.push(reqCode.chart[i].userRating);
+									
+								}
+								ids.push(reqCode.chart[i].id);
+								chartList += "</form> </div> <div id=\"chartstars"
+										+ reqCode.chart[i].id
+										+ "\" class=\"chartstars\">"
+										+ reqCode.chart[i].rating + " / "+reqCode.chart[i].voteCount;
+								if(reqCode.chart[i].voteCount ==1)
+									chartList+=" Vote";
+								else chartList+=" Votes";
+								
+								chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
+										+ reqCode.chart[i].tracklength
+										+ "min</div> <!-- <div class=\"chartplayer\">Play | Stop | Volume</div> --> <div class=\"chart_extend\"></div> </div> <div class=\"kasten_extended\"> <div class=\"chartvideo\"> <object style='width: 301px; height: 200px;' width='301' height='200'> <embed src='"
+										+ reqCode.chart[i].video
+										+ "' width='301' height='200' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'> </embed> <param name='movie' value='"
+										+ reqCode.chart[i].video
+										+ "' /> <param name='AllowFullscreen' value='true' /> <param name='AllowScriptAccess' value='always' /> </object> </div> <div class=\"chartlyrik\"> Lyrik <div id=\"lyriktext"
+										+ reqCode.chart[i].id
+										+ "\" class=\"lyriktext\"> "
+										+ reqCode.chart[i].lyric.text
+										+ "<br> <br> <a target=\"_blank\" href=\""
+										+ reqCode.chart[i].lyric.url
+										+ "\">"
+										+ reqCode.chart[i].interpreter
+										+ " - "
+										+ reqCode.chart[i].title
+										+ "</a> </div> </div> <!-- Lyrik Ende --> </div> <!-- Kasten Extended Ende --> </div> <!-- Content_Item Ende -->";
+
+							});
+
+			updateChartList(chartList);
+			
+			if (reqCode.loggedIn) {
+				jQuery.each(ids, function(i, value) {
+					showStars(ids[i], ids[i]);
+					rate(ids[i], ratings[i]);
+				});
+			} else {
+				jQuery.each(ratings, function(i, value) {
+					rateFake(ids[i], ratings[i]);
+				});
+			}
+			setTriggers();
 		}
 	});
 }

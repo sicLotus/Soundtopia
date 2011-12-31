@@ -11,6 +11,7 @@ import music.data.Rating;
 import music.data.Song;
 import music.data.SongInChart;
 import music.data.SongVO;
+import music.data.SortType;
 import music.repository.ChartDAO;
 import music.repository.RatingDAO;
 import music.repository.SongDAO;
@@ -35,23 +36,36 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 
 	public List<SongVO> showCharts(String chartName, int start, int end,
 			int userID) {
+		return showCharts(chartName, start, end, userID, SortType.RANKING);
+	}
+
+	public List<SongVO> showCharts(String chartName, int start, int end,
+			int userID, SortType sort) {
 		List<SongVO> chartList = new ArrayList<SongVO>();
 		SongVO chartEntry;
 		Rating rating;
 		Chart chart = chartDAO.findChart(chartName);
-		List<Song> songList = songDAO.findSongInCharts(chart.getId(), start,
-				end);
+		List<Song> songList;
+
+		if (sort.equals(SortType.RATING))
+			songList = songDAO.findTopUserCharts(chart.getId(), end);
+		else if (sort.equals(SortType.VOTES))
+			songList = songDAO.findTopUserChartsVotes(chart.getId(), end);
+		else
+			songList = songDAO.findSongInCharts(chart.getId(), start, end);
+
 		for (int i = 0; i < songList.size(); i++) {
 			chartEntry = new SongVO();
 
 			chartEntry.valueOf(songList.get(i));
 
-			for (SongInChart sic : songList.get(i).getSongInCharts()) {
-				if (sic.getId().getChartID() == chart.getId()) {
-					chartEntry.setRanking(sic.getRanking());
-					chartEntry.setChange(sic.getChangeInRanking());
+			if (sort.equals(SortType.RANKING))
+				for (SongInChart sic : songList.get(i).getSongInCharts()) {
+					if (sic.getId().getChartID() == chart.getId()) {
+						chartEntry.setRanking(sic.getRanking());
+						chartEntry.setChange(sic.getChangeInRanking());
+					}
 				}
-			}
 
 			if (userID >= 0) {
 				rating = ratingDAO.findRating(userID, songList.get(i).getId());
@@ -116,7 +130,8 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 		return sb.toString();
 	}
 
-	public List<SongVO> searchSongs(int userID, String[] search, String chartName) {
+	public List<SongVO> searchSongs(int userID, String[] search,
+			String chartName) {
 		int chartID = chartDAO.findChart(chartName).getId();
 		List<Song> oldResultList = songDAO.searchSongs(chartID, search[0]);
 		List<Song> newResultList;
@@ -130,7 +145,7 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 		if (oldResultList != null) {
 			SongVO chartEntry;
 			Rating rating;
-			for (Song s : oldResultList) {		
+			for (Song s : oldResultList) {
 				chartEntry = new SongVO();
 
 				chartEntry.valueOf(s);
@@ -150,7 +165,7 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 						chartEntry.setUserRating(0);
 				} else
 					chartEntry.setUserRating(0);
-				
+
 				results.add(chartEntry);
 			}
 		}

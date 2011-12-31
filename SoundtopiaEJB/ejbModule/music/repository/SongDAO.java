@@ -103,6 +103,28 @@ public class SongDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Song> findTopUserCharts(int chartID, int end) {
+		List<Song> list = em.createNamedQuery("song.findTopUserCharts")
+				.setParameter("chartID", chartID)
+				.setMaxResults(end).getResultList();
+		if (list.size() > 0) {
+			return list;
+		} else
+			return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Song> findTopUserChartsVotes(int chartID, int end) {
+		List<Song> list = em.createNamedQuery("song.findTopUserChartsVotes")
+				.setParameter("chartID", chartID)
+				.setMaxResults(end).getResultList();
+		if (list.size() > 0) {
+			return list;
+		} else
+			return null;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Song> searchSongs(int chartID, String search) {
 		List<Song> list = em.createNamedQuery("song.findSearchResults")
 				.setParameter("chartID", chartID).setParameter("search", "%"+search+"%").getResultList();

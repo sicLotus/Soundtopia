@@ -53,11 +53,6 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 		// return song.getRating();
 	}
 
-	public float getMeanRate(int songID) {
-		Song song = songDAO.findSong(songID);
-		return song.getRating();
-	}
-
 	public SongAdditionVO getSongInformation(int songID) {
 		SongAdditionVO songAdditionVO = new SongAdditionVO();
 		SongAddition songAddition = songAdditionDAO.findSongAddition(songID);
@@ -110,7 +105,6 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 
 	public SongVO undoChanges(int songID) {
 		SongVO songVO = new SongVO();
-
 		songAdditionDAO.deleteSongAddition(songID);
 		songVO = getSong(songID);
 		return songVO;
@@ -121,6 +115,17 @@ public class SongManager implements SongManagerRemote, SongManagerLocal {
 		SongVO songVO = new SongVO();
 		songVO.valueOf(song);
 		return songVO;
+	}
+	
+
+	public float getMeanRate(int songID) {
+		Song song = songDAO.findSong(songID);
+		return song.getRating();
+	}
+	
+	public int getVoteCount(int songID) {
+		Song song = songDAO.findSong(songID);
+		return song.getVoteCount();
 	}
 
 }

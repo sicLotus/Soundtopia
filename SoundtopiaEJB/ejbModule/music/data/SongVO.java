@@ -17,6 +17,7 @@ public class SongVO {
 	private int ranking;
 	private Integer change;
 	private int userRating;
+	private int voteCount;
 
 	public String getInterpreter() {
 		return interpreter;
@@ -123,6 +124,7 @@ public class SongVO {
 			setRating(song.getRating());
 			setVideo(song.getVideo());
 			setTracklength(convertToTime(song.getTracklength()));
+			setVoteCount(song.getVoteCount());
 			valueOf(song.getLyric());
 			valueOf(song.getPrices());
 			return this;
@@ -164,6 +166,14 @@ public class SongVO {
 		else
 			result = minutes + ":" + seconds;
 		return result;
+	}
+
+	public int getVoteCount() {
+		return voteCount;
+	}
+
+	public void setVoteCount(int voteCount) {
+		this.voteCount = voteCount;
 	}
 
 }

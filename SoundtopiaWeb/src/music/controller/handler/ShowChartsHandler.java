@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import music.controller.Controller;
 import music.data.PriceVO;
 import music.data.SongVO;
+import music.data.SortType;
 import music.data.UserVO;
 import music.util.JSONException;
 import music.util.JSONObject;
@@ -73,10 +74,10 @@ public class ShowChartsHandler extends HttpServlet {
 		if (loggedIn) {
 			user = (UserVO) session.getAttribute("user");
 			chartList = Controller.chartManager.showCharts("Singlecharts",
-					start, end, user.getId());
+					start, end, user.getId(), SortType.RANKING);
 		} else {
 			chartList = Controller.chartManager.showCharts("Singlecharts",
-					start, end, -1);
+					start, end, -1, SortType.RANKING);
 		}
 
 		chartAnz = Controller.chartManager.getMaxSongsInChart("Singlecharts");
@@ -141,6 +142,7 @@ public class ShowChartsHandler extends HttpServlet {
 				chart.put("ranking", s.getRanking());
 				chart.put("rating", df.format(s.getRating()));
 				chart.put("userRating", df.format(s.getUserRating()));
+				chart.put("voteCount", s.getVoteCount());
 				JSONObject lyric = new JSONObject();
 				lyric.put("text", s.getLyric().getText());
 				lyric.put("url", s.getLyric().getUrl());

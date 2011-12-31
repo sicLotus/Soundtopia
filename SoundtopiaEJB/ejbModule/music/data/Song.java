@@ -22,6 +22,14 @@ import java.util.Set;
 		"( s.interpreter LIKE :search OR s.title LIKE :search OR sa.interpreter LIKE :search OR sa.title LIKE :search ) "
 ),
 @NamedQuery(
+		name="song.findTopUserCharts",
+		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID ORDER BY s.rating DESC"
+),
+@NamedQuery(
+		name="song.findTopUserChartsVotes",
+		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID ORDER BY s.voteCount DESC"
+),
+@NamedQuery(
 		name="song.findSongsInChart",
 		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND c.ranking >= :start AND c.ranking <= :end ORDER BY c.ranking")
 })

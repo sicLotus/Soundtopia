@@ -35,6 +35,8 @@ public class GoogleImageAPI {
 		params.add("start", ""+index);
 		params.add("q", decodedQuery);
 		
+		System.out.println(index);
+		
 		String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN)
 				.get(String.class);
 				

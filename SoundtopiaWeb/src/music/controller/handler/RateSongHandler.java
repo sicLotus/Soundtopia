@@ -65,12 +65,14 @@ public class RateSongHandler extends HttpServlet {
 			DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
 
 			float meanRate = Controller.songManager.getMeanRate(songID);
+			int votes = Controller.songManager.getVoteCount(songID);
 			
 			try {
 				JSONObject json = new JSONObject();
 				PrintWriter out;
 				out = response.getWriter();
 				json.put("meanRating", df.format(meanRate));
+				json.put("voteCount", votes);
 				response.setContentType("application/json");
 				out.println(json);
 			} catch (JSONException e) {

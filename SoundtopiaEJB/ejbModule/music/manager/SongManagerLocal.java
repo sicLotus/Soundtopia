@@ -22,4 +22,6 @@ public interface SongManagerLocal {
 
 	public void readNewSongInformationFromAPIs(int songID, String interpreter,
 			String title);
+	
+	public int getVoteCount(int songID);
 }

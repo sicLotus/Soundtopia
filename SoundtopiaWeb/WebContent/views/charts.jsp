@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="en_US" />
+<jsp:include page="header1.jsp" />
 <jsp:include page="navi.jsp" />
 <jsp:include page="modals.jsp" />
 
@@ -77,17 +78,17 @@
 						<c:choose>
 							<c:when test="${sessionScope.loggedIn  == false}">
 								<br>
-								<div id="fake-stars-off${chart.ranking}" class="stars-off"
+								<div id="fake-stars-off${chart.id}" class="stars-off"
 									style="width: 81px;">
-									<div id="fake-stars-on${chart.ranking}" class="stars-on"></div>
+									<div id="fake-stars-on${chart.id}" class="stars-on"></div>
 								</div>
 								<script>
-									rateFake('${chart.ranking}',
+									rateFake('${chart.id}',
 											'${chart.rating}');
 								</script>
 							</c:when>
 							<c:otherwise>
-								<div class="stars-wrapper" id="stars-wrapper${chart.ranking}">
+								<div class="stars-wrapper" id="stars-wrapper${chart.id}">
 									<select name="selrate">
 										<option value="1">Very poor</option>
 										<option value="2">Not that bad</option>
@@ -97,15 +98,19 @@
 									</select>
 								</div>
 								<script>
-									showStars('${chart.ranking}', '${chart.id}');
-									rate('${chart.ranking}',
+									showStars('${chart.id}', '${chart.id}');
+									rate('${chart.id}',
 											'${chart.userRating}');
 								</script>
 							</c:otherwise>
 						</c:choose>
 					</form>
 				</div>
-				<div id="chartstars${chart.ranking}" class="chartstars"><fmt:formatNumber pattern="0.00" type="number" value="${chart.rating}" /></div>
+				<div id="chartstars${chart.id}" class="chartstars"><fmt:formatNumber pattern="0.00" type="number" value="${chart.rating}" /> / ${chart.voteCount}
+					<c:choose>
+					<c:when test="${chart.voteCount==1}">Vote</c:when>
+					<c:otherwise>Votes</c:otherwise>
+					</c:choose></div>
 
 				<div class="chartlaenge">Trackl&auml;nge:
 					${chart.tracklength}min</div>

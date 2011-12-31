@@ -53,12 +53,23 @@ a:hover {
 	position: relative;
 }
 
-.navistrich {
+#navistrich {
 	height: 30px;
 	width: 773px;
-	background-image: url(./images/navistrich.png);
-	background-repeat: no-repeat;
 	clear: both;
+	background-repeat: no-repeat;
+}
+
+.link1 {
+	background-image: url(./images/navistrich1.png);
+}
+
+.link2 {
+	background-image: url(./images/navistrich2.png);
+}
+
+.linkSearch {
+	background-image: url(./images/navistrich.png);
 }
 
 .input {
@@ -239,7 +250,7 @@ a:hover {
 .chartstars {
 	position: relative;
 	left: 5px;
-	width: 150px;
+	width: 238px;
 }
 
 .chartlaenge {
@@ -269,14 +280,14 @@ a:hover {
 
 .kasten_extended {
 	margin-top: 3px;
-	width: 528px;
+	width: 529px;
 	height: 212px;
 	background-color: #55796b;
 	float: left;
-	margin-left: 54px;
+	margin-left: 53px;
 }
 
-.chartpreise { /*margin-left:11px;*/
+.chartpreise {
 	margin-top: 2px;
 	position: absolute;
 	margin-left: 240px;
@@ -443,7 +454,7 @@ a:hover {
 
 .chartStateEqual {
 	float: left;
-	margin-left:4px;
+	margin-left: 4px;
 }
 
 .chartStateUp {
@@ -461,8 +472,8 @@ a:hover {
 
 .equal {
 	float: left;
-    margin-left: 6px;
-    margin-top: 25px;
+	margin-left: 6px;
+	margin-top: 25px;
 }
 
 .up {
@@ -605,4 +616,16 @@ a:hover {
 	cursor: pointer;
 	height: 32px;
 	width: 32px;
+}
+
+#sortNavi {
+	height: 25px;
+	margin-bottom: -6px;
+	margin-left: 69px;
+	margin-top: 4px;
+	width: 633px;
+}
+
+#sortTopUserCharts-button {
+	margin-top: 3px;
 }
