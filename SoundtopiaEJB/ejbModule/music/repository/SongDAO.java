@@ -125,6 +125,19 @@ public class SongDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Song> findUserCharts(int chartID, int userID, int end) {
+		List<Song> list = em.createNamedQuery("song.findUserCharts")
+				.setParameter("chartID", chartID)
+				.setParameter("userID", userID)
+				.setMaxResults(end).getResultList();
+		if (list.size() > 0) {
+			return list;
+		} else
+			return null;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
 	public List<Song> searchSongs(int chartID, String search) {
 		List<Song> list = em.createNamedQuery("song.findSearchResults")
 				.setParameter("chartID", chartID).setParameter("search", "%"+search+"%").getResultList();

@@ -51,6 +51,8 @@ public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 			songList = songDAO.findTopUserCharts(chart.getId(), end);
 		else if (sort.equals(SortType.VOTES))
 			songList = songDAO.findTopUserChartsVotes(chart.getId(), end);
+		else if (sort.equals(SortType.USERVOTES))
+			songList = songDAO.findUserCharts(chart.getId(),userID, end);
 		else
 			songList = songDAO.findSongInCharts(chart.getId(), start, end);
 

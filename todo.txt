@@ -6,10 +6,11 @@ Fehlersystem
 	Falls Fehler auftreten, Errorsites anpassen
 	Redundanzen vermindern (showChartsHandler, changeSongHandler, undoChangeHandler, chartmanager(suche))
 	Defaultwerte im gesamten System überprüfen
+	Prüfen ob eine Seite überhaupt aufgerufen werden darf (für meine Usercharts und für die admin handler)
 	
 Linksystem
-	Usercharts (sortiert nach Bewertungen (global und für mich als User)
-		- sortieren
+	Anzahl der Usercharts festlegen.. zZ bei 10.. über das GUI möglich? Oder lieber dauerhaft feste Einstellung?
+	Oder einen Button "mehr" der dann mit/ohne Ajax? weitere 10 Tracks aufruft
 
 Songstiges
 	Controller in der View so lassen wie er ist, oder wie Stefan das hat mit den Actions?

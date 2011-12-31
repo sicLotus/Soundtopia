@@ -30,6 +30,10 @@ import java.util.Set;
 		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID ORDER BY s.voteCount DESC"
 ),
 @NamedQuery(
+		name="song.findUserCharts",
+		query="SELECT s FROM Song s JOIN s.songInCharts c JOIN s.ratings r where c.id.chartID = :chartID AND r.id.userID = :userID AND r.id.songID = s.id ORDER BY r.rating DESC"
+),
+@NamedQuery(
 		name="song.findSongsInChart",
 		query="SELECT s FROM Song s JOIN s.songInCharts c where c.id.chartID = :chartID AND c.ranking >= :start AND c.ranking <= :end ORDER BY c.ranking")
 })

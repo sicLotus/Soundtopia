@@ -1,5 +1,5 @@
 package music.data;
 
 public enum SortType {
-	NONE, RANKING, VOTES, RATING;
+	NONE, RANKING, VOTES, RATING, USERVOTES;
 }

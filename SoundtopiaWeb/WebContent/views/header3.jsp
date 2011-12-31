@@ -10,12 +10,12 @@
 			<a href="../controller/showCharts?start=1">Singlecharts</a>
 		</div>
 		<div class="navi_item">
-			<a href="../controller/showUserCharts"><strong>Usercharts</strong></a>
+			<a href="../controller/showUserCharts">Usercharts</a>
 		</div>
 		<c:choose>
 			<c:when test="${sessionScope.user.admin == 1 }">
 				<div class="navi_item">
-					<a href="../controller/showMyCharts">Meine Charts</a>
+					<a href="../controller/showMyCharts"><strong>Meine Charts</strong></a>
 				</div>
 
 				<div class="navi_item">
