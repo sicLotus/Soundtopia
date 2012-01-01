@@ -24,7 +24,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class MyVideoAPI {
 
-	public List<ChartEntryVO> retrieveData() {
+	public static List<ChartEntryVO> retrieveData() {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
@@ -83,37 +83,3 @@ public class MyVideoAPI {
 		return chartList;
 	}
 }
-//AmazonAPI.retrieveData(AmazonAPI.SearchIndex.MP3Downloads, entry.getInterpreter() + " " + entry.getTitle());
-
-//System.out.print(entry + " % ");
-//System.out.println(entry.getLyricVO().getText() + "$$" + entry.getLyricVO().getUrl());
-
-
-/*entry.setMovie_id(Integer.parseInt(node
-.getChildText("movie_id")));
-
-entry.setMovie_owner_id(Integer.parseInt(node
-.getChildText("movie_owner_id")));
-entry.setMovie_views(Integer.parseInt(node
-.getChildText("movie_views")));
-entry.setMovie_added(Integer.parseInt(node
-.getChildText("movie_added")));
-entry.setMovie_rating(Double.parseDouble(node
-.getChildText("movie_rating")));
-
-entry.setMovie_thumbnail(node
-.getChildText("movie_thumbnail"));
-entry.setMovie_owner(node.getChildText("movie_owner"));
-entry.setMovie_owner_url(node
-.getChildText("movie_owner_url"));
-
-entry.setPermathumblink(node.getChildText("permathumblink"));*/
-
-/*
-entry.setCoverUrl(GoogleImageAPI.retrieveData(entry
-.getInterpreter()
-+ " "
-+ entry.getTitle()
-+ " cover"));
-entry.setLyricVO(LyricAPI.retrieveData(entry.getInterpreter(), entry.getTitle()));
-*/

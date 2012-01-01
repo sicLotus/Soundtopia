@@ -38,22 +38,25 @@ public class ShowChartsHandler {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory.getManager("ChartManager", ManagerFactory.Mode.Local);
-	
+		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory
+				.getManager("ChartManager", ManagerFactory.Mode.Local);
+
 		String operation = "";
 		operation = request.getParameter("op");
 		HttpSession session = request.getSession();
 
 		System.out.println(chartManager);
-		
+
 		try {
 			start = Integer.valueOf(request.getParameter("start"));
 		} catch (NumberFormatException e) {
 			start = (Integer) session.getAttribute("lastVisitSong");
 		}
-		
-		session.setAttribute("lastVisitSong", start);
-		
+
+		synchronized (session) {
+			session.setAttribute("lastVisitSong", start);
+		}
+
 		try {
 			end = Integer.valueOf(request.getParameter("end"));
 		} catch (NumberFormatException e) {
@@ -65,22 +68,22 @@ public class ShowChartsHandler {
 
 		if (loggedIn) {
 			user = (UserVO) session.getAttribute("user");
-			chartList = chartManager.showCharts("Singlecharts",
-					start, end, user.getId(), SortType.RANKING);
+			chartList = chartManager.showCharts("Singlecharts", start, end,
+					user.getId(), SortType.RANKING);
 		} else {
-			chartList = chartManager.showCharts("Singlecharts",
-					start, end, -1, SortType.RANKING);
+			chartList = chartManager.showCharts("Singlecharts", start, end, -1,
+					SortType.RANKING);
 		}
 
 		chartAnz = chartManager.getMaxSongsInChart("Singlecharts");
-		
+
 		if (operation != null && operation.equals("update"))
 			view = updateChartList(request, response);
 		else
 			view = showChartList(request, response);
 
 		return view;
-			
+
 	}
 
 	private String showChartList(HttpServletRequest request,

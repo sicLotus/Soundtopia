@@ -59,9 +59,8 @@ public class Session implements SessionRemote, SessionLocal {
 	 * Diese Methode sollte noch einen Timer (1x wöchentlich oder so bekommen!)
 	 */
 	public void readChartsFromMyvideo() {
-		MyVideoAPI api = new MyVideoAPI();
 		ChartEntryVO entry;
-		List<ChartEntryVO> chartList = api.retrieveData();
+		List<ChartEntryVO> chartList = MyVideoAPI.retrieveData();
 		System.out.println("Succeeded: " + chartList.size());
 		Chart chart = chartDAO.createChartTable();
 		for (int i = 0; i < chartList.size(); i++) {

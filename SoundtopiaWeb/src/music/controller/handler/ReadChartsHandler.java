@@ -20,7 +20,7 @@ public class ReadChartsHandler {
 		String view = null;
 		SessionLocal sessionManager = (SessionLocal) ManagerFactory.getManager("Session", ManagerFactory.Mode.Local);
 
-		sessionManager.readChartsFromMyvideo();		
+		sessionManager.readChartsFromMyvideo();
 		return view;
 	}
 

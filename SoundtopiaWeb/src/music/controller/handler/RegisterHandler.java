@@ -11,8 +11,7 @@ import music.controller.ManagerFactory;
 import music.data.UserVO;
 import music.manager.UserManagerLocal;
 
-public class RegisterHandler  {
-
+public class RegisterHandler {
 
 	public RegisterHandler() {
 		super();
@@ -20,7 +19,8 @@ public class RegisterHandler  {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		UserManagerLocal userManager = (UserManagerLocal) ManagerFactory.getManager("UserManager", ManagerFactory.Mode.Local);
+		UserManagerLocal userManager = (UserManagerLocal) ManagerFactory
+				.getManager("UserManager", ManagerFactory.Mode.Local);
 
 		String view = null;
 		HttpSession session = request.getSession();
@@ -31,15 +31,18 @@ public class RegisterHandler  {
 		byte admin;
 		if (adminStr != null && adminStr.equals("on"))
 			admin = 1;
-		else admin = 0;
-		
-		System.out.println("register: "+email+" "+password + " "+admin);
+		else
+			admin = 0;
+
+		System.out.println("register: " + email + " " + password + " " + admin);
 
 		UserVO user = userManager.createUser(email, password, admin);
-		
+
 		if (user != null) {
-			session.setAttribute("user", user);
-			session.setAttribute("loggedIn", new Boolean(true));
+			synchronized (session) {
+				session.setAttribute("user", user);
+				session.setAttribute("loggedIn", new Boolean(true));
+			}
 			view = "../controller/showCharts";
 		} else
 			view = "../error/registerErr.jsp";
