@@ -12,40 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.PriceVO;
 import music.data.SongVO;
+import music.manager.SongManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class ChangeSongHandler
- */
 @WebServlet("/ChangeSongHandler")
 public class ChangeSongHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ChangeSongHandler() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
@@ -53,6 +39,8 @@ public class ChangeSongHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		SongManagerLocal songManager = (SongManagerLocal)ManagerFactory.getManager("SongManager", ManagerFactory.Mode.Local);
+		
 		String view = null;
 
 		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(
@@ -68,9 +56,9 @@ public class ChangeSongHandler extends HttpServlet {
 
 		System.out.println(songID+" "+interpreter+" "+title+" "+cover);
 		
-		SongVO song = Controller.songManager.changeSongInformation(songID,
+		SongVO song = songManager.changeSongInformation(songID,
 				interpreter, title, cover);
-		song = Controller.songManager.getSong(songID);
+		song = songManager.getSong(songID);
 
 		try {
 			JSONObject json = new JSONObject();
@@ -102,8 +90,6 @@ public class ChangeSongHandler extends HttpServlet {
 		} catch (IOException io) {
 			io.printStackTrace();
 		}
-
 		return view;
 	}
-
 }

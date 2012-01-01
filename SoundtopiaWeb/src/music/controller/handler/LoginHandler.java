@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.UserVO;
+import music.manager.UserManagerLocal;
 
 @WebServlet("/LoginHandler")
 public class LoginHandler extends HttpServlet {
@@ -33,17 +34,17 @@ public class LoginHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) {
-
+		UserManagerLocal userManager = (UserManagerLocal) ManagerFactory.getManager("UserManager", ManagerFactory.Mode.Local);
 		String view = null;
 		HttpSession session = request.getSession();
 
 		String email = request.getParameter("iuser");
 		String password = request.getParameter("ipass");
 
-		System.out.println("UserManager:\n" + Controller.userManager);
+		System.out.println("UserManager:\n" + userManager);
 		System.out.println("loginhandler: "+email+ " "+password);
 
-		UserVO user = Controller.userManager.checkLogin(email, password);
+		UserVO user = userManager.checkLogin(email, password);
 
 		if (user != null) {
 			session.setAttribute("user", user);

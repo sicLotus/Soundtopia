@@ -19,6 +19,11 @@ Songstiges
 	SessionManager noch richtigen Namen finden
 	Test der Weiterleitung in der soundtopia.js (showCharts)
 	login verlinkt immer auf singlecharts site.. auch wenn man zuletzt auf der top user charts seite war.. kann man das umgehen?
+	wenn session variable hinzugefügt wird, synchronized?
+	
+Controller:
+	FactoryKlasse für Manager schreiben (jede methode gibt einen bestimmten manager zurück)
+	in dieser klasse wird das jndi lookup aufgerufen
 
 	
 =================================================	

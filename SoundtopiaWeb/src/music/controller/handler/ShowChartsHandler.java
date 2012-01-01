@@ -15,16 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.PriceVO;
 import music.data.SongVO;
 import music.data.SortType;
 import music.data.UserVO;
+import music.manager.ChartManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
 @WebServlet("/ShowChartsHandler")
 public class ShowChartsHandler extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private int SONGS_PER_SITE = 10;
 	private int start, end;
@@ -50,10 +52,14 @@ public class ShowChartsHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory.getManager("ChartManager", ManagerFactory.Mode.Local);
+	
 		String operation = "";
 		operation = request.getParameter("op");
 		HttpSession session = request.getSession();
 
+		System.out.println(chartManager);
+		
 		try {
 			start = Integer.valueOf(request.getParameter("start"));
 		} catch (NumberFormatException e) {
@@ -73,14 +79,14 @@ public class ShowChartsHandler extends HttpServlet {
 
 		if (loggedIn) {
 			user = (UserVO) session.getAttribute("user");
-			chartList = Controller.chartManager.showCharts("Singlecharts",
+			chartList = chartManager.showCharts("Singlecharts",
 					start, end, user.getId(), SortType.RANKING);
 		} else {
-			chartList = Controller.chartManager.showCharts("Singlecharts",
+			chartList = chartManager.showCharts("Singlecharts",
 					start, end, -1, SortType.RANKING);
 		}
 
-		chartAnz = Controller.chartManager.getMaxSongsInChart("Singlecharts");
+		chartAnz = chartManager.getMaxSongsInChart("Singlecharts");
 		
 		if (operation != null && operation.equals("update"))
 			view = updateChartList(request, response);
@@ -88,6 +94,7 @@ public class ShowChartsHandler extends HttpServlet {
 			view = showChartList(request, response);
 
 		return view;
+			
 	}
 
 	private String showChartList(HttpServletRequest request,
@@ -115,8 +122,6 @@ public class ShowChartsHandler extends HttpServlet {
 		otherSymbols.setDecimalSeparator('.');
 		otherSymbols.setGroupingSeparator(',');
 		DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
-
-		System.out.println("EJB: " + Controller.chartManager);
 
 		try {
 			JSONObject json = new JSONObject();

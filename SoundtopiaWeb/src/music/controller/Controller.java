@@ -2,7 +2,6 @@ package music.controller;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -26,46 +25,44 @@ import music.controller.handler.ShowChartsHandler;
 import music.controller.handler.ShowMyChartsHandler;
 import music.controller.handler.ShowUserChartsHandler;
 import music.controller.handler.UndoChangesHandler;
-import music.manager.ChartManagerLocal;
-import music.manager.SessionLocal;
-import music.manager.SongManagerLocal;
-import music.manager.UserManagerLocal;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@EJB
-	public static UserManagerLocal userManager;
+	private ShowChartsHandler showChartsHandler;
+	private RegisterHandler registerHandler;
+	private LoginHandler loginHandler;
+	private RateSongHandler rateSongHandler;
+	private	LogoutHandler logoutHandler;
+	private ShowAdditionalInformation showAdditionalInformationHandler;
+	private ChangeSongHandler changeSongHandler;
+	private PictureHandler pictureHandler;
+	private UndoChangesHandler undoChangesHandler;
+	private ReadChartsHandler readChartsHandler;
+	private SearchHandler searchHandler;
+	private SearchSongHandler searchSongHandler;
+	private ShowUserChartsHandler showUserChartsHandler;
+	private ShowMyChartsHandler showMyChartsHandler;
 	
-	@EJB
-	public static ChartManagerLocal chartManager;
-	
-	@EJB
-	public static SongManagerLocal songManager;
-	
-	@EJB
-	public static SessionLocal sessionManager;
-/*
-//EJB injezieren
-	@EJB UserDAO userHelper;
-	@EJB BookDAO bookHelper;
-	@EJB GenreDAO genreHelper;
-	@EJB VerlagDAO verlagHelper;
-	@EJB CoverDAO coverHelper;
-	@EJB VerkaufslisteDAO verkaufslisteHelper;
-	
-	@PersistenceUnit
-	EntityManagerFactory emf;
-	
-	private UserBO userBO;
-	private BookBO bookBO;
-	private StoreBO storeBO;
- */      
 // Constructor
 // ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
     public Controller() {
         super();
+        showChartsHandler = new ShowChartsHandler();
+        registerHandler =  new RegisterHandler();
+        loginHandler = new LoginHandler();
+        rateSongHandler = new RateSongHandler();
+        logoutHandler = new LogoutHandler();
+        showAdditionalInformationHandler = new ShowAdditionalInformation();
+        changeSongHandler = new ChangeSongHandler();
+        pictureHandler = new PictureHandler();
+        undoChangesHandler = new UndoChangesHandler();
+        readChartsHandler = new ReadChartsHandler();
+        searchHandler = new SearchHandler();
+        searchSongHandler = new SearchSongHandler();
+        showUserChartsHandler = new ShowUserChartsHandler();
+        showMyChartsHandler = new ShowMyChartsHandler();
     }
 
 // Methods
@@ -82,10 +79,8 @@ public class Controller extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
-		try {
-			
-			processRequest(request,response);
-			
+		try {	
+			processRequest(request,response);		
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -97,10 +92,8 @@ public class Controller extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
-		try {
-			
-			processRequest(request,response);
-			
+		try {		
+			processRequest(request,response);		
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -111,63 +104,14 @@ public class Controller extends HttpServlet {
 	}
 	
 	private void initializeSession(HttpSession session) {
-		if (session.getAttribute("loggedIn") == null) {
+		if (session.getAttribute("loggedIn") == null) 
 			session.setAttribute("loggedIn", new Boolean(false));
-		}
 		
-		if(session.getAttribute("lastVisitSong") == null) {
+		if(session.getAttribute("lastVisitSong") == null) 
 			session.setAttribute("lastVisitSong", 1);
-		}
 				
 	}
 	
-	/*	
-	private void initializeSession(HttpSession session) {
-		if (session.getAttribute("userBO") == null) {
-			userBO = new UserBO(userHelper);
-			session.setAttribute("userBO", userBO);
-		}
-
-		if (session.getAttribute("bookBO") == null) {
-			bookBO = new BookBO(bookHelper, genreHelper, verlagHelper,
-					coverHelper);
-			session.setAttribute("bookBO", bookBO);
-		}
-
-		if (session.getAttribute("storeBO") == null) {
-			storeBO = new StoreBO(bookHelper, verkaufslisteHelper);
-			session.setAttribute("storeBO", storeBO);
-		}
-
-		if (session.getAttribute("cart") == null) {
-			Cart cart = new Cart();
-			session.setAttribute("cart", cart);
-		}
-
-		if (session.getAttribute("bookList") == null) {
-			List<Book> bookList = new ArrayList<Book>();
-			session.setAttribute("bookList", bookList);
-		}
-
-		if (session.getAttribute("coverList") == null) {
-			List<Cover> coverList = new ArrayList<Cover>();
-			coverList = bookBO.getCovers();
-			session.setAttribute("coverList", coverList);
-		}
-
-		if (session.getAttribute("genreList") == null) {
-			List<Genre> genreList = new ArrayList<Genre>();
-			genreList = bookBO.getGenres();
-			session.setAttribute("genreList", genreList);
-		}
-
-		if (session.getAttribute("verlagList") == null) {
-			List<Verlag> verlagList = new ArrayList<Verlag>();
-			verlagList = bookBO.getPublisher();
-			session.setAttribute("verlagList", verlagList);
-		}
-	}
-	*/
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String pathInfo = request.getPathInfo();
@@ -185,81 +129,61 @@ public class Controller extends HttpServlet {
 		System.out.println("servlet = "+servlet);
 		
 		if(servlet.equals("register")){
-			RegisterHandler handler = new RegisterHandler();
-			view = handler.processRequest(request, response);
+			view = registerHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("login")){
-			LoginHandler handler = new LoginHandler();
-			view = handler.processRequest(request, response);
+			view = loginHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("showCharts")){
-			ShowChartsHandler handler = new ShowChartsHandler();
-			view = handler.processRequest(request, response);
+			view = showChartsHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("rateSong")){
-			RateSongHandler handler = new RateSongHandler();
-			view = handler.processRequest(request, response);
+			view = rateSongHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("logout")){
-			LogoutHandler handler = new LogoutHandler();
-			view = handler.processRequest(request, response);
+			view = logoutHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("showInfo")){
-			ShowAdditionalInformation handler = new ShowAdditionalInformation();
-			view = handler.processRequest(request, response);
+			view = showAdditionalInformationHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("changeSongInformation")){
-			ChangeSongHandler handler = new ChangeSongHandler();
-			view = handler.processRequest(request, response);
+			view = changeSongHandler.processRequest(request, response);
 		}
 	
 		if(servlet.equals("getPictureURL")){
-			PictureHandler handler = new PictureHandler();
-			view = handler.processRequest(request, response);
+			view = pictureHandler.processRequest(request, response);
 		}
 			
 		if(servlet.equals("undoChanges")){
-			UndoChangesHandler handler = new UndoChangesHandler();
-			view = handler.processRequest(request, response);
+			view = undoChangesHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("readNewCharts")){
-			ReadChartsHandler handler = new ReadChartsHandler();
-			view = handler.processRequest(request, response);
+			view = readChartsHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("suggestSearch")){
-			SearchHandler handler = new SearchHandler();
-			view = handler.processRequest(request, response);
+			view = searchHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("searchSongs")){
-			SearchSongHandler handler = new SearchSongHandler();
-			view = handler.processRequest(request, response);
+			view = searchSongHandler.processRequest(request, response);
 		}
 		
 		if(servlet.equals("showUserCharts")){
-			ShowUserChartsHandler handler = new ShowUserChartsHandler();
-			view = handler.processRequest(request, response);		
+			view = showUserChartsHandler.processRequest(request, response);		
 		}
 		
 		if(servlet.equals("showMyCharts")){
-			ShowMyChartsHandler handler = new ShowMyChartsHandler();
-			view = handler.processRequest(request, response);		
+			view = showMyChartsHandler.processRequest(request, response);		
 		}
-/*			
-		if(servlet.equals("editBook")){
-			EditBookHandler handler = new EditBookHandler();
-			view = handler.processRequest(request, response);		
-		}
-		
-		*/
+
 		if (view != null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(view);
 			dispatcher.forward(request, response);

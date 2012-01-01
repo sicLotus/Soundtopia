@@ -19,7 +19,7 @@ import music.repository.SongDAO;
 /**
  * Session Bean implementation class ChartManager
  */
-@Stateless
+@Stateless()
 public class ChartManager implements ChartManagerRemote, ChartManagerLocal {
 
 	@EJB

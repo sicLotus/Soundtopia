@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.UserVO;
+import music.manager.UserManagerLocal;
 
 @WebServlet("/RegisterHandler")
 public class RegisterHandler extends HttpServlet {
@@ -32,6 +33,8 @@ public class RegisterHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		UserManagerLocal userManager = (UserManagerLocal) ManagerFactory.getManager("UserManager", ManagerFactory.Mode.Local);
+
 		String view = null;
 		HttpSession session = request.getSession();
 
@@ -45,7 +48,7 @@ public class RegisterHandler extends HttpServlet {
 		
 		System.out.println("register: "+email+" "+password + " "+admin);
 
-		UserVO user = Controller.userManager.createUser(email, password, admin);
+		UserVO user = userManager.createUser(email, password, admin);
 		
 		if (user != null) {
 			session.setAttribute("user", user);

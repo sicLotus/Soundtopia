@@ -9,20 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
+import music.manager.ChartManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class SearchHandler
- */
 @WebServlet("/SearchHandler")
 public class SearchHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public SearchHandler() {
         super();
     }
@@ -40,12 +35,12 @@ public class SearchHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-		
+		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory.getManager("ChartManager", ManagerFactory.Mode.Local);
 		String searchStr = request.getParameter("searchinput");
 		
 		String[] search = searchStr.split(",");
 		
-		String searchResult = Controller.chartManager.suggestSearch(search, "Singlecharts");
+		String searchResult = chartManager.suggestSearch(search, "Singlecharts");
 		
 		try {
 			PrintWriter out = response.getWriter();

@@ -13,17 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.PriceVO;
 import music.data.SongVO;
 import music.data.SortType;
 import music.data.UserVO;
+import music.manager.ChartManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class SearchHandler
- */
 @WebServlet("/SearchHandler")
 public class ShowUserChartsHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +29,6 @@ public class ShowUserChartsHandler extends HttpServlet {
 	private List<SongVO> results;
 	private UserVO user;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ShowUserChartsHandler() {
 		super();
 	}
@@ -51,7 +46,7 @@ public class ShowUserChartsHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-
+		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory.getManager("ChartManager", ManagerFactory.Mode.Local);
 		String sortType, mode;
 		mode = request.getParameter("mode");
 		sortType = request.getParameter("sortType");
@@ -64,10 +59,10 @@ public class ShowUserChartsHandler extends HttpServlet {
 			userID = user.getId();
 
 		if (sortType == null || sortType.equals("rating"))
-			results = Controller.chartManager.showCharts("Singlecharts", 1, 10,
+			results = chartManager.showCharts("Singlecharts", 1, 10,
 					userID, SortType.RATING);
 		else
-			results = Controller.chartManager.showCharts("Singlecharts", 1, 10,
+			results = chartManager.showCharts("Singlecharts", 1, 10,
 					userID, SortType.VOTES);
 		
 		if (mode == null) {
@@ -113,14 +108,12 @@ public class ShowUserChartsHandler extends HttpServlet {
 				chart.put("video", s.getVideo());
 				chart.put("voteCount", s.getVoteCount());
 				chart.put("picture", s.getPicture());
-				//chart.put("ranking", s.getRanking());
 				chart.put("rating", df.format(s.getRating()));
 				chart.put("userRating", df.format(s.getUserRating()));
 				JSONObject lyric = new JSONObject();
 				lyric.put("text", s.getLyric().getText());
 				lyric.put("url", s.getLyric().getUrl());
 				chart.put("lyric", lyric);
-				//chart.put("change", s.getChange());
 				for (PriceVO p : s.getPrices()) {
 					JSONObject prices = new JSONObject();
 					prices.put("provider", p.getProvider());

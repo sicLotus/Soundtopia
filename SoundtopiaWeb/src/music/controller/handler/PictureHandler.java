@@ -9,21 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
+import music.manager.SessionLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class PictureHandler
- */
 @WebServlet("/PictureHandler")
 public class PictureHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String[] apis = { "Google Picture API", "Amazon API" };
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public PictureHandler() {
 		super();
 	}
@@ -40,6 +35,7 @@ public class PictureHandler extends HttpServlet {
 
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		SessionLocal sessionManager = (SessionLocal) ManagerFactory.getManager("Session", ManagerFactory.Mode.Local);
 		String view = null;
 
 		String interpreter = request.getParameter("interpreter");
@@ -50,10 +46,10 @@ public class PictureHandler extends HttpServlet {
 		String url = "";
 
 		if (api.equals(apis[0])) {
-			url = Controller.sessionManager.getPictureFromGoogle(interpreter,
+			url = sessionManager.getPictureFromGoogle(interpreter,
 					title, index);
 		} else if (api.equals(apis[1])) {
-			url = Controller.sessionManager.getPictureFromAmazon(interpreter,
+			url = sessionManager.getPictureFromAmazon(interpreter,
 					title);
 		}
 

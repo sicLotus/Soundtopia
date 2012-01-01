@@ -7,21 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
+import music.manager.SessionLocal;
 
-/**
- * Servlet implementation class ReadChartsHandler
- */
+
+
+
 @WebServlet("/ReadChartsHandler")
 public class ReadChartsHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public ReadChartsHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	protected void doGet(HttpServletRequest request,
@@ -37,8 +35,9 @@ public class ReadChartsHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-		
-		Controller.sessionManager.readChartsFromMyvideo();
+		SessionLocal sessionManager = (SessionLocal) ManagerFactory.getManager("Session", ManagerFactory.Mode.Local);
+
+		sessionManager.readChartsFromMyvideo();
 		//view="../controller/showCharts";
 		
 		return view;

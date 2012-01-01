@@ -9,21 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.SongVO;
 import music.data.UserVO;
+import music.manager.ChartManagerLocal;
 
-
-/**
- * Servlet implementation class SearchHandler
- */
 @WebServlet("/SearchHandler")
 public class SearchSongHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public SearchSongHandler() {
 		super();
 	}
@@ -41,7 +35,7 @@ public class SearchSongHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-
+		ChartManagerLocal chartManager = (ChartManagerLocal) ManagerFactory.getManager("ChartManager", ManagerFactory.Mode.Local);
 		String searchStr = request.getParameter("searchinput");
 		UserVO user = (UserVO) request.getSession().getAttribute("user");
 		int userID = -1;
@@ -53,27 +47,17 @@ public class SearchSongHandler extends HttpServlet {
 		if (user != null)
 			userID = user.getId(); 
 			
-		results = Controller.chartManager.searchSongs(
+		results = chartManager.searchSongs(
 				userID, search, "Singlecharts");
-
-		System.out.println(results.size());
 		
-		if (!results.isEmpty() || results != null) {
-			System.out.println("results gefunden");
+		if (results.isEmpty() || results == null) {
+			view = "../error/noSearchResult.jsp";
+		}
+		else {
 			request.setAttribute("chartList", results);
 			view = "../views/searchResults.jsp";
 		}
-		else view = "../error/noSearchResult.jsp";
-
-		System.out.println(view);
 		
-		/*
-		 * try { PrintWriter out = response.getWriter(); JSONObject json = new
-		 * JSONObject(); json.put("searchResults", searchResult);
-		 * response.setContentType("application/json"); out.println(json); }
-		 * catch (JSONException e) { e.printStackTrace(); }
-		 */
-
 		return view;
 	}
 }

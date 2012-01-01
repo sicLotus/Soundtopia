@@ -13,42 +13,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.UserVO;
+import music.manager.SongManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class rateSong
- */
 @WebServlet("/rateSong")
 public class RateSongHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public RateSongHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 	
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) {
+		SongManagerLocal songManager = (SongManagerLocal)ManagerFactory.getManager("SongManager", ManagerFactory.Mode.Local);
 
 		String view = null;
 		HttpSession session = request.getSession();
@@ -58,14 +47,14 @@ public class RateSongHandler extends HttpServlet {
 			int songID = Integer.valueOf(request.getParameter("songID"));
 			int rating = Integer.valueOf(request.getParameter("rating"));
 			
-			Controller.songManager.rateASong(user.getId(), songID, rating);
+			songManager.rateASong(user.getId(), songID, rating);
 			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.GERMAN);
 			otherSymbols.setDecimalSeparator('.');
 			otherSymbols.setGroupingSeparator(','); 
 			DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
 
-			float meanRate = Controller.songManager.getMeanRate(songID);
-			int votes = Controller.songManager.getVoteCount(songID);
+			float meanRate = songManager.getMeanRate(songID);
+			int votes = songManager.getVoteCount(songID);
 			
 			try {
 				JSONObject json = new JSONObject();

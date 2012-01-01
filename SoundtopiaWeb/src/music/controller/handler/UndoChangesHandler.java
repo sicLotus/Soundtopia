@@ -12,25 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import music.controller.Controller;
+import music.controller.ManagerFactory;
 import music.data.PriceVO;
 import music.data.SongVO;
+import music.manager.SongManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-/**
- * Servlet implementation class UndoChangesHandler
- */
 @WebServlet("/UndoChangesHandler")
 public class UndoChangesHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public UndoChangesHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     protected void doGet(HttpServletRequest request,
@@ -46,7 +40,8 @@ public class UndoChangesHandler extends HttpServlet {
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String view = null;
-		
+		SongManagerLocal songManager = (SongManagerLocal)ManagerFactory.getManager("SongManager", ManagerFactory.Mode.Local);
+
 		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(
 				Locale.GERMAN);
 		otherSymbols.setDecimalSeparator('.');
@@ -54,13 +49,13 @@ public class UndoChangesHandler extends HttpServlet {
 		DecimalFormat df = new DecimalFormat("0.00", otherSymbols);
 		
 		int songID = Integer.valueOf(request.getParameter("songID"));
-		SongVO song = Controller.songManager.undoChanges(songID);
-		song = Controller.songManager.getSong(songID);
+		SongVO song = songManager.undoChanges(songID);
+		song = songManager.getSong(songID);
 		System.out.println(song.getInterpreter());
 		
-		Controller.songManager.readNewSongInformationFromAPIs(songID, song.getInterpreter(), song.getTitle());
+		songManager.readNewSongInformationFromAPIs(songID, song.getInterpreter(), song.getTitle());
 		
-		song = Controller.songManager.getSong(songID);
+		song = songManager.getSong(songID);
 		
 		
 		try {
