@@ -6,9 +6,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,21 +16,11 @@ import music.manager.SongManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-@WebServlet("/rateSong")
-public class RateSongHandler extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+public class RateSongHandler {
+   
     public RateSongHandler() {
         super();
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
 	
 	public String processRequest(HttpServletRequest request,
 			HttpServletResponse response) {

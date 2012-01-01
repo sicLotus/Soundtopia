@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,23 +12,11 @@ import music.manager.SessionLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-@WebServlet("/PictureHandler")
-public class PictureHandler extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class PictureHandler {
 	private String[] apis = { "Google Picture API", "Amazon API" };
 
 	public PictureHandler() {
 		super();
-	}
-
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
 	}
 
 	public String processRequest(HttpServletRequest request,

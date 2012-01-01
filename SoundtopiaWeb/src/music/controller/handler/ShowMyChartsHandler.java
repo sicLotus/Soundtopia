@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,22 +13,10 @@ import music.data.SortType;
 import music.data.UserVO;
 import music.manager.ChartManagerLocal;
 
-@WebServlet("/SearchHandler")
-public class ShowMyChartsHandler extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class ShowMyChartsHandler {
 
 	public ShowMyChartsHandler() {
 		super();
-	}
-
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
 	}
 
 	public String processRequest(HttpServletRequest request,
