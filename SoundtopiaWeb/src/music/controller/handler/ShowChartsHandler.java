@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,10 +22,8 @@ import music.manager.ChartManagerLocal;
 import music.util.JSONException;
 import music.util.JSONObject;
 
-@WebServlet("/ShowChartsHandler")
-public class ShowChartsHandler extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
+public class ShowChartsHandler {
+
 	private int SONGS_PER_SITE = 10;
 	private int start, end;
 	private String view = null;
@@ -38,16 +34,6 @@ public class ShowChartsHandler extends HttpServlet {
 
 	public ShowChartsHandler() {
 		super();
-	}
-
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
 	}
 
 	public String processRequest(HttpServletRequest request,
