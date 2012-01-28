@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setLocale value="en_US" />
 <jsp:include page="header1.jsp" />
 <jsp:include page="navi.jsp" />
@@ -41,7 +41,7 @@
 					class="platz">Platz</span>
 			</div>
 			<c:choose>
-				<c:when test="${sessionScope.user.admin == 1 }">
+				<c:when test="${sessionScope.user.admin == true }">
 					<a class="modalInput" onclick="javascript:fillText('${chart.id}');"
 						rel="#modalEdit" href="javascript:void(0);"> <img class="edit"
 						src="../images/edit.png" />
@@ -54,7 +54,7 @@
 			</c:choose>
 			<div class="chartbild">
 				<img id="cover${chart.id}" class="cover"
-					alt="Coverlink:${chart.picture}" src="${chart.picture}" />
+					alt="Coverlink:${chart.cover}" src="${chart.cover}" />
 			</div>
 			<div class="kasten">
 				<div id="chartautor${chart.id}" class="chartautor">${chart.interpreter}</div>
@@ -66,7 +66,8 @@
 							<a target="_blank" href="${price.url}"><img class="resize"
 								src="../images/${price.provider}_resize.png" /></a>
 							<div class="chartpreis_preis">
-								<a target="_blank" href="${price.url}"><fmt:formatNumber pattern="0.00" type="number" value="${price.value}" />
+								<a target="_blank" href="${price.url}"><fmt:formatNumber
+										pattern="0.00" type="number" value="${price.value}" />
 									${price.currency}</a>
 							</div>
 						</div>
@@ -106,11 +107,15 @@
 						</c:choose>
 					</form>
 				</div>
-				<div id="chartstars${chart.id}" class="chartstars"><fmt:formatNumber pattern="0.00" type="number" value="${chart.rating}" /> / ${chart.voteCount}
+				<div id="chartstars${chart.id}" class="chartstars">
+					<fmt:formatNumber pattern="0.00" type="number"
+						value="${chart.rating}" />
+					/ ${chart.voteCount}
 					<c:choose>
-					<c:when test="${chart.voteCount==1}">Vote</c:when>
-					<c:otherwise>Votes</c:otherwise>
-					</c:choose></div>
+						<c:when test="${chart.voteCount==1}">Vote</c:when>
+						<c:otherwise>Votes</c:otherwise>
+					</c:choose>
+				</div>
 
 				<div class="chartlaenge">Trackl&auml;nge:
 					${chart.tracklength}min</div>

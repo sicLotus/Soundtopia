@@ -5,8 +5,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import music.data.Rating;
-import music.data.RatingPK;
+import music.data.DataObject.Rating;
+import music.data.DataObject.PK.RatingPK;
 
 @Stateless
 @LocalBean
@@ -29,9 +29,7 @@ public class RatingDAO {
 		RatingPK pk = new RatingPK();
 		pk.setSongID(songID);
 		pk.setUserID(userID);
-
 		if (!doesRatingExist(pk)) {
-
 			Rating rating = new Rating();
 			rating.setId(pk);
 			rating.setRating(ratingValue);

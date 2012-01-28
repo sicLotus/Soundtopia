@@ -26,12 +26,12 @@ jQuery(document).ready(function() {
 	$('#txtTitle').focus(function() {
 		$(this).select();
 	});
-	
+
 	$('select#sortTopUserCharts').selectmenu({
-		width: 119
+		width : 119
 	});
 
-setTriggers();
+	setTriggers();
 });
 
 function setTriggers() {
@@ -44,8 +44,8 @@ function setTriggers() {
 		closeOnEsc : false,
 		closeOnClick : false
 	});
-	
-	$("a[rel]").each(function(i) {	
+
+	$("a[rel]").each(function(i) {
 		$(this).overlay({
 			mask : {
 				color : '#113d2b',
@@ -54,39 +54,12 @@ function setTriggers() {
 			},
 			closeOnEsc : false,
 			closeOnClick : false
-		});			
-	});	
+		});
+	});
 }
-
-/*
-
-function changeNavistrich() {
-	
-}
-
-function createCookie(name,value,days) {
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
-	}
-	else var expires = "";
-	document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function readCookie(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-	}
-	return null;
-} */
 
 function eraseCookie(name) {
-	createCookie(name,"",-1);
+	createCookie(name, "", -1);
 }
 
 function hideKasten() {
@@ -109,29 +82,33 @@ function rateFake(divID, value) {
 }
 
 function showStars(divID, songID) {
-	$("#stars-wrapper" + divID).stars({
-		inputType : "select",
-		callback : function(ui, type, value) {
-			var ui = $("#stars-wrapper" + divID).data("stars");
-			var _data = "songID=" + songID + "&rating=" + ui.options.value;
-			jQuery.ajax({
-				url : "../controller/rateSong",
-				type : "POST",
-				data : _data,
-				success : function(reqCode) {
-					// aktualisieren des durchschnittwertes
-					var html = reqCode.meanRating + " / "+reqCode.voteCount;
-					
-					if(reqCode.voteCount == 1)
-						html += " Vote";
-					else html += " Votes";
-					
-					updateChartstars(divID, html);
+	$("#stars-wrapper" + divID).stars(
+			{
+				inputType : "select",
+				callback : function(ui, type, value) {
+					var ui = $("#stars-wrapper" + divID).data("stars");
+					var _data = "songID=" + songID + "&rating="
+							+ ui.options.value;
+					jQuery.ajax({
+						url : "../controller/rateSong",
+						type : "POST",
+						data : _data,
+						success : function(reqCode) {
+							// aktualisieren des durchschnittwertes
+							var html = reqCode.rating.meanRating + " / "
+									+ reqCode.rating.voteCount;
+
+							if (reqCode.rating.voteCount == 1)
+								html += " Vote";
+							else
+								html += " Votes";
+
+							updateChartstars(divID, html);
+						}
+					});
+
 				}
 			});
-
-		}
-	});
 }
 
 function disableStars() {
@@ -183,71 +160,71 @@ function showCharts(start, end) {
 					var chartList = "";
 					jQuery
 							.each(
-									reqCode.chart,
+									reqCode.chart.song,
 									function(i, value) {
 
 										chartList += "<div class=\"content_item\"><div class=\"chartplatzierung\"><div class=\"chartState\">";
-										if (reqCode.chart[i].change > 0) {
+										if (reqCode.chart.song[i].change > 0) {
 											chartList += "<img class=\"up\" src=\"../images/up.png\"><span class=\"chartStateUp\">"
-													+ reqCode.chart[i].change
+													+ reqCode.chart.song[i].change
 													+ "</span>";
-										} else if (reqCode.chart[i].change < 0) {
+										} else if (reqCode.chart.song[i].change < 0) {
 											chartList += "<img class=\"down\" src=\"../images/down.png\"><span class=\"chartStateDown\">"
-													+ reqCode.chart[i].change
+													+ reqCode.chart.song[i].change
 													+ "</span>";
-										} else if (reqCode.chart[i].change == 0) {
+										} else if (reqCode.chart.song[i].change == 0) {
 											chartList += "<img class=\"equal\" src=\"../images/equal.png\"><span class=\"chartStateEqual\"></span>";
 										} else {
 											chartList += "<img class=\"new\" src=\"../images/new.png\"><span class=\"chartStateNew\">Neu</span>";
 										}
 										chartList += "</div><span class=\"platznummer\">"
-												+ reqCode.chart[i].ranking
+												+ reqCode.chart.song[i].ranking
 												+ ".</span><span class=\"platz\">Platz</span></div>";
 
 										if (reqCode.user != null) {
 											if (reqCode.user.admin == 1) {
 												chartList += "<a class=\"modalInput\" onclick=\"fillText('"
-														+ reqCode.chart[i].id
+														+ reqCode.chart.song[i].id
 														+ "'); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
-														+ reqCode.chart[i].id
+														+ reqCode.chart.song[i].id
 														+ ")\" class=\"modalInput\" rel=\"#modalUndo\" href=\"javascript:void(0);\"><img class=\"undo\" src=\"../images/undo.png\" /></a>";
 											}
 										}
 
 										chartList += "<div class=\"chartbild\"> <img id=\"cover"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"cover\" alt=\"Coverlink:"
-												+ reqCode.chart[i].picture
+												+ reqCode.chart.song[i].cover
 												+ "\" src=\""
-												+ reqCode.chart[i].picture
+												+ reqCode.chart.song[i].cover
 												+ "\" /> </div>";
 										chartList += "<div class=\"kasten\"> <div id=\"chartautor"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"chartautor\">"
-												+ reqCode.chart[i].interpreter
+												+ reqCode.chart.song[i].interpreter
 												+ "</div> <span class=\"platzhalter_autor_name\"> | </span> <div id=\"chartname"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"chartname\">"
-												+ reqCode.chart[i].title
+												+ reqCode.chart.song[i].title
 												+ "</div> <div id=\"chartpreise"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"chartpreise\">";
 
-										if (reqCode.chart[i].prices != null) {
+										if (reqCode.chart.song[i].prices != null) {
 											jQuery
 													.each(
-															reqCode.chart[i].prices,
+															reqCode.chart.song[i].prices,
 															function(j, value) {
 																chartList += " <div class=\"chartpreis\"> <a target=\"_blank\" href=\""
-																		+ reqCode.chart[i].prices[j].url
+																		+ reqCode.chart.song[i].prices[j].url
 																		+ "\"><img class=\"resize\" src=\"../images/"
-																		+ reqCode.chart[i].prices[j].provider
+																		+ reqCode.chart.song[i].prices[j].provider
 																		+ "_resize.png\" /></a> <div class=\"chartpreis_preis\"> <a target=\"_blank\" href=\""
-																		+ reqCode.chart[i].prices[j].url
+																		+ reqCode.chart.song[i].prices[j].url
 																		+ "\">"
-																		+ reqCode.chart[i].prices[j].value
+																		+ reqCode.chart.song[i].prices[j].value
 																		+ " "
-																		+ reqCode.chart[i].prices[j].currency
+																		+ reqCode.chart.song[i].prices[j].currency
 																		+ "</a></div></div>";
 															});
 										}
@@ -255,46 +232,49 @@ function showCharts(start, end) {
 
 										if (reqCode.loggedIn == false) {
 											chartList += " <br> <div id=\"fake-stars-off"
-													+ reqCode.chart[i].id
+													+ reqCode.chart.song[i].id
 													+ "\" class=\"stars-off\" style=\"width: 81px;\"> <div id=\"fake-stars-on"
-													+ reqCode.chart[i].id
+													+ reqCode.chart.song[i].id
 													+ "\" class=\"stars-on\"></div></div>";
-										
+
 											ratings
-													.push(reqCode.chart[i].rating);
+													.push(reqCode.chart.song[i].rating);
 										} else {
 											chartList += " <div class=\"stars-wrapper\" id=\"stars-wrapper"
-													+ reqCode.chart[i].id
+													+ reqCode.chart.song[i].id
 													+ "\"> <select name=\"selrate\"> <option value=\"1\">Very poor</option> <option value=\"2\">Not that bad</option> <option value=\"3\">Average</option> <option value=\"4\">Good</option> <option value=\"5\">Perfect</option> </select> </div>";
 
 											ratings
-													.push(reqCode.chart[i].userRating);
-											
+													.push(reqCode.chart.song[i].userRating);
+
 										}
-										ids.push(reqCode.chart[i].id);
+										ids.push(reqCode.chart.song[i].id);
 										chartList += "</form> </div> <div id=\"chartstars"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"chartstars\">"
-												+ reqCode.chart[i].rating + " / "+reqCode.chart[i].voteCount;
-												if(reqCode.chart[i].voteCount ==1)
-													chartList+=" Vote";
-												else chartList+=" Votes";
-												chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
-												+ reqCode.chart[i].tracklength
+												+ reqCode.chart.song[i].rating
+												+ " / "
+												+ reqCode.chart.song[i].voteCount;
+										if (reqCode.chart.song[i].voteCount == 1)
+											chartList += " Vote";
+										else
+											chartList += " Votes";
+										chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
+												+ reqCode.chart.song[i].tracklength
 												+ "min</div> <!-- <div class=\"chartplayer\">Play | Stop | Volume</div> --> <div class=\"chart_extend\"></div> </div> <div class=\"kasten_extended\"> <div class=\"chartvideo\"> <object style='width: 301px; height: 200px;' width='301' height='200'> <embed src='"
-												+ reqCode.chart[i].video
+												+ reqCode.chart.song[i].video
 												+ "' width='301' height='200' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'> </embed> <param name='movie' value='"
-												+ reqCode.chart[i].video
+												+ reqCode.chart.song[i].video
 												+ "' /> <param name='AllowFullscreen' value='true' /> <param name='AllowScriptAccess' value='always' /> </object> </div> <div class=\"chartlyrik\"> Lyrik <div id=\"lyriktext"
-												+ reqCode.chart[i].id
+												+ reqCode.chart.song[i].id
 												+ "\" class=\"lyriktext\"> "
-												+ reqCode.chart[i].lyric.text
+												+ reqCode.chart.song[i].lyric.text
 												+ "<br> <br> <a target=\"_blank\" href=\""
-												+ reqCode.chart[i].lyric.url
+												+ reqCode.chart.song[i].lyric.url
 												+ "\">"
-												+ reqCode.chart[i].interpreter
+												+ reqCode.chart.song[i].interpreter
 												+ " - "
-												+ reqCode.chart[i].title
+												+ reqCode.chart.song[i].title
 												+ "</a> </div> </div> <!-- Lyrik Ende --> </div> <!-- Kasten Extended Ende --> </div> <!-- Content_Item Ende -->";
 
 									});
@@ -395,7 +375,7 @@ function changePreview(preview) {
 
 function getURLfromAPI() {
 	startLoadingModal('saveEdit', 'loadingEdit');
-	//0 - google, 1 - amazon
+	// 0 - google, 1 - amazon
 	var api = document.getElementById('txtAPI').options[document
 			.getElementById('txtAPI').selectedIndex].value;
 	var interpreter = document.getElementById("txtInterpreter").value.replace(
@@ -405,19 +385,20 @@ function getURLfromAPI() {
 	var index = document.getElementById("txtIndex").value;
 	var _data = "api=" + api + "&interpreter=" + interpreter + "&title="
 			+ title + "&index=" + index;
-	jQuery.ajax({
-		url : "../controller/getPictureURL",
-		type : "POST",
-		data : _data,
-		success : function(reqCode) {		
-			if (api == 'Google Picture API')
-				document.getElementById("txtIndex").value = parseInt(index)+1;
-			
-			document.getElementById("txtCover").value = reqCode.url;
-			changePreview(reqCode.url);
-			finishLoadingModal('saveEdit', 'loadingEdit');
-		}
-	});
+	jQuery
+			.ajax({
+				url : "../controller/getPictureURL",
+				type : "POST",
+				data : _data,
+				success : function(reqCode) {
+					if (api == 'Google Picture API')
+						document.getElementById("txtIndex").value = parseInt(index) + 1;
+
+					document.getElementById("txtCover").value = reqCode.url;
+					changePreview(reqCode.url);
+					finishLoadingModal('saveEdit', 'loadingEdit');
+				}
+			});
 }
 
 function undoChanges() {
@@ -432,35 +413,36 @@ function undoChanges() {
 				data : _data,
 				success : function(reqCode) {
 					document.getElementById("cover" + songID).setAttribute(
-							"src", reqCode.cover);
-					document.getElementById("chartautor" + songID).innerHTML = reqCode.interpreter;
-					document.getElementById("chartname" + songID).innerHTML = reqCode.title;
+							"src", reqCode.song.cover);
+					document.getElementById("chartautor" + songID).innerHTML = reqCode.song.interpreter;
+					document.getElementById("chartname" + songID).innerHTML = reqCode.song.title;
 					var priceHtml = "";
-					if (reqCode.prices != null) {
+					if (reqCode.song.prices != null) {
 						jQuery
 								.each(
-										reqCode.prices,
+										reqCode.song.prices,
 										function(i, value) {
 											priceHtml += "<div class=\"chartpreis\"><a target=\"_blank\" href=\""
-													+ reqCode.prices[i].url
+													+ reqCode.song.prices[i].url
 													+ "\"><img class=\"resize\" src=\"../images/"
-													+ reqCode.prices[i].provider
+													+ reqCode.song.prices[i].provider
 													+ "_resize.png\" /></a><div class=\"chartpreis_preis\"><a target=\"_blank\" "
 													+ "href=\""
-													+ reqCode.prices[i].url
+													+ reqCode.song.prices[i].url
 													+ "\">"
-													+ reqCode.prices[i].value
+													+ reqCode.song.prices[i].value
 													+ " "
-													+ reqCode.prices[i].currency
+													+ reqCode.song.prices[i].currency
 													+ "</a></div></div>";
 										});
 
 					}
 					document.getElementById("chartpreise" + songID).innerHTML = priceHtml;
-					var lyricHtml = reqCode.lyric.text
+					var lyricHtml = reqCode.song.lyric.text
 							+ "<br><br><a target=\"_blank\" href=\""
-							+ reqCode.lyric.url + "\">" + reqCode.interpreter
-							+ " - " + reqCode.title + "</a>";
+							+ reqCode.song.lyric.url + "\">"
+							+ reqCode.song.interpreter + " - "
+							+ reqCode.song.title + "</a>";
 
 					document.getElementById("lyriktext" + songID).innerHTML = lyricHtml;
 					document.getElementById("closeUndoChanges").click();
@@ -489,35 +471,36 @@ function changeSongInformation() {
 				data : _data,
 				success : function(reqCode) {
 					document.getElementById("cover" + songID).setAttribute(
-							"src", reqCode.cover);
-					document.getElementById("chartautor" + songID).innerHTML = reqCode.interpreter;
-					document.getElementById("chartname" + songID).innerHTML = reqCode.title;
+							"src", reqCode.song.cover);
+					document.getElementById("chartautor" + songID).innerHTML = reqCode.song.interpreter;
+					document.getElementById("chartname" + songID).innerHTML = reqCode.song.title;
 					var priceHtml = "";
-					if (reqCode.prices != null) {
+					if (reqCode.song.prices != null) {
 						jQuery
 								.each(
-										reqCode.prices,
+										reqCode.song.prices,
 										function(i, value) {
 											priceHtml += "<div class=\"chartpreis\"><a target=\"_blank\" href=\""
-													+ reqCode.prices[i].url
+													+ reqCode.song.prices[i].url
 													+ "\"><img class=\"resize\" src=\"../images/"
-													+ reqCode.prices[i].provider
+													+ reqCode.song.prices[i].provider
 													+ "_resize.png\" /></a><div class=\"chartpreis_preis\"><a target=\"_blank\" "
 													+ "href=\""
-													+ reqCode.prices[i].url
+													+ reqCode.song.prices[i].url
 													+ "\">"
-													+ reqCode.prices[i].value
+													+ reqCode.song.prices[i].value
 													+ " "
-													+ reqCode.prices[i].currency
+													+ reqCode.song.prices[i].currency
 													+ "</a></div></div>";
 										});
 
 					}
 					document.getElementById("chartpreise" + songID).innerHTML = priceHtml;
-					var lyricHtml = reqCode.lyric.text
+					var lyricHtml = reqCode.song.lyric.text
 							+ "<br><br><a target=\"_blank\" href=\""
-							+ reqCode.lyric.url + "\">" + reqCode.interpreter
-							+ " - " + reqCode.title + "</a>";
+							+ reqCode.song.lyric.url + "\">"
+							+ reqCode.song.interpreter + " - "
+							+ reqCode.song.title + "</a>";
 
 					document.getElementById("lyriktext" + songID).innerHTML = lyricHtml;
 
@@ -543,138 +526,142 @@ function readCharts() {
 }
 
 function showUserCharts(sort) {
-	var _data = "mode=ajax&sortType="+sort;
-	jQuery.ajax({
-		url : "../controller/showUserCharts",
-		type : "POST",
-		data : _data,
-		success : function(reqCode) {
-		//	var rankings = [];
-			var ratings = [];
-			var ids = [];
-			var chartList = "";
-			var index = 1;
-			jQuery
-					.each(
-							reqCode.chart,
-							function(i, value) {
-								
-								chartList += "<div class=\"content_item\"><div class=\"chartplatzierung\"><span class=\"platznummer\">"
-										+ index++
-										+ ".</span><span class=\"platz\">Platz</span></div>";
+	var _data = "mode=ajax&sortType=" + sort;
+	jQuery
+			.ajax({
+				url : "../controller/showUserCharts",
+				type : "POST",
+				data : _data,
+				success : function(reqCode) {
+					// var rankings = [];
+					var ratings = [];
+					var ids = [];
+					var chartList = "";
+					var index = 1;
+					jQuery
+							.each(
+									reqCode.chart.song,
+									function(i, value) {
 
-								if (reqCode.user != null) {
-									if (reqCode.user.admin == 1) {
-										chartList += "<a class=\"modalInput\" onclick=\"fillText('"
-												+ reqCode.chart[i].id
-												+ "'); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
-												+ reqCode.chart[i].id
-												+ ")\" class=\"modalInput\" rel=\"#modalUndo\" href=\"javascript:void(0);\"><img class=\"undo\" src=\"../images/undo.png\" /></a>";
-									}
-								}
+										chartList += "<div class=\"content_item\"><div class=\"chartplatzierung\"><span class=\"platznummer\">"
+												+ index++
+												+ ".</span><span class=\"platz\">Platz</span></div>";
 
-								chartList += "<div class=\"chartbild\"> <img id=\"cover"
-										+ reqCode.chart[i].id
-										+ "\" class=\"cover\" alt=\"Coverlink:"
-										+ reqCode.chart[i].picture
-										+ "\" src=\""
-										+ reqCode.chart[i].picture
-										+ "\" /> </div>";
-								chartList += "<div class=\"kasten\"> <div id=\"chartautor"
-										+ reqCode.chart[i].id
-										+ "\" class=\"chartautor\">"
-										+ reqCode.chart[i].interpreter
-										+ "</div> <span class=\"platzhalter_autor_name\"> | </span> <div id=\"chartname"
-										+ reqCode.chart[i].id
-										+ "\" class=\"chartname\">"
-										+ reqCode.chart[i].title
-										+ "</div> <div id=\"chartpreise"
-										+ reqCode.chart[i].id
-										+ "\" class=\"chartpreise\">";
+										if (reqCode.user != null) {
+											if (reqCode.user.admin == 1) {
+												chartList += "<a class=\"modalInput\" onclick=\"fillText('"
+														+ reqCode.chart.song[i].id
+														+ "'); \"rel=\"#modalEdit\" href=\"javascript:void(0);\"> <img class=\"edit\" src=\"../images/edit.png\" /></a><a onclick=\"javascript:setUndoID("
+														+ reqCode.chart.song[i].id
+														+ ")\" class=\"modalInput\" rel=\"#modalUndo\" href=\"javascript:void(0);\"><img class=\"undo\" src=\"../images/undo.png\" /></a>";
+											}
+										}
 
-								if (reqCode.chart[i].prices != null) {
-									jQuery
-											.each(
-													reqCode.chart[i].prices,
-													function(j, value) {
-														chartList += " <div class=\"chartpreis\"> <a target=\"_blank\" href=\""
-																+ reqCode.chart[i].prices[j].url
-																+ "\"><img class=\"resize\" src=\"../images/"
-																+ reqCode.chart[i].prices[j].provider
-																+ "_resize.png\" /></a> <div class=\"chartpreis_preis\"> <a target=\"_blank\" href=\""
-																+ reqCode.chart[i].prices[j].url
-																+ "\">"
-																+ reqCode.chart[i].prices[j].value
-																+ " "
-																+ reqCode.chart[i].prices[j].currency
-																+ "</a></div></div>";
-													});
-								}
-								chartList += "</div><div class=\"chartbewertung\"><form>Bewertung: &oslash;";
+										chartList += "<div class=\"chartbild\"> <img id=\"cover"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"cover\" alt=\"Coverlink:"
+												+ reqCode.chart.song[i].cover
+												+ "\" src=\""
+												+ reqCode.chart.song[i].cover
+												+ "\" /> </div>";
+										chartList += "<div class=\"kasten\"> <div id=\"chartautor"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"chartautor\">"
+												+ reqCode.chart.song[i].interpreter
+												+ "</div> <span class=\"platzhalter_autor_name\"> | </span> <div id=\"chartname"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"chartname\">"
+												+ reqCode.chart.song[i].title
+												+ "</div> <div id=\"chartpreise"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"chartpreise\">";
 
-								if (reqCode.loggedIn == false) {
-									chartList += " <br> <div id=\"fake-stars-off"
-											+ reqCode.chart[i].id
-											+ "\" class=\"stars-off\" style=\"width: 81px;\"> <div id=\"fake-stars-on"
-											+ reqCode.chart[i].id
-											+ "\" class=\"stars-on\"></div></div>";
-									//rankings
-									//		.push(reqCode.chart[i].ranking);
-									ratings
-											.push(reqCode.chart[i].rating);
-								} else {
-									chartList += " <div class=\"stars-wrapper\" id=\"stars-wrapper"
-											+ reqCode.chart[i].id
-											+ "\"> <select name=\"selrate\"> <option value=\"1\">Very poor</option> <option value=\"2\">Not that bad</option> <option value=\"3\">Average</option> <option value=\"4\">Good</option> <option value=\"5\">Perfect</option> </select> </div>";
+										if (reqCode.chart.song[i].prices != null) {
+											jQuery
+													.each(
+															reqCode.chart.song[i].prices,
+															function(j, value) {
+																chartList += " <div class=\"chartpreis\"> <a target=\"_blank\" href=\""
+																		+ reqCode.chart.song[i].prices[j].url
+																		+ "\"><img class=\"resize\" src=\"../images/"
+																		+ reqCode.chart.song[i].prices[j].provider
+																		+ "_resize.png\" /></a> <div class=\"chartpreis_preis\"> <a target=\"_blank\" href=\""
+																		+ reqCode.chart.song[i].prices[j].url
+																		+ "\">"
+																		+ reqCode.chart.song[i].prices[j].value
+																		+ " "
+																		+ reqCode.chart.song[i].prices[j].currency
+																		+ "</a></div></div>";
+															});
+										}
+										chartList += "</div><div class=\"chartbewertung\"><form>Bewertung: &oslash;";
 
-									//rankings
-									//		.push(reqCode.chart[i].ranking);
-									ratings
-											.push(reqCode.chart[i].userRating);
-									
-								}
-								ids.push(reqCode.chart[i].id);
-								chartList += "</form> </div> <div id=\"chartstars"
-										+ reqCode.chart[i].id
-										+ "\" class=\"chartstars\">"
-										+ reqCode.chart[i].rating + " / "+reqCode.chart[i].voteCount;
-								if(reqCode.chart[i].voteCount ==1)
-									chartList+=" Vote";
-								else chartList+=" Votes";
-								
-								chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
-										+ reqCode.chart[i].tracklength
-										+ "min</div> <!-- <div class=\"chartplayer\">Play | Stop | Volume</div> --> <div class=\"chart_extend\"></div> </div> <div class=\"kasten_extended\"> <div class=\"chartvideo\"> <object style='width: 301px; height: 200px;' width='301' height='200'> <embed src='"
-										+ reqCode.chart[i].video
-										+ "' width='301' height='200' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'> </embed> <param name='movie' value='"
-										+ reqCode.chart[i].video
-										+ "' /> <param name='AllowFullscreen' value='true' /> <param name='AllowScriptAccess' value='always' /> </object> </div> <div class=\"chartlyrik\"> Lyrik <div id=\"lyriktext"
-										+ reqCode.chart[i].id
-										+ "\" class=\"lyriktext\"> "
-										+ reqCode.chart[i].lyric.text
-										+ "<br> <br> <a target=\"_blank\" href=\""
-										+ reqCode.chart[i].lyric.url
-										+ "\">"
-										+ reqCode.chart[i].interpreter
-										+ " - "
-										+ reqCode.chart[i].title
-										+ "</a> </div> </div> <!-- Lyrik Ende --> </div> <!-- Kasten Extended Ende --> </div> <!-- Content_Item Ende -->";
+										if (reqCode.loggedIn == false) {
+											chartList += " <br> <div id=\"fake-stars-off"
+													+ reqCode.chart.song[i].id
+													+ "\" class=\"stars-off\" style=\"width: 81px;\"> <div id=\"fake-stars-on"
+													+ reqCode.chart.song[i].id
+													+ "\" class=\"stars-on\"></div></div>";
+											// rankings
+											// .push(reqCode.chart[i].ranking);
+											ratings
+													.push(reqCode.chart.song[i].rating);
+										} else {
+											chartList += " <div class=\"stars-wrapper\" id=\"stars-wrapper"
+													+ reqCode.chart.song[i].id
+													+ "\"> <select name=\"selrate\"> <option value=\"1\">Very poor</option> <option value=\"2\">Not that bad</option> <option value=\"3\">Average</option> <option value=\"4\">Good</option> <option value=\"5\">Perfect</option> </select> </div>";
 
-							});
+											// rankings
+											// .push(reqCode.chart[i].ranking);
+											ratings
+													.push(reqCode.chart.song[i].userRating);
 
-			updateChartList(chartList);
-			
-			if (reqCode.loggedIn) {
-				jQuery.each(ids, function(i, value) {
-					showStars(ids[i], ids[i]);
-					rate(ids[i], ratings[i]);
-				});
-			} else {
-				jQuery.each(ratings, function(i, value) {
-					rateFake(ids[i], ratings[i]);
-				});
-			}
-			setTriggers();
-		}
-	});
+										}
+										ids.push(reqCode.chart.song[i].id);
+										chartList += "</form> </div> <div id=\"chartstars"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"chartstars\">"
+												+ reqCode.chart.song[i].rating
+												+ " / "
+												+ reqCode.chart.song[i].voteCount;
+										if (reqCode.chart.song[i].voteCount == 1)
+											chartList += " Vote";
+										else
+											chartList += " Votes";
+
+										chartList += "</div><div class=\"chartlaenge\">Trackl&auml;nge: "
+												+ reqCode.chart.song[i].tracklength
+												+ "min</div> <!-- <div class=\"chartplayer\">Play | Stop | Volume</div> --> <div class=\"chart_extend\"></div> </div> <div class=\"kasten_extended\"> <div class=\"chartvideo\"> <object style='width: 301px; height: 200px;' width='301' height='200'> <embed src='"
+												+ reqCode.chart.song[i].video
+												+ "' width='301' height='200' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true'> </embed> <param name='movie' value='"
+												+ reqCode.chart.song[i].video
+												+ "' /> <param name='AllowFullscreen' value='true' /> <param name='AllowScriptAccess' value='always' /> </object> </div> <div class=\"chartlyrik\"> Lyrik <div id=\"lyriktext"
+												+ reqCode.chart.song[i].id
+												+ "\" class=\"lyriktext\"> "
+												+ reqCode.chart.song[i].lyric.text
+												+ "<br> <br> <a target=\"_blank\" href=\""
+												+ reqCode.chart.song[i].lyric.url
+												+ "\">"
+												+ reqCode.chart.song[i].interpreter
+												+ " - "
+												+ reqCode.chart.song[i].title
+												+ "</a> </div> </div> <!-- Lyrik Ende --> </div> <!-- Kasten Extended Ende --> </div> <!-- Content_Item Ende -->";
+
+									});
+
+					updateChartList(chartList);
+
+					if (reqCode.loggedIn) {
+						jQuery.each(ids, function(i, value) {
+							showStars(ids[i], ids[i]);
+							rate(ids[i], ratings[i]);
+						});
+					} else {
+						jQuery.each(ratings, function(i, value) {
+							rateFake(ids[i], ratings[i]);
+						});
+					}
+					setTriggers();
+				}
+			});
 }

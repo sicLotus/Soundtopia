@@ -5,22 +5,17 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import music.data.Price;
-import music.data.PriceVO;
+import music.data.DataObject.Price;
+import music.data.ValueObject.PriceVO;
 
-/**
- * Session Bean implementation class PriceDAO
- */
 @Stateless
 @LocalBean
 public class PriceDAO {
-	
+
 	@EJB
 	private SongDAO songDAO;
 
@@ -56,8 +51,7 @@ public class PriceDAO {
 
 	public Price updatePrice(int songID, PriceVO priceVO) {
 		if (priceVO != null) {
-			Price price = findPriceBySongIDAndProvider(songID,
-					priceVO.getProvider());
+			Price price = findPriceBySongIDAndProvider(songID, priceVO.getProvider());
 			price.setCurrency(priceVO.getCurrency());
 			price.setValue(priceVO.getValue());
 			price.setOfferUrl(priceVO.getUrl());
@@ -66,12 +60,11 @@ public class PriceDAO {
 		} else
 			return null;
 	}
-	
+
 	public void removeAllPrices(int songID) {
 		List<Price> prices = findPriceBySongID(songID);
-		for(Price p:prices) 
+		for (Price p : prices)
 			em.remove(p);
-		
 	}
 
 	public Price findPrice(int id) {
@@ -80,20 +73,17 @@ public class PriceDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Price> findPriceBySongID(int songID) {
-		List<Price> list = em.createNamedQuery("price.findBySongID")
-				.setParameter("songID", songID).getResultList();
+		List<Price> list = em.createNamedQuery("price.findBySongID").setParameter("songID", songID).getResultList();
 		return list;
 	}
 
 	public Price findPriceBySongIDAndProvider(int songID, String provider) {
 		try {
-			Price price = (Price) em.createNamedQuery("price.findBySongIDAndProvider").setParameter("songID", songID)
-					.setParameter("provider", provider).getSingleResult();
+			Price price = (Price) em.createNamedQuery("price.findBySongIDAndProvider").setParameter("songID", songID).setParameter("provider", provider).getSingleResult();
 			return price;
 		} catch (NoResultException e) {
-			return null;	
+			return null;
 		}
 	}
-	
-	
+
 }

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="SoundtopiaEJB">
-	
-	<non-jta-data-source>SoundtopiaDS</non-jta-data-source>
-	<class>music.data.Chart</class>
-	<class>music.data.Lyric</class>
-	<class>music.data.Song</class>
-	<class>music.data.User</class>
-	<class>music.data.Price</class>
-	<class>music.data.SongInChart</class>
-	<class>music.data.SongInChartPK</class>
-	<class>music.data.Rating</class>
-	<class>music.data.RatingPK</class>
-	<class>music.data.SongAddition</class>
-	<exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+		<non-jta-data-source>SoundtopiaDS</non-jta-data-source>
+		<class>music.data.DataObject.Chart</class>
+		<class>music.data.DataObject.Lyric</class>
+		<class>music.data.DataObject.Song</class>
+		<class>music.data.DataObject.User</class>
+		<class>music.data.DataObject.Price</class>
+		<class>music.data.DataObject.SongInChart</class>
+		<class>music.data.DataObject.PK.SongInChartPK</class>
+		<class>music.data.DataObject.Rating</class>
+		<class>music.data.DataObject.PK.RatingPK</class>
+		<class>music.data.DataObject.SongAddition</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
-	
+
 </persistence>

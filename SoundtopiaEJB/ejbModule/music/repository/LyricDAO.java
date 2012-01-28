@@ -5,19 +5,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import music.data.Lyric;
-import music.data.LyricVO;
+import music.data.DataObject.Lyric;
+import music.data.ValueObject.LyricVO;
 
-/**
- * Session Bean implementation class LyricDAO
- */
 @Stateless
 @LocalBean
 public class LyricDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-
 
 	public LyricDAO() {
 	}
@@ -38,7 +34,7 @@ public class LyricDAO {
 			em.persist(lyric);
 			return lyric;
 		} else
-			return updateLyric(songID,lyricVO);
+			return updateLyric(songID, lyricVO);
 	}
 
 	public Lyric updateLyric(int songID, LyricVO lyricVO) {
@@ -53,7 +49,7 @@ public class LyricDAO {
 		}
 		return null;
 	}
-	
+
 	public Lyric findLyric(int songID) {
 		return em.find(Lyric.class, songID);
 	}

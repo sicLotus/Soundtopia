@@ -68,6 +68,10 @@ a:hover {
 	background-image: url(./images/navistrich2.png);
 }
 
+.link3 {
+	background-image: url(./images/navistrich3.png);
+}
+
 .linkSearch {
 	background-image: url(./images/navistrich.png);
 }
@@ -328,6 +332,10 @@ a:hover {
 	height: 174px;
 	width: 183px;
 	overflow: auto;
+}
+
+.lyriktext b {
+	color: #FFFFFF;
 }
 
 #footer {

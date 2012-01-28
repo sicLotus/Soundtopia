@@ -14,7 +14,7 @@
 				<span class="platznummer">${index.count}.</span> <span class="platz">Platz</span>
 			</div>
 			<c:choose>
-				<c:when test="${sessionScope.user.admin == 1 }">
+				<c:when test="${sessionScope.user.admin == true }">
 					<a class="modalInput" onclick="javascript:fillText('${chart.id}');"
 						rel="#modalEdit" href="javascript:void(0);"> <img class="edit"
 						src="../images/edit.png" />
@@ -27,7 +27,7 @@
 			</c:choose>
 			<div class="chartbild">
 				<img id="cover${chart.id}" class="cover"
-					alt="Coverlink:${chart.picture}" src="${chart.picture}" />
+					alt="Coverlink:${chart.cover}" src="${chart.cover}" />
 			</div>
 			<div class="kasten">
 				<div id="chartautor${chart.id}" class="chartautor">${chart.interpreter}</div>
@@ -83,8 +83,8 @@
 						value="${chart.rating}" />
 					/ ${chart.voteCount}
 					<c:choose>
-					<c:when test="${chart.voteCount==1}">Vote</c:when>
-					<c:otherwise>Votes</c:otherwise>
+						<c:when test="${chart.voteCount==1}">Vote</c:when>
+						<c:otherwise>Votes</c:otherwise>
 					</c:choose>
 				</div>
 

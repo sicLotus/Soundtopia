@@ -13,11 +13,13 @@
 			<a href="../controller/showUserCharts">Usercharts</a>
 		</div>
 		<c:choose>
-			<c:when test="${sessionScope.user.admin == 1 }">
+			<c:when test="${sessionScope.loggedIn == true }">
 				<div class="navi_item">
-					<a href="../controller/showMyCharts"><strong>Meine Charts</strong></a>
+					<a href="../controller/showMyCharts"><strong>Meine
+							Charts</strong></a>
 				</div>
-
+			</c:when>
+			<c:when test="${sessionScope.user.admin == true }">
 				<div class="navi_item">
 					<a class="modalInput" href="javascript:void(0);" rel="#modalNew">Neue
 						Charts einlesen</a>
@@ -27,6 +29,6 @@
 		<div class="navi_right"></div>
 	</div>
 
-	<div id="navistrich" class="link2"></div>
+	<div id="navistrich" class="link3"></div>
 	</body>
 	</html>

@@ -14,9 +14,12 @@
 			<a href="../controller/showUserCharts">Usercharts</a>
 		</div>
 		<c:choose>
-			<c:when test="${sessionScope.user.admin == 1 }">
-				<div class="navi_item"><a href="../controller/showMyCharts">Meine Charts</a></div>
-
+			<c:when test="${sessionScope.loggedIn == true }">
+				<div class="navi_item">
+					<a href="../controller/showMyCharts">Meine Charts</a>
+				</div>
+			</c:when>
+			<c:when test="${sessionScope.user.admin == true }">
 				<div class="navi_item">
 					<a class="modalInput" href="javascript:void(0);" rel="#modalNew">Neue
 						Charts einlesen</a>

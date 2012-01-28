@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import music.data.ChartEntryVO;
+import music.data.ValueObject.ChartEntryVO;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -34,8 +34,7 @@ public class MyVideoAPI {
 		List list = null;
 		int page = 1;
 
-		WebResource webResource = client
-				.resource("https://api.myvideo.de/prod/mobile/api2_rest.php");
+		WebResource webResource = client.resource("https://api.myvideo.de/prod/mobile/api2_rest.php");
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("dev_id", "fd613876bee13bc19d5a4d8575a6fd47");
 		params.add("website_id", "57c115313d1c7b9e531035af0e739973");
@@ -48,28 +47,25 @@ public class MyVideoAPI {
 
 		do {
 			params.putSingle("page", "" + page);
-			String response = webResource.queryParams(params)
-					.accept(MediaType.TEXT_PLAIN).get(String.class);
+			String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN).get(String.class);
 
 			try {
 				Reader in = new StringReader(response);
 
 				Document document = (Document) builder.build(in);
 				Element rootNode = document.getRootElement();
-				list = rootNode.getChild("myvideo").getChild("movie_list")
-						.getChildren();
+				list = rootNode.getChild("myvideo").getChild("movie_list").getChildren();
 
 				for (int i = 0; i < list.size(); i++) {
 					Element node = (Element) list.get(i);
 					ChartEntryVO entry = new ChartEntryVO();
 
-					entry.setMovie_length(Integer.parseInt(node
-							.getChildText("movie_length")));
+					entry.setMovie_length(Integer.parseInt(node.getChildText("movie_length")));
 					entry.setMovie_title(node.getChildText("movie_title"));
 					entry.setPermalink(node.getChildText("permalink"));
 					entry.setMovie_url(node.getChildText("movie_url"));
-					entry.setChartPlacing(i+1+((page-1)*20));
-					
+					entry.setChartPlacing(i + 1 + ((page - 1) * 20));
+
 					chartList.add(entry);
 					System.out.println("Current song: " + (i + 1) + " from " + list.size() + " page (" + page + ")");
 				}

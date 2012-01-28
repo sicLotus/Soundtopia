@@ -7,7 +7,7 @@ import java.io.StringReader;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import music.data.LyricVO;
+import music.data.ValueObject.LyricVO;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -21,22 +21,21 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class LyricAPI {
+
 	public static LyricVO retrieveData(String interpreter, String title) {
 		ClientConfig config = new DefaultClientConfig();
 		Client client = Client.create(config);
 		SAXBuilder builder = new SAXBuilder();
 		LyricVO lyricVO = new LyricVO();
 
-		WebResource webResource = client
-				.resource("http://lyrics.wikia.com/api.php");
+		WebResource webResource = client.resource("http://lyrics.wikia.com/api.php");
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 		params.add("func", "getSong");
 		params.add("artist", interpreter);
 		params.add("song", title);
 		params.add("fmt", "xml");
 
-		String response = webResource.queryParams(params)
-				.accept(MediaType.APPLICATION_XML).get(String.class);
+		String response = webResource.queryParams(params).accept(MediaType.APPLICATION_XML).get(String.class);
 
 		try {
 			Reader in = new StringReader(response);
@@ -50,7 +49,6 @@ public class LyricAPI {
 		} catch (JDOMException jdomex) {
 			System.err.println(jdomex.getMessage());
 		}
-		
 		return lyricVO;
 	}
 }

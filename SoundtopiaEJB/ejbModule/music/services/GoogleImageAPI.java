@@ -12,9 +12,9 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class GoogleImageAPI {
-	
+
 	public static String retrieveData(String interpreter, String title) {
-		return retrieveData(interpreter,title,0);
+		return retrieveData(interpreter, title, 0);
 	}
 
 	public static String retrieveData(String interpreter, String title, int index) {
@@ -24,24 +24,20 @@ public class GoogleImageAPI {
 		String query = interpreter + " " + title + " cover";
 		int delIndex;
 
-		WebResource webResource = client
-				.resource("http://ajax.googleapis.com/ajax/services/search/images");
-		
+		WebResource webResource = client.resource("http://ajax.googleapis.com/ajax/services/search/images");
+
 		String decodedQuery = EntityDecoder.htmlToChar(query);
-		
+
 		MultivaluedMap<String, String> params = new MultivaluedMapImpl();
-		params.add("v", "1.0"); //ProtocolNumber
-		params.add("rsz", "1"); //Numbers of results
-		params.add("start", ""+index);
+		params.add("v", "1.0"); // ProtocolNumber
+		params.add("rsz", "1"); // Numbers of results
+		params.add("start", "" + index);
 		params.add("q", decodedQuery);
-		
-		System.out.println(index);
-		
-		String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN)
-				.get(String.class);
-				
-		delIndex = response.indexOf(delimiter)+delimiter.length();	
+
+		String response = webResource.queryParams(params).accept(MediaType.TEXT_PLAIN).get(String.class);
+
+		delIndex = response.indexOf(delimiter) + delimiter.length();
 		String url = response.substring(delIndex, response.indexOf("\"", delIndex)).replaceAll("\\%2520", "%20");
-		return url;		
+		return url;
 	}
 }

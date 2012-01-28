@@ -1,9 +1,9 @@
 <div class="modal" id="modalRegister">
-<a class="close myClose"></a>
+	<a class="close myClose"></a>
 	<form id="validRegistrationForm" name="validRegistrationForm"
 		action="../controller/register" Method="post">
 		<fieldset>
-			<legend>Registration</legend>
+			<legend>Registrierung</legend>
 			<table>
 				<tr>
 					<td><label>E-Mail Adresse</label></td>
@@ -66,8 +66,8 @@
 	<a id="closeEdit" class="close myClose"></a>
 	<form action="javascript:void(0);"
 		onsubmit="javascript:changeSongInformation();" method="post">
-		<input id="txtID" name="txtID" type="text" style="display: none" />
-		<input id="txtIndex" name="txtIndex" type="text" style="display: none" />
+		<input id="txtID" name="txtID" type="text" style="display: none" /> <input
+			id="txtIndex" name="txtIndex" type="text" style="display: none" />
 		<div class="songAdditionInterpreter">
 			Interpreter<br> <input id="txtInterpreter" name="txtInterpreter"
 				type="text" />

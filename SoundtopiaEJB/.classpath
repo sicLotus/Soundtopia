@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="ejbModule"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss 7.0 Runtime">
+	<classpathentry kind="src" path="ejbModule" />
+	<classpathentry kind="con"
+		path="org.eclipse.jst.j2ee.internal.module.container" />
+	<classpathentry kind="con"
+		path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/JBoss 7.0 Runtime">
 		<attributes>
-			<attribute name="owner.project.facets" value="jst.ejb;jpt.jpa;#system#"/>
+			<attribute name="owner.project.facets" value="jst.ejb;jpt.jpa;#system#" />
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con"
+		path="org.eclipse.jdt.launching.JRE_CONTAINER" />
 	<classpathentry kind="lib" path="lib/jdom-1.1.2.jar">
 		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+			<attribute name="org.eclipse.jst.component.dependency"
+				value="../lib" />
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/commons-codec-1.5.jar">
 		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+			<attribute name="org.eclipse.jst.component.dependency"
+				value="../lib" />
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/AmazonWebService.jar">
 		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+			<attribute name="org.eclipse.jst.component.dependency"
+				value="../lib" />
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jersey-client-1.10.jar">
 		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+			<attribute name="org.eclipse.jst.component.dependency"
+				value="../lib" />
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jersey-core-1.10.jar">
 		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../lib"/>
+			<attribute name="org.eclipse.jst.component.dependency"
+				value="../lib" />
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jstl-api-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jstl-impl-1.2.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="lib" path="lib/jstl-api-1.2.jar" />
+	<classpathentry kind="lib" path="lib/jstl-impl-1.2.jar" />
+	<classpathentry kind="output" path="build/classes" />
 </classpath>

@@ -2,21 +2,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<META HTTP-EQUIV="REFRESH" CONTENT="2;URL=../controller/showBooks">
-
-<title>Insert title here</title>
+<!--  <META HTTP-EQUIV="REFRESH" CONTENT="2;URL=../controller/showCharts">-->
 </head>
 <body>
-<jsp:include page="../views/warenkorb2_noHover.jsp" />
-<div class="c_content" style="display:block;">
-<center>
-<div id="content" class="c_content_text">
-<div class="done"><br>Fehler: Username oder Email existieren bereits...</div>
-</center>
-</div>
-</div>
-</div>
-<div class="footer"></div>
-</div> <!-- div close from main in warenkorbjsp2  -->
+	<jsp:include page="../views/headers.jsp" />
+	<jsp:include page="../views/navi.jsp" />
+	<div class="c_content" style="display: block;">
+		<center>
+			<div id="content" class="c_content_text">
+				<div class="done">
+					<br>Fehler: Email existiert bereits...
+				</div>
+			</div>
+		</center>
+	</div>
+
+
+	<div class="footer"></div>
+
 </body>
 </html>

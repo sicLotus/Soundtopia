@@ -11,76 +11,82 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.controller.handler.ChangeSongHandler;
-import music.controller.handler.LoginHandler;
-import music.controller.handler.LogoutHandler;
-import music.controller.handler.PictureHandler;
-import music.controller.handler.RateSongHandler;
-import music.controller.handler.ReadChartsHandler;
-import music.controller.handler.RegisterHandler;
-import music.controller.handler.SearchHandler;
-import music.controller.handler.SearchSongHandler;
-import music.controller.handler.ShowAdditionalInformation;
-import music.controller.handler.ShowChartsHandler;
-import music.controller.handler.ShowMyChartsHandler;
-import music.controller.handler.ShowUserChartsHandler;
-import music.controller.handler.UndoChangesHandler;
+import music.controller.handler.IRequestHandler;
+import music.controller.handler.forward.IForwardHandler;
+import music.controller.handler.forward.LoginHandler;
+import music.controller.handler.forward.LogoutHandler;
+import music.controller.handler.forward.RegisterHandler;
+import music.controller.handler.forward.SearchSongHandler;
+import music.controller.handler.forward.ShowChartsHandlerForward;
+import music.controller.handler.forward.ShowMyChartsHandler;
+import music.controller.handler.forward.ShowUserChartsHandlerForward;
+import music.controller.handler.json.ChangeSongHandler;
+import music.controller.handler.json.IJSONProcessHandler;
+import music.controller.handler.json.PictureHandler;
+import music.controller.handler.json.RateSongHandler;
+import music.controller.handler.json.ReadChartsHandler;
+import music.controller.handler.json.SearchSuggestHandler;
+import music.controller.handler.json.ShowAdditionalInformation;
+import music.controller.handler.json.ShowChartsHandlerJSON;
+import music.controller.handler.json.ShowUserChartsHandlerJSON;
+import music.controller.handler.json.UndoChangesHandler;
+import music.exception.SoundtopiaException;
+import music.util.SessionUtil;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private ShowChartsHandler showChartsHandler;
+
+	private ShowChartsHandlerJSON showChartsHandlerJSON;
+	private ShowChartsHandlerForward showChartsHandlerForward;
+	private ShowUserChartsHandlerJSON showUserChartsHandlerJSON;
+	private ShowUserChartsHandlerForward showUserChartsHandlerForward;
 	private RegisterHandler registerHandler;
 	private LoginHandler loginHandler;
 	private RateSongHandler rateSongHandler;
-	private	LogoutHandler logoutHandler;
+	private LogoutHandler logoutHandler;
 	private ShowAdditionalInformation showAdditionalInformationHandler;
 	private ChangeSongHandler changeSongHandler;
 	private PictureHandler pictureHandler;
 	private UndoChangesHandler undoChangesHandler;
 	private ReadChartsHandler readChartsHandler;
-	private SearchHandler searchHandler;
+	private SearchSuggestHandler searchSuggestHandler;
 	private SearchSongHandler searchSongHandler;
-	private ShowUserChartsHandler showUserChartsHandler;
 	private ShowMyChartsHandler showMyChartsHandler;
-	
-// Constructor
-// ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-    public Controller() {
-        super();
-        showChartsHandler = new ShowChartsHandler();
-        registerHandler =  new RegisterHandler();
-        loginHandler = new LoginHandler();
-        rateSongHandler = new RateSongHandler();
-        logoutHandler = new LogoutHandler();
-        showAdditionalInformationHandler = new ShowAdditionalInformation();
-        changeSongHandler = new ChangeSongHandler();
-        pictureHandler = new PictureHandler();
-        undoChangesHandler = new UndoChangesHandler();
-        readChartsHandler = new ReadChartsHandler();
-        searchHandler = new SearchHandler();
-        searchSongHandler = new SearchSongHandler();
-        showUserChartsHandler = new ShowUserChartsHandler();
-        showMyChartsHandler = new ShowMyChartsHandler();
-    }
+	ServletConfig servletConfig;
 
-// Methods
-// ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯    
-    public void init() throws ServletException{
+	public Controller() {
+		super();
+		showChartsHandlerJSON = new ShowChartsHandlerJSON();
+		showChartsHandlerForward = new ShowChartsHandlerForward();
+		showUserChartsHandlerJSON = new ShowUserChartsHandlerJSON();
+		showUserChartsHandlerForward = new ShowUserChartsHandlerForward();
+		registerHandler = new RegisterHandler();
+		loginHandler = new LoginHandler();
+		rateSongHandler = new RateSongHandler();
+		logoutHandler = new LogoutHandler();
+		showAdditionalInformationHandler = new ShowAdditionalInformation();
+		changeSongHandler = new ChangeSongHandler();
+		pictureHandler = new PictureHandler();
+		undoChangesHandler = new UndoChangesHandler();
+		readChartsHandler = new ReadChartsHandler();
+		searchSuggestHandler = new SearchSuggestHandler();
+		searchSongHandler = new SearchSongHandler();
+		showMyChartsHandler = new ShowMyChartsHandler();
+	}
+
+	public void init() throws ServletException {
 		super.init();
 	}
-	
-    ServletConfig servletConfig; //instance variable
-    public void init(ServletConfig config) throws ServletException {
-    	servletConfig = config;
-    	super.init();
-    }
-	
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws IOException, ServletException {
-		try {	
-			processRequest(request,response);		
+
+	public void init(ServletConfig config) throws ServletException {
+		servletConfig = config;
+		super.init();
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		try {
+			processRequest(request, response);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -89,11 +95,10 @@ public class Controller extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws IOException, ServletException {
-		try {		
-			processRequest(request,response);		
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		try {
+			processRequest(request, response);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -102,91 +107,109 @@ public class Controller extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void initializeSession(HttpSession session) {
-		if (session.getAttribute("loggedIn") == null) 
-			session.setAttribute("loggedIn", new Boolean(false));
-		
-		if(session.getAttribute("lastVisitSong") == null) 
-			session.setAttribute("lastVisitSong", 1);
-				
+		if (session.getAttribute("loggedIn") == null)
+			SessionUtil.setLoggedIn(session, new Boolean(false));
+		if (session.getAttribute("lastVisitSong") == null)
+			SessionUtil.setLastVisitSong(session, 1);
 	}
-	
-	
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+
 		String pathInfo = request.getPathInfo();
-		String view = null;
-		
+
 		HttpSession session = request.getSession();
-		
+
 		initializeSession(session);
-				
-		if (pathInfo == null || "/".equals(pathInfo))
-			   response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-		
-		String servlet = pathInfo.substring(1);
-		System.out.println("pathinfo = "+pathInfo);
-		System.out.println("servlet = "+servlet);
-		
-		if(servlet.equals("register")){
-			view = registerHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("login")){
-			view = loginHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("showCharts")){
-			view = showChartsHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("rateSong")){
-			view = rateSongHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("logout")){
-			view = logoutHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("showInfo")){
-			view = showAdditionalInformationHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("changeSongInformation")){
-			view = changeSongHandler.processRequest(request, response);
-		}
-	
-		if(servlet.equals("getPictureURL")){
-			view = pictureHandler.processRequest(request, response);
-		}
-			
-		if(servlet.equals("undoChanges")){
-			view = undoChangesHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("readNewCharts")){
-			view = readChartsHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("suggestSearch")){
-			view = searchHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("searchSongs")){
-			view = searchSongHandler.processRequest(request, response);
-		}
-		
-		if(servlet.equals("showUserCharts")){
-			view = showUserChartsHandler.processRequest(request, response);		
-		}
-		
-		if(servlet.equals("showMyCharts")){
-			view = showMyChartsHandler.processRequest(request, response);		
+
+		String commandHandler = getPathInfo(response, pathInfo);
+		System.out.println("pathinfo = " + pathInfo);
+		System.out.println("servlet = " + commandHandler);
+		String view = null;
+
+		IRequestHandler requestHandler = getRequestHandler(request, response, commandHandler);
+		try {
+			if (requestHandler instanceof IForwardHandler) {
+				view = ((IForwardHandler) requestHandler).getForward(request, response);
+			} else {
+				((IJSONProcessHandler) requestHandler).processJSON(request, response);
+			}
+		} catch (RuntimeException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			String[] msg = e.getMessage().split(":");
+			if (msg.length > 1)
+				request.setAttribute("errorMsg", msg[1]);
+			else request.setAttribute("errorMsg", e.getMessage());
+			view = "/error/err.jsp";
 		}
 
 		if (view != null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(view);
 			dispatcher.forward(request, response);
-		}			
+		}
+
+	}
+	private IRequestHandler getRequestHandler(HttpServletRequest request, HttpServletResponse response, String commandHandler) throws ServletException, IOException {
+		if (commandHandler.equals("register")) {
+			return registerHandler;
+		} else if (commandHandler.equals("login")) {
+			return loginHandler;
+		} else if (commandHandler.equals("showCharts")) {
+			return getShowChartsHandler(request);
+		} else if (commandHandler.equals("rateSong")) {
+			return rateSongHandler;
+		} else if (commandHandler.equals("logout")) {
+			return logoutHandler;
+		} else if (commandHandler.equals("showInfo")) {
+			return showAdditionalInformationHandler;
+		} else if (commandHandler.equals("changeSongInformation")) {
+			return changeSongHandler;
+		} else if (commandHandler.equals("getPictureURL")) {
+			return pictureHandler;
+		} else if (commandHandler.equals("undoChanges")) {
+			return undoChangesHandler;
+		} else if (commandHandler.equals("readNewCharts")) {
+			return readChartsHandler;
+		} else if (commandHandler.equals("suggestSearch")) {
+			return searchSuggestHandler;
+		} else if (commandHandler.equals("searchSongs")) {
+			return searchSongHandler;
+		} else if (commandHandler.equals("showUserCharts")) {
+			return getShowUserChartsHandler(request);
+		} else if (commandHandler.equals("showMyCharts")) {
+			return showMyChartsHandler;
+		} else
+			 throw new SoundtopiaException("Ihre Seite konnte nicht gefunden werden.");
+
+	}
+
+	private IRequestHandler getShowUserChartsHandler(HttpServletRequest request) {
+		if (request.getParameter("mode") != null)
+			return showUserChartsHandlerJSON;
+		else
+			return showUserChartsHandlerForward;
+	}
+
+	private IRequestHandler getShowChartsHandler(HttpServletRequest request) {
+		try {
+			if (request.getParameter("op").equals("update")) {
+				return showChartsHandlerJSON;
+			}
+		} catch (NullPointerException e) {
+
+		}
+		return showChartsHandlerForward;
+
+	}
+
+	private String getPathInfo(HttpServletResponse response, String pathInfo) throws IOException {
+		if (pathInfo == null || pathInfo.equals("/"))
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+
+		String servlet = pathInfo.substring(1);
+		return servlet;
 	}
 }

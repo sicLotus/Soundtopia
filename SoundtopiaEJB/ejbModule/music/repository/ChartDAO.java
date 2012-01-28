@@ -1,7 +1,5 @@
 package music.repository;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,14 +8,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import music.data.Chart;
-import music.data.Song;
-import music.data.SongInChart;
-import music.data.SongInChartPK;
+import music.data.DataObject.Chart;
+import music.data.DataObject.Song;
+import music.data.DataObject.SongInChart;
+import music.data.DataObject.PK.SongInChartPK;
 
-/**
- * Session Bean implementation class ChartDAO
- */
 @Stateless
 @LocalBean
 public class ChartDAO {
@@ -37,7 +32,7 @@ public class ChartDAO {
 			return false;
 	}
 
-	public Chart createChartTable() {
+	public Chart createSinglechartTable() {
 		return createChartTable("Singlecharts");
 	}
 
@@ -49,8 +44,7 @@ public class ChartDAO {
 		return chart;
 	}
 
-	public void createChartEntry(int chartTable, int chartPlacing,
-			String interpreter, String title) {
+	public void createChartEntry(int chartTable, int chartPlacing, String interpreter, String title) {
 		Song song = songDAO.findSong(interpreter, title);
 		SongInChartPK pk = new SongInChartPK();
 		pk.setChartID(chartTable);
@@ -67,8 +61,7 @@ public class ChartDAO {
 
 	@SuppressWarnings("unchecked")
 	public Chart findChart(String name) {
-		List<Chart> list = em.createNamedQuery("chart.findChart")
-				.setParameter("name", name).getResultList();
+		List<Chart> list = em.createNamedQuery("chart.findChart").setParameter("name", name).getResultList();
 		if (list.size() > 0) {
 			return (Chart) list.get(0);
 		} else
@@ -77,13 +70,11 @@ public class ChartDAO {
 
 	@SuppressWarnings("unchecked")
 	public SongInChart findChartEntry(SongInChartPK pk) {
-		List<SongInChart> list = em.createNamedQuery("songInChart.findByIds")
-				.setParameter("id", pk).getResultList();
+		List<SongInChart> list = em.createNamedQuery("songInChart.findByIds").setParameter("id", pk).getResultList();
 		if (list.size() > 0) {
 			return (SongInChart) list.get(0);
 		} else
 			return null;
 	}
-	
 
 }

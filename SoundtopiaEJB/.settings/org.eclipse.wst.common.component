@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="SoundtopiaEJB">
-        <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
-        <dependent-module archiveName="jstl-api-1.2.jar" deploy-path="/" handle="module:/classpath/lib/SoundtopiaEJB/lib/jstl-api-1.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jstl-impl-1.2.jar" deploy-path="/" handle="module:/classpath/lib/SoundtopiaEJB/lib/jstl-impl-1.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <property name="java-output-path" value="/SoundtopiaEJB/build/classes"/>
-    </wb-module>
+	<wb-module deploy-name="SoundtopiaEJB">
+		<wb-resource deploy-path="/" source-path="/ejbModule"
+			tag="defaultRootSource" />
+		<dependent-module archiveName="jstl-api-1.2.jar"
+			deploy-path="/"
+			handle="module:/classpath/lib/SoundtopiaEJB/lib/jstl-api-1.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module archiveName="jstl-impl-1.2.jar"
+			deploy-path="/"
+			handle="module:/classpath/lib/SoundtopiaEJB/lib/jstl-impl-1.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<property name="java-output-path" value="/SoundtopiaEJB/build/classes" />
+	</wb-module>
 </project-modules>
